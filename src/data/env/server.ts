@@ -11,6 +11,8 @@ export const env = createEnv({
         ARCJET_KEY: z.string().min(1),
         CLERK_SECRET_KEY: z.string().min(1),
     },
+
+    // create a new env variable - DATABASE_URL
     createFinalSchema: env => {
         return z.object(env).transform(val => {
             const { DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME, DB_USER, ...rest } = val;

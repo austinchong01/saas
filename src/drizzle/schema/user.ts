@@ -1,8 +1,8 @@
 import { pgTable, varchar } from "drizzle-orm/pg-core";
-import { createdAt, updatedAt, id } from "../schemaHelpers";
+import { createdAt, updatedAt } from "../schemaHelpers";
 
 export const UserTable = pgTable("users", {
-    id: varchar().primaryKey(),
+    id: varchar().primaryKey(), // Clerk does not use UUIDs (uses strings)
     email: varchar().notNull().unique(),
     name: varchar().notNull(),
     imageUrl: varchar().notNull(),
