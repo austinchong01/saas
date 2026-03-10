@@ -36,7 +36,7 @@
     - growth?
     - rank?
     - link to profile
-    - Campaign (foreign key)
+    - Campaign (FK)
     - membership?
 - Company
     - name
@@ -44,7 +44,7 @@
     - bio
     - description
     - Saved Creators (FK)
-    - Campaigns (foreign key)
+    - Campaigns (FK)
 - Campaign
     - dates
     - budget
