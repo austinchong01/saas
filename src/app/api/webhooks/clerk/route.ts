@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
         await upsertUser({
           id: clerkData.id,
           email,
-          name: clerkData.first_name + " " + clerkData.last_name,
+          name: `${clerkData.first_name} ${clerkData.last_name}`,
           imageUrl: clerkData.image_url,
           createdAt: new Date(clerkData.created_at),
           updatedAt: new Date(clerkData.updated_at),
