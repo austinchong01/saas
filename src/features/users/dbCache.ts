@@ -1,3 +1,5 @@
+// "use server";
+
 import { getGlobalTag, getIdTag } from "@/lib/dataCache";
 import { revalidateTag } from "next/cache";
 

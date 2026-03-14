@@ -3,13 +3,13 @@
 import { Moon, Sun, Monitor, Icon, Vault } from "lucide-react";
 import { useTheme } from "next-themes";
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/src/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
