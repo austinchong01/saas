@@ -1,7 +1,7 @@
 import { pgTable, varchar } from "drizzle-orm/pg-core";
 import { id, createdAt, updatedAt } from "../schemaHelpers";
 
-export const CreatorTable = pgTable("creator", {
+export const CreatorTable = pgTable("creators", {
     id,
     username: varchar().notNull().unique(),
     profile_image: varchar(),
