@@ -5,8 +5,7 @@ import { env } from "./data/env/server";
 const isPublicRoute = createRouteMatcher(["/sign-in(.*)", "/", "/api/webhooks(.*)"]);
 
 const aj = arcjet({
-  // TODO: Add ts for env vars
-  key: env.ARCJET_KEY!,
+  key: env.ARCJET_KEY,
   rules: [
     shield({ mode: "LIVE" }),
     detectBot({
