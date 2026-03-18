@@ -1,17 +1,17 @@
 // "use server"; ??
 
-import { getGlobalTag, getIdTag } from "@/lib/dataCache";
+import { getGlobalTag, getUserTag } from "@/lib/dataCache";
 import { revalidateTag } from "next/cache";
 
 export function getUserGlobalTag() {
     return getGlobalTag("users");
 }
 
-export function getUserIdTag(id: string) {
-    return getIdTag("users", id);
+export function getUserIdTag(userId: string) {
+    return getUserTag("users", userId);
 }
 
-export function revalidateUserCache(id: string) {
+export function revalidateUserCache(userId: string) {
     revalidateTag(getUserGlobalTag());
-    revalidateTag(getUserIdTag(id));
+    revalidateTag(getUserIdTag(userId));
 }
