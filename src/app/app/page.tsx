@@ -1,6 +1,8 @@
+import { getCreatorsByFilters } from "@/features/creators/actions";
 import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser";
 import { Loader2Icon } from "lucide-react";
 import { Suspense } from "react";
+import { CreatorFilters } from "@/features/creators/actions";
 
 export default function AppPage() {
   return (
@@ -16,16 +18,14 @@ export default function AppPage() {
   );
 }
 
-async function CreatorInfos(filters: Array<string> = []) {
+async function CreatorInfos({ filters = {} }: { filters?: CreatorFilters }) {
     const { userId, redirectToSignIn } = await getCurrentUser();
     
     if (userId == null) return redirectToSignIn;
 
-    const creatorInfos = await getCreatorInfos(userId, filters);
-}
+    // const creators = await getCreatorsByFilters(filters);
+    const creators = await getCreatorsByFilters({content_type: "gaming"});
 
-async function getCreatorInfos(userId: string, filters: Array<string> = []) {
-    // need to have mock data
-    // use cache
-    // have filtering
+    // TODO: render the creators
+    return <div>{creators[0].display_name}</div>;
 }

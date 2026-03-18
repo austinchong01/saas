@@ -4,7 +4,7 @@ import { getCreatorIdTag } from "./cache";
 import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import mockCreators from "@/data/mock/creators.json";
 
-type CreatorFilters = {
+export type CreatorFilters = {
   content_type?: string;
   followers_min?: number;
   followers_max?: number;
