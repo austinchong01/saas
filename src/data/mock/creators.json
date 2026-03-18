@@ -2,129 +2,289 @@
   {
     "id": "mock-001",
     "username": "dancequeen",
+    "display_name": "Dance Queen",
+    "is_verified": true,
     "profile_image": "https://placehold.co/150x150/10b981/white?text=DQ",
     "bio": "Dance creator sharing choreography and tutorials. 💃",
     "followers": 2400000,
     "likes": 48000000,
+    "video_count": 312,
     "content_type": "dance",
     "median_views": 850000,
     "tt_link": "https://www.tiktok.com/@dancequeen",
     "engagement_rate": 4.2,
-    "starting_price": 500,
-    "starting_price_currency": "USD",
     "country": "US",
-    "language": "English"
+    "language": "English",
+    "audience_ages": [
+      { "age": "13-17", "percentage": 18.5 },
+      { "age": "18-24", "percentage": 42.3 },
+      { "age": "25-34", "percentage": 26.1 },
+      { "age": "35-44", "percentage": 9.2 },
+      { "age": "45+", "percentage": 3.9 }
+    ],
+    "audience_genders": [
+      { "gender": "female", "percentage": 68.4 },
+      { "gender": "male", "percentage": 29.1 },
+      { "gender": "other", "percentage": 2.5 }
+    ],
+    "audience_countries": [
+      { "country": "US", "percentage": 55.2 },
+      { "country": "UK", "percentage": 12.8 },
+      { "country": "CA", "percentage": 8.4 },
+      { "country": "AU", "percentage": 6.1 },
+      { "country": "BR", "percentage": 4.3 }
+    ]
   },
   {
     "id": "mock-002",
     "username": "fitwithjay",
+    "display_name": "Fit With Jay",
+    "is_verified": false,
     "profile_image": "https://placehold.co/150x150/3b82f6/white?text=FJ",
     "bio": "Fitness tips, meal prep, and workout routines. Let's get it 💪",
     "followers": 870000,
     "likes": 12000000,
+    "video_count": 198,
     "content_type": "fitness",
     "median_views": 320000,
     "tt_link": "https://www.tiktok.com/@fitwithjay",
     "engagement_rate": 5.8,
-    "starting_price": 250,
-    "starting_price_currency": "USD",
     "country": "US",
-    "language": "English"
+    "language": "English",
+    "audience_ages": [
+      { "age": "13-17", "percentage": 8.2 },
+      { "age": "18-24", "percentage": 35.6 },
+      { "age": "25-34", "percentage": 38.9 },
+      { "age": "35-44", "percentage": 12.4 },
+      { "age": "45+", "percentage": 4.9 }
+    ],
+    "audience_genders": [
+      { "gender": "female", "percentage": 41.2 },
+      { "gender": "male", "percentage": 56.3 },
+      { "gender": "other", "percentage": 2.5 }
+    ],
+    "audience_countries": [
+      { "country": "US", "percentage": 62.1 },
+      { "country": "CA", "percentage": 10.3 },
+      { "country": "UK", "percentage": 8.7 },
+      { "country": "MX", "percentage": 5.2 },
+      { "country": "AU", "percentage": 3.8 }
+    ]
   },
   {
     "id": "mock-003",
     "username": "gamingleo",
+    "display_name": "Gaming Leo",
+    "is_verified": true,
     "profile_image": "https://placehold.co/150x150/8b5cf6/white?text=GL",
     "bio": "Streaming highlights and game reviews 🎮",
     "followers": 5100000,
     "likes": 95000000,
+    "video_count": 524,
     "content_type": "gaming",
     "median_views": 1200000,
     "tt_link": "https://www.tiktok.com/@gamingleo",
     "engagement_rate": 3.1,
-    "starting_price": 1200,
-    "starting_price_currency": "USD",
     "country": "US",
-    "language": "English"
+    "language": "English",
+    "audience_ages": [
+      { "age": "13-17", "percentage": 28.4 },
+      { "age": "18-24", "percentage": 39.7 },
+      { "age": "25-34", "percentage": 21.3 },
+      { "age": "35-44", "percentage": 7.8 },
+      { "age": "45+", "percentage": 2.8 }
+    ],
+    "audience_genders": [
+      { "gender": "female", "percentage": 22.6 },
+      { "gender": "male", "percentage": 74.8 },
+      { "gender": "other", "percentage": 2.6 }
+    ],
+    "audience_countries": [
+      { "country": "US", "percentage": 48.3 },
+      { "country": "UK", "percentage": 11.2 },
+      { "country": "DE", "percentage": 7.6 },
+      { "country": "BR", "percentage": 6.9 },
+      { "country": "CA", "percentage": 5.4 }
+    ]
   },
   {
     "id": "mock-004",
     "username": "beautybymin",
+    "display_name": "Beauty by Min",
+    "is_verified": true,
     "profile_image": "https://placehold.co/150x150/ec4899/white?text=BM",
     "bio": "Korean beauty routines and skincare tips ✨",
     "followers": 3200000,
     "likes": 62000000,
+    "video_count": 276,
     "content_type": "beauty",
     "median_views": 980000,
     "tt_link": "https://www.tiktok.com/@beautybymin",
     "engagement_rate": 6.1,
-    "starting_price": 800,
-    "starting_price_currency": "USD",
     "country": "KR",
-    "language": "Korean"
+    "language": "Korean",
+    "audience_ages": [
+      { "age": "13-17", "percentage": 12.1 },
+      { "age": "18-24", "percentage": 44.8 },
+      { "age": "25-34", "percentage": 30.6 },
+      { "age": "35-44", "percentage": 9.3 },
+      { "age": "45+", "percentage": 3.2 }
+    ],
+    "audience_genders": [
+      { "gender": "female", "percentage": 82.3 },
+      { "gender": "male", "percentage": 15.4 },
+      { "gender": "other", "percentage": 2.3 }
+    ],
+    "audience_countries": [
+      { "country": "KR", "percentage": 38.7 },
+      { "country": "US", "percentage": 22.4 },
+      { "country": "JP", "percentage": 14.2 },
+      { "country": "TH", "percentage": 8.1 },
+      { "country": "VN", "percentage": 5.6 }
+    ]
   },
   {
     "id": "mock-005",
     "username": "comedycarlos",
+    "display_name": "Comedy Carlos",
+    "is_verified": false,
     "profile_image": "https://placehold.co/150x150/f59e0b/white?text=CC",
     "bio": "Making you laugh one skit at a time 😂",
     "followers": 1600000,
     "likes": 31000000,
+    "video_count": 189,
     "content_type": "comedy",
     "median_views": 540000,
     "tt_link": "https://www.tiktok.com/@comedycarlos",
     "engagement_rate": 7.3,
-    "starting_price": 400,
-    "starting_price_currency": "USD",
     "country": "US",
-    "language": "Spanish"
+    "language": "Spanish",
+    "audience_ages": [
+      { "age": "13-17", "percentage": 15.3 },
+      { "age": "18-24", "percentage": 36.8 },
+      { "age": "25-34", "percentage": 28.4 },
+      { "age": "35-44", "percentage": 13.7 },
+      { "age": "45+", "percentage": 5.8 }
+    ],
+    "audience_genders": [
+      { "gender": "female", "percentage": 47.6 },
+      { "gender": "male", "percentage": 49.8 },
+      { "gender": "other", "percentage": 2.6 }
+    ],
+    "audience_countries": [
+      { "country": "US", "percentage": 42.1 },
+      { "country": "MX", "percentage": 18.6 },
+      { "country": "CO", "percentage": 9.8 },
+      { "country": "ES", "percentage": 7.4 },
+      { "country": "AR", "percentage": 6.2 }
+    ]
   },
   {
     "id": "mock-006",
     "username": "techsarah",
+    "display_name": "Tech Sarah",
+    "is_verified": false,
     "profile_image": "https://placehold.co/150x150/06b6d4/white?text=TS",
     "bio": "Tech reviews and unboxings. Your gadget guide 📱",
     "followers": 920000,
     "likes": 15000000,
+    "video_count": 156,
     "content_type": "tech",
     "median_views": 410000,
     "tt_link": "https://www.tiktok.com/@techsarah",
     "engagement_rate": 4.9,
-    "starting_price": 350,
-    "starting_price_currency": "USD",
     "country": "US",
-    "language": "English"
+    "language": "English",
+    "audience_ages": [
+      { "age": "13-17", "percentage": 10.4 },
+      { "age": "18-24", "percentage": 32.1 },
+      { "age": "25-34", "percentage": 36.8 },
+      { "age": "35-44", "percentage": 14.6 },
+      { "age": "45+", "percentage": 6.1 }
+    ],
+    "audience_genders": [
+      { "gender": "female", "percentage": 35.7 },
+      { "gender": "male", "percentage": 61.9 },
+      { "gender": "other", "percentage": 2.4 }
+    ],
+    "audience_countries": [
+      { "country": "US", "percentage": 58.4 },
+      { "country": "IN", "percentage": 11.2 },
+      { "country": "UK", "percentage": 9.3 },
+      { "country": "CA", "percentage": 6.7 },
+      { "country": "DE", "percentage": 4.1 }
+    ]
   },
   {
     "id": "mock-007",
     "username": "cookingwithana",
+    "display_name": "Cooking with Ana",
+    "is_verified": true,
     "profile_image": "https://placehold.co/150x150/ef4444/white?text=CA",
     "bio": "Quick recipes for busy people 🍳",
     "followers": 4500000,
     "likes": 78000000,
+    "video_count": 412,
     "content_type": "food",
     "median_views": 1100000,
     "tt_link": "https://www.tiktok.com/@cookingwithana",
     "engagement_rate": 5.4,
-    "starting_price": 900,
-    "starting_price_currency": "USD",
     "country": "US",
-    "language": "English"
+    "language": "English",
+    "audience_ages": [
+      { "age": "13-17", "percentage": 6.8 },
+      { "age": "18-24", "percentage": 28.4 },
+      { "age": "25-34", "percentage": 37.2 },
+      { "age": "35-44", "percentage": 19.1 },
+      { "age": "45+", "percentage": 8.5 }
+    ],
+    "audience_genders": [
+      { "gender": "female", "percentage": 71.8 },
+      { "gender": "male", "percentage": 25.9 },
+      { "gender": "other", "percentage": 2.3 }
+    ],
+    "audience_countries": [
+      { "country": "US", "percentage": 51.6 },
+      { "country": "UK", "percentage": 13.4 },
+      { "country": "CA", "percentage": 9.8 },
+      { "country": "AU", "percentage": 7.2 },
+      { "country": "PH", "percentage": 4.9 }
+    ]
   },
   {
     "id": "mock-008",
     "username": "sportshype_kr",
+    "display_name": "스포츠 하이프",
+    "is_verified": false,
     "profile_image": "https://placehold.co/150x150/22c55e/white?text=SK",
     "bio": "스포츠 하이라이트와 분석 ⚽🏀",
     "followers": 780000,
     "likes": 9500000,
+    "video_count": 143,
     "content_type": "sports",
     "median_views": 280000,
     "tt_link": "https://www.tiktok.com/@sportshype_kr",
     "engagement_rate": 3.7,
-    "starting_price": 200,
-    "starting_price_currency": "KRW",
     "country": "KR",
-    "language": "Korean"
+    "language": "Korean",
+    "audience_ages": [
+      { "age": "13-17", "percentage": 22.6 },
+      { "age": "18-24", "percentage": 34.1 },
+      { "age": "25-34", "percentage": 27.8 },
+      { "age": "35-44", "percentage": 11.2 },
+      { "age": "45+", "percentage": 4.3 }
+    ],
+    "audience_genders": [
+      { "gender": "female", "percentage": 28.4 },
+      { "gender": "male", "percentage": 69.3 },
+      { "gender": "other", "percentage": 2.3 }
+    ],
+    "audience_countries": [
+      { "country": "KR", "percentage": 64.2 },
+      { "country": "US", "percentage": 12.1 },
+      { "country": "JP", "percentage": 8.7 },
+      { "country": "VN", "percentage": 5.3 },
+      { "country": "TH", "percentage": 3.4 }
+    ]
   }
 ]
