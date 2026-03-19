@@ -3,7 +3,7 @@ import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser";
 import { CreatorFilters } from "@/features/creators/actions";
 import { Card, CardContent } from "@/components/ui/card";
 
-export async function CreatorInfos({ filters = {} }: { filters?: CreatorFilters }) {
+export async function CreatorList({ filters = {} }: { filters?: CreatorFilters }) {
   const { userId, redirectToSignIn } = await getCurrentUser();
   if (userId == null) return redirectToSignIn();
 
@@ -25,7 +25,7 @@ function NoCreatorsFound() {
       </p>
       <Card>
         <CardContent>
-          <CreatorInfoForm />
+          <CreatorCard />
         </CardContent>
       </Card>
     </div>

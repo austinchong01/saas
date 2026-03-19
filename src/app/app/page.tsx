@@ -1,6 +1,6 @@
 import { Loader2Icon } from "lucide-react";
 import { Suspense } from "react";
-import { CreatorInfos } from "@/features/creators/components/CreatorInfos";
+import { CreatorList } from "@/features/creators/components/CreatorList";
 
 export default function AppPage() {
   return (
@@ -11,7 +11,7 @@ export default function AppPage() {
         </div>
       }
     >
-      <CreatorInfos />
+      <CreatorList />
     </Suspense>
   );
 }
