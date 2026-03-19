@@ -24,8 +24,8 @@ async function CreatorInfos({ filters = {} }: { filters?: CreatorFilters }) {
     if (userId == null) return redirectToSignIn;
 
     // const creators = await getCreatorsByFilters(filters);
-    const creators = await getCreatorsByFilters({content_type: "gaming"});
+    const creators = await getCreatorsByFilters({median_views_min: 1000});
 
     // TODO: render the creators
-    return <div>{creators[0].display_name}</div>;
+    return <div>{creators[7].display_name}</div>;
 }

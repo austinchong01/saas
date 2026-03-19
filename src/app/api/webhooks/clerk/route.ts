@@ -1,4 +1,5 @@
 import { deleteUser, upsertUser } from "@/features/users/db";
+import { revalidateUserCache } from "@/features/users/dbCache";
 import { verifyWebhook } from "@clerk/nextjs/webhooks";
 import { NextRequest } from "next/server";
 
@@ -28,6 +29,8 @@ export async function POST(request: NextRequest) {
           updatedAt: new Date(clerkData.updated_at),
         });
 
+        revalidateUserCache(clerkData.id);
+
         break;
       case "user.deleted":
         if (event.data.id == null) {
@@ -35,6 +38,9 @@ export async function POST(request: NextRequest) {
         }
 
         await deleteUser(event.data.id);
+        
+        revalidateUserCache(event.data.id);
+        
         break;
     }
   } catch {
