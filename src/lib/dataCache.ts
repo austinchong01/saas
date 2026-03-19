@@ -8,6 +8,6 @@ export function getUserTag(tag: CacheTag, userId: string) {
     return `user:${userId}:${tag}` as const;
 }
 
-export function getCreatorTag(tag: CacheTag, creatorId: string) {
-    return `creator:${creatorId}:${tag}` as const;
+export function getIdTag(tag: CacheTag, id: string) {
+    return `id:${id}:${tag}` as const;
 }

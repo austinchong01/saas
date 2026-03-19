@@ -1,12 +1,17 @@
 // "use server"; ??
 
-import { getCreatorTag } from "@/lib/dataCache";
+import { getIdTag } from "@/lib/dataCache";
 import { revalidateTag } from "next/cache";
 
-export function getCreatorIdTag(creatorId: string) {
-    return getCreatorTag("creators", creatorId);
+export function getCreatorInfoUserTag(userId: string) {
+    return getIdTag("creators", userId);
 }
 
-export function revalidateCreatorCache(creatorId: string) {
+export function getCreatorIdTag(creatorId: string) {
+    return getIdTag("creators", creatorId);
+}
+
+export function revalidateCreatorCache({ userId, creatorId }: { userId: string; creatorId: string }) {
+    revalidateTag(getCreatorInfoUserTag(userId));
     revalidateTag(getCreatorIdTag(creatorId));
 }
