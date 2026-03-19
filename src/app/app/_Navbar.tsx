@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { UserAvatar } from "@/components/UserAvatar";
+import { UserAvatar } from "@/features/users/components/UserAvatar";
 
 export function Navbar({ user }: { user: { name: string; imageUrl: string } }) {
   const { openUserProfile } = useClerk();
@@ -20,7 +20,7 @@ export function Navbar({ user }: { user: { name: string; imageUrl: string } }) {
     <nav className="h-header flex items-center justify-between border-b px-4">
       <Link href="/app" className="flex items-center gap-2">
         <BrainCircuitIcon className="size-6" />
-        <span className="text-lg font-semibold">Creator Search</span>
+        <span className="text-lg font-semibold">Creator Hub</span>
       </Link>
 
       <div className="flex items-center gap-2">
