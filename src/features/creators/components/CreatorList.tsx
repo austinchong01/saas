@@ -3,12 +3,13 @@ import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser";
 import { CreatorFilters } from "@/features/creators/actions";
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/CreatorCard";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import {
   BadgeCheck,
@@ -19,6 +20,7 @@ import {
   Globe,
   Languages,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export async function CreatorList({
   filters = {},
@@ -29,7 +31,7 @@ export async function CreatorList({
   if (userId == null) return redirectToSignIn();
 
   // const creators = await getCreatorsByFilters(filters);
-  const creators = await getCreatorsByFilters({ country_code: "US" });
+  const creators = await getCreatorsByFilters({});
 
   return <Main creators={creators} />;
 }
@@ -54,12 +56,9 @@ function Main({ creators }: { creators: any[] }) {
 
       <div className="grid gap-4">
         {creators.map((creator) => (
-          <Card
-            key={creator.id}
-            className="flex-row gap-5 items-center min-w-fit"
-          >
-            <CardHeader className="flex flex-col gap-3 justify-center w-100">
-              <div className="flex flex-0 gap-3 items-center">
+          <Card key={creator.id}>
+            <CardHeader>
+              <div className="flex flex-0 gap-4 items-center">
                 <Avatar size="lg">
                   <AvatarImage
                     src={creator.profile_image}
@@ -69,10 +68,8 @@ function Main({ creators }: { creators: any[] }) {
                     {creator.display_name.slice(0, 2).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
-                <div className="shrink-0">
-                  <CardTitle className="flex items-center gap-1.5">
-                    {creator.display_name}
-                  </CardTitle>
+                <div>
+                  <CardTitle>{creator.display_name}</CardTitle>
                   <CardDescription>@{creator.username}</CardDescription>
                 </div>
                 <div>
@@ -83,45 +80,40 @@ function Main({ creators }: { creators: any[] }) {
               </div>
 
               <div className="text-sm text-muted-foreground">{creator.bio}</div>
+              <CardAction>
+                <Button variant="outline" size="sm">
+                  Profile
+                </Button>
+              </CardAction>
             </CardHeader>
 
-            <CardContent className="flex-1 w-100">
+            <CardContent>
               <div className="grid grid-cols-2 gap-6 text-sm">
-                <div className="flex items-center gap-2">
-                  <Users className="size-4 text-muted-foreground shrink-0" />
-                  <span className="whitespace-nowrap">
-                    {formatCount(creator.followers)} followers
-                  </span>
+                <div className="flex items-center gap-2 h-5 w-56">
+                  <Users className="size-4 text-muted-foreground" />
+                  <span>{formatCount(creator.followers)} followers</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Heart className="size-4 text-muted-foreground shrink-0" />
-                  <span className="whitespace-nowrap">
-                    {formatCount(creator.likes)} likes
-                  </span>
+                <div className="flex items-center gap-2 h-5 w-56">
+                  <Heart className="size-4 text-muted-foreground" />
+                  <span className="nowraptext">{formatCount(creator.likes)} likes</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Tag className="size-4 text-muted-foreground shrink-0" />
-                  <span className="whitespace-nowrap">
-                    {creator.content_type}
-                  </span>
+                <div className="flex items-center gap-2 h-5 w-56">
+                  <Tag className="size-4 text-muted-foreground" />
+                  <span>{creator.content_type}</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Eye className="size-4 text-muted-foreground shrink-0" />
-                  <span className="whitespace-nowrap">
+                <div className="flex items-center gap-2 h-5 w-56">
+                  <Eye className="size-4 text-muted-foreground" />
+                  <span className="nowraptext">
                     {formatCount(creator.median_views)} views (median)
                   </span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Globe className="size-4 text-muted-foreground shrink-0" />
-                  <span className="whitespace-nowrap">
-                    {creator.country}
-                  </span>
+                <div className="flex items-center gap-2 h-5 w-56">
+                  <Globe className="size-4 text-muted-foreground" />
+                  <span>{creator.country}</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Languages className="size-4 text-muted-foreground shrink-0" />
-                  <span className="whitespace-nowrap">
-                    {creator.language} (language)
-                  </span>
+                <div className="flex items-center gap-2 h-5 w-56">
+                  <Languages className="size-4 text-muted-foreground" />
+                  <span>{creator.language} (language)</span>
                 </div>
               </div>
             </CardContent>
