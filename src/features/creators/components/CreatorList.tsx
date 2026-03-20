@@ -6,7 +6,6 @@ import {
   CardAction,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/CreatorCard";
@@ -21,6 +20,7 @@ import {
   Languages,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { LoadingSwap } from "@/components/ui/loading-swap";
 
 export async function CreatorList({
   filters = {},
@@ -82,6 +82,7 @@ function Main({ creators }: { creators: any[] }) {
               <div className="text-sm text-muted-foreground">{creator.bio}</div>
               <CardAction>
                 <Button variant="outline" size="sm">
+                  {/* <LoadingSwap></LoadingSwap> */}
                   Profile
                 </Button>
               </CardAction>
@@ -95,7 +96,9 @@ function Main({ creators }: { creators: any[] }) {
                 </div>
                 <div className="flex items-center gap-2 h-5 w-56">
                   <Heart className="size-4 text-muted-foreground" />
-                  <span className="nowraptext">{formatCount(creator.likes)} likes</span>
+                  <span className="nowraptext">
+                    {formatCount(creator.likes)} likes
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 h-5 w-56">
                   <Tag className="size-4 text-muted-foreground" />

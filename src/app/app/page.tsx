@@ -1,6 +1,6 @@
 import { Loader2Icon } from "lucide-react";
 import { Suspense } from "react";
-import { CreatorList } from "@/features/creators/components/CreatorList";
+import { CreatorFilterForm } from "@/features/creators/components/CreatorFilterForm";
 
 export default function AppPage() {
   return (
@@ -11,7 +11,7 @@ export default function AppPage() {
         </div>
       }
     >
-      <CreatorList />
+      <CreatorFilterForm />
     </Suspense>
   );
 }
