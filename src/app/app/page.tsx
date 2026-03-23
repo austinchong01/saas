@@ -11,7 +11,17 @@ export default function AppPage() {
         </div>
       }
     >
-      <CreatorFilterForm />
+      <div className="container my-4 max-w-5xl">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl mb-4">
+          Welcome to Creator Hub
+        </h1>
+        <p className="text-muted-foreground mb-8">
+          To get started, try adjusting the filters related to the creator/(s)
+          you are interested in. The most relevant creators will be displayed
+          first.
+        </p>
+        <CreatorFilterForm />
+      </div>
     </Suspense>
   );
 }

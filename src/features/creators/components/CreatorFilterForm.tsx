@@ -1,7 +1,6 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -22,17 +21,14 @@ import {
   LANGUAGES,
   GENDER_RATIO_LABELS,
   LANGUAGE_LABELS,
-  COUNTRY_LABELS
+  COUNTRY_LABELS,
 } from "../constants";
 import { RangeFields } from "./RangeSelect";
 import { MultiToggle } from "./MultiSelect";
+import { LoadingSwap } from "@/components/ui/loading-swap";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-type CreatorFilterFormProps = {
-  onSubmit: (values: CreatorFilterFormValues) => void;
-  defaultValues?: Partial<CreatorFilterFormValues>;
-};
-
-export function CreatorFilterForm({ onSubmit }: CreatorFilterFormProps) {
+export function CreatorFilterForm({ filterInfo}) {
   const form = useForm<CreatorFilterFormValues>({
     resolver: zodResolver(creatorFilterSchema),
     defaultValues: {
@@ -47,16 +43,11 @@ export function CreatorFilterForm({ onSubmit }: CreatorFilterFormProps) {
     },
   });
 
-  return (
-    <div className="container my-4 max-w-5xl">
-      <h1 className="text-3xl md:text-4xl lg:text-5xl mb-4">
-        Welcome to Creator Hub
-      </h1>
-      <p className="text-muted-foreground mb-8">
-        To get started, try adjusting the filters related to the creator/(s) you
-        are interested in. The most relevant creators will be displayed first.
-      </p>
+  function onSubmit(values: CreatorFilterFormValues) {
 
+  }
+
+  return (
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <Card>
@@ -227,7 +218,6 @@ export function CreatorFilterForm({ onSubmit }: CreatorFilterFormProps) {
                   </FormItem>
                 )}
               /> */}
-
             </CardContent>
           </Card>
 
@@ -239,10 +229,13 @@ export function CreatorFilterForm({ onSubmit }: CreatorFilterFormProps) {
             >
               Reset
             </Button>
-            <Button type="submit">Apply Filters</Button>
+            <Button disabled={form.formState.isSubmitting} type="submit">
+              <LoadingSwap isLoading={form.formState.isSubmitting}>
+                Apply Filters
+              </LoadingSwap>
+            </Button>
           </div>
         </form>
       </Form>
-    </div>
   );
 }

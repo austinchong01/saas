@@ -3,29 +3,29 @@ import { CONTENT_LABELS, COUNTRY_CODES, FOLLOWER_AGES, FOLLOWER_GENDER_RATIOS, L
 
 export const optionalNonNegativeInt = z.preprocess(
   (v) => (v === "" || v == null ? undefined : Number(v)),
-  z.number().int().min(0).optional(),
+  z.number().int().min(0).nullable(),
 ) as z.ZodType<number | undefined>;
 
 export const optionalRate = z.preprocess(
   (v) => (v === "" || v == null ? undefined : Number(v)),
-  z.number().min(0).max(1).optional(),
+  z.number().min(0).max(1).nullable(),
 ) as z.ZodType<number | undefined>;
 
 export const creatorFilterSchema = z
   .object({
-    keyword: z.string().optional(),
+    keyword: z.string().nullable(),
     followersMin: optionalNonNegativeInt,
     followersMax: optionalNonNegativeInt,
     medianViewsMin: optionalNonNegativeInt,
     medianViewsMax: optionalNonNegativeInt,
     engagementRateMin: optionalRate,
     engagementRateMax: optionalRate,
-    languages: z.array(z.enum(LANGUAGES)).optional(),
-    followerCountryCodes: z.array(z.enum(COUNTRY_CODES)).optional(),
-    countryCodes: z.array(z.enum(COUNTRY_CODES)).optional(),
-    contentLabels: z.array(z.enum(CONTENT_LABELS)).optional(),
-    followerGenderRatio: z.array(z.enum(FOLLOWER_GENDER_RATIOS)).optional(),
-    followerAge: z.array(z.enum(FOLLOWER_AGES)).optional(),
+    languages: z.array(z.enum(LANGUAGES)).nullable(),
+    followerCountryCodes: z.array(z.enum(COUNTRY_CODES)).nullable(),
+    countryCodes: z.array(z.enum(COUNTRY_CODES)).nullable(),
+    contentLabels: z.array(z.enum(CONTENT_LABELS)).nullable(),
+    followerGenderRatio: z.array(z.enum(FOLLOWER_GENDER_RATIOS)).nullable(),
+    followerAge: z.array(z.enum(FOLLOWER_AGES)).nullable(),
   })
   .refine(
     (d) =>

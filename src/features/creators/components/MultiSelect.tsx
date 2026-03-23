@@ -7,7 +7,7 @@ export function MultiToggle<T extends string>({
   getLabel,
 }: {
   options: readonly T[];
-  value: T[] | undefined;
+  value: T[] | null;
   onChange: (next: T[]) => void;
   getLabel?: (option: T) => string;
 }) {
@@ -25,7 +25,7 @@ export function MultiToggle<T extends string>({
         <Button
           key={option}
           type="button"
-          variant={value?.includes(option) ? "default" : "outline"}
+          variant={value?.includes(option) ? "default" : "secondary"}
           size="sm"
           onClick={() => toggle(option)}
         >
