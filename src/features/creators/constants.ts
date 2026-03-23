@@ -1,13 +1,13 @@
 export const LANGUAGES = [
+  "en",
+  "ko",
   "ar",
   "de",
-  "en",
   "es",
   "fr",
   "id",
   "it",
   "ja",
-  "ko",
   "ms",
   "pt",
   "th",
@@ -17,6 +17,8 @@ export const LANGUAGES = [
 ] as const;
 
 export const COUNTRY_CODES = [
+  "US",
+  "KR",
   "AE",
   "AU",
   "BR",
@@ -30,7 +32,6 @@ export const COUNTRY_CODES = [
   "IL",
   "IT",
   "JP",
-  "KR",
   "MY",
   "PH",
   "RU",
@@ -39,7 +40,6 @@ export const COUNTRY_CODES = [
   "TH",
   "TR",
   "TW",
-  "US",
   "VN",
 ] as const;
 
@@ -88,4 +88,49 @@ export const GENDER_RATIO_LABELS: Record<
   MALE_50: "50%+ Male",
   MALE_60: "60%+ Male",
   MALE_70: "70%+ Male",
+};
+
+export const LANGUAGE_LABELS: Record<(typeof LANGUAGES)[number], string> = {
+  ar: "Arabic",
+  de: "German",
+  en: "English",
+  es: "Spanish",
+  fr: "French",
+  id: "Indonesian",
+  it: "Italian",
+  ja: "Japanese",
+  ko: "Korean",
+  ms: "Malay",
+  pt: "Portuguese",
+  th: "Thai",
+  tl: "Filipino",
+  tr: "Turkish",
+  vi: "Vietnamese",
+};
+
+export const COUNTRY_LABELS: Record<(typeof COUNTRY_CODES)[number], string> = {
+  US: "United States",
+  KR: "South Korea",
+  AE: "UAE",
+  AU: "Australia",
+  BR: "Brazil",
+  CA: "Canada",
+  DE: "Germany",
+  EG: "Egypt",
+  ES: "Spain",
+  FR: "France",
+  GB: "United Kingdom",
+  ID: "Indonesia",
+  IL: "Israel",
+  IT: "Italy",
+  JP: "Japan",
+  MY: "Malaysia",
+  PH: "Philippines",
+  RU: "Russia",
+  SA: "Saudi Arabia",
+  SG: "Singapore",
+  TH: "Thailand",
+  TR: "Turkey",
+  TW: "Taiwan",
+  VN: "Vietnam",
 };

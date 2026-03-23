@@ -21,6 +21,8 @@ import {
   FOLLOWER_GENDER_RATIOS,
   LANGUAGES,
   GENDER_RATIO_LABELS,
+  LANGUAGE_LABELS,
+  COUNTRY_LABELS
 } from "../constants";
 import { RangeFields } from "./RangeSelect";
 import { MultiToggle } from "./MultiSelect";
@@ -120,6 +122,7 @@ export function CreatorFilterForm({ onSubmit }: CreatorFilterFormProps) {
                         options={LANGUAGES}
                         value={field.value}
                         onChange={field.onChange}
+                        getLabel={(option) => LANGUAGE_LABELS[option]}
                       />
                     </FormControl>
                     <FormMessage />
@@ -139,6 +142,7 @@ export function CreatorFilterForm({ onSubmit }: CreatorFilterFormProps) {
                         options={COUNTRY_CODES}
                         value={field.value}
                         onChange={field.onChange}
+                        // getLabel={(option) => COUNTRY_LABELS[option]}
                       />
                     </FormControl>
                     <FormMessage />
@@ -158,6 +162,7 @@ export function CreatorFilterForm({ onSubmit }: CreatorFilterFormProps) {
                         options={COUNTRY_CODES}
                         value={field.value}
                         onChange={field.onChange}
+                        // getLabel={(option) => COUNTRY_LABELS[option]}
                       />
                     </FormControl>
                     <FormMessage />
