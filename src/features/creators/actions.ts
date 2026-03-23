@@ -3,24 +3,9 @@
 import { getCreatorIdTag } from "./cache";
 import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import mockCreators from "@/data/mock/creators.json";
-
-export type CreatorFilters = {
-  content_type?: string;
-  followers_min?: number;
-  followers_max?: number;
-  median_views_min?: number;
-  median_views_max?: number;
-  engagement_rate_min?: number;
-  engagement_rate_max?: number;
-  country_code?: string;
-  follower_country_codes?: string[];
-  follower_gender_ratio?: {
-    gender: string;
-    min_percentage: number;
-  };
-  follower_age_min?: number;
-  follower_age_max?: number;
-};
+import { CreatorFilterFormValues, creatorFilterSchema } from "./schemas";
+import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser";
+import { filtersToSearchParams } from "./url";
 
 export async function getCreator(creatorId: string) {
   "use cache";
@@ -33,77 +18,125 @@ export async function getCreator(creatorId: string) {
   return creator ?? null;
 }
 
-export async function getCreatorsByFilters(filters: CreatorFilters) {
+async function getCreatorsByFilters(filters: CreatorFilterFormValues) {
   let results = [...mockCreators];
 
-  // Exact match filters
-  if (filters.content_type) {
-    results = results.filter((c) => c.content_type === filters.content_type);
+  // Keyword search (username, display_name, bio)
+  // if (filters.keyword) {
+  //   const kw = filters.keyword.toLowerCase();
+  //   results = results.filter(
+  //     (c) =>
+  //       c.username.toLowerCase().includes(kw) ||
+  //       c.display_name.toLowerCase().includes(kw) ||
+  //       c.bio.toLowerCase().includes(kw),
+  //   );
+  // }
+
+  // Content labels (multi-select)
+  if (filters.contentLabels?.length) {
+    results = results.filter((c) =>
+      filters.contentLabels!.includes(c.content_type as typeof filters.contentLabels extends (infer U)[] | null ? U : never),
+    );
   }
 
-  if (filters.country_code) {
-    results = results.filter((c) => c.country === filters.country_code);
+  // Creator country (multi-select)
+  if (filters.countryCodes?.length) {
+    results = results.filter((c) =>
+      filters.countryCodes!.includes(c.country as any),
+    );
+  }
+
+  // Languages (multi-select)
+  if (filters.languages?.length) {
+    results = results.filter((c) =>
+      filters.languages!.some(
+        (lang) => lang === c.language.toLowerCase().slice(0, 2),
+      ),
+    );
   }
 
   // Range filters
-  if (filters.followers_min != null) {
-    results = results.filter((c) => c.followers >= filters.followers_min!);
+  if (filters.followersMin != null) {
+    results = results.filter((c) => c.followers >= filters.followersMin!);
   }
-  if (filters.followers_max != null) {
-    results = results.filter((c) => c.followers <= filters.followers_max!);
-  }
-
-  if (filters.median_views_min != null) {
-    results = results.filter(
-      (c) => c.median_views >= filters.median_views_min!,
-    );
-  }
-  if (filters.median_views_max != null) {
-    results = results.filter(
-      (c) => c.median_views <= filters.median_views_max!,
-    );
+  if (filters.followersMax != null) {
+    results = results.filter((c) => c.followers <= filters.followersMax!);
   }
 
-  if (filters.engagement_rate_min != null) {
+  if (filters.medianViewsMin != null) {
+    results = results.filter((c) => c.median_views >= filters.medianViewsMin!);
+  }
+  if (filters.medianViewsMax != null) {
+    results = results.filter((c) => c.median_views <= filters.medianViewsMax!);
+  }
+
+  if (filters.engagementRateMin != null) {
     results = results.filter(
-      (c) => c.engagement_rate >= filters.engagement_rate_min!,
+      (c) => c.engagement_rate >= filters.engagementRateMin!,
     );
   }
-  if (filters.engagement_rate_max != null) {
+  if (filters.engagementRateMax != null) {
     results = results.filter(
-      (c) => c.engagement_rate <= filters.engagement_rate_max!,
+      (c) => c.engagement_rate <= filters.engagementRateMax!,
     );
   }
 
-  // Audience demographic filters
-  if (filters.follower_country_codes?.length) {
+  // Audience country (multi-select)
+  if (filters.followerCountryCodes?.length) {
     results = results.filter((c) =>
-      filters.follower_country_codes!.some((code) =>
+      filters.followerCountryCodes!.some((code) =>
         c.audience_countries.some((ac) => ac.country === code),
       ),
     );
   }
 
-  if (filters.follower_gender_ratio) {
-    const { gender, min_percentage } = filters.follower_gender_ratio;
-    results = results.filter((c) => {
-      const match = c.audience_genders.find((g) => g.gender === gender);
-      return match != null && match.percentage >= min_percentage;
-    });
-  }
-
-  if (filters.follower_age_min != null || filters.follower_age_max != null) {
-    const min = filters.follower_age_min ?? 0;
-    const max = filters.follower_age_max ?? Infinity;
-
+  // Audience gender ratio
+  if (filters.followerGenderRatio?.length) {
     results = results.filter((c) =>
-      c.audience_ages.some((a) => {
-        const [lower] = a.age.replace("+", "").split("-").map(Number);
-        return lower >= min && lower <= max && a.percentage >= 20;
+      filters.followerGenderRatio!.some((ratio) => {
+        const [gender, threshold] = ratio.split("_");
+        const percentage = Number(threshold);
+        const match = c.audience_genders.find(
+          (g) => g.gender === gender.toLowerCase(),
+        );
+        return match != null && match.percentage >= percentage;
       }),
     );
   }
 
+  // Audience age
+  if (filters.followerAge?.length) {
+    results = results.filter((c) =>
+      filters.followerAge!.some((ageRange) =>
+        c.audience_ages.some(
+          (a) => a.age === ageRange && a.percentage >= 20,
+        ),
+      ),
+    );
+  }
+
   results.sort((a, b) => b.followers - a.followers);
-  return results;
+  const id = filtersToSearchParams(filters);
+  return {results, id};
 }
+
+export async function createFilterInfo(unsafeData: CreatorFilterFormValues) {
+  const { userId } = await getCurrentUser();
+  if (userId == null) {
+    return {
+      error: true,
+      message: "You do not have permission to do this.",
+    };
+  }
+
+  const { success, data } = creatorFilterSchema.safeParse(unsafeData);
+  if (!success) {
+    return { error: true, message: "Invalid job data." };
+  }
+
+  const filterInfo = await getCreatorsByFilters(data);
+
+  redirect(`/app/creator-infos/${filterInfo.id}`);
+}
+
+// export async function editFilterInfo(){}
