@@ -10,131 +10,27 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { creatorFilterSchema, CreatorFilterFormValues } from "../schemas";
-import { CONTENT_LABELS, COUNTRY_CODES, FOLLOWER_AGES, FOLLOWER_GENDER_RATIOS, LANGUAGES, GENDER_RATIO_LABELS } from "../constants";
-
-// ── Multi-toggle helper ───────────────────────────────────────────────────────
-
-function MultiToggle<T extends string>({
-  options,
-  value,
-  onChange,
-  getLabel,
-}: {
-  options: readonly T[];
-  value: T[] | undefined;
-  onChange: (next: T[]) => void;
-  getLabel?: (option: T) => string;
-}) {
-  function toggle(option: T) {
-    const current = value ?? [];
-    const next = current.includes(option)
-      ? current.filter((v) => v !== option)
-      : [...current, option];
-    onChange(next);
-  }
-
-  return (
-    <div className="flex flex-wrap gap-2">
-      {options.map((option) => (
-        <Button
-          key={option}
-          type="button"
-          variant={value?.includes(option) ? "default" : "outline"}
-          size="sm"
-          onClick={() => toggle(option)}
-        >
-          {getLabel ? getLabel(option) : option}
-        </Button>
-      ))}
-    </div>
-  );
-}
-
-// ── Range input helper ────────────────────────────────────────────────────────
-
-function RangeFields({
-  minName,
-  maxName,
-  control,
-  label,
-  placeholder,
-  step,
-}: {
-  minName: string;
-  maxName: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  control: any;
-  label: string;
-  placeholder?: { min?: string; max?: string };
-  step?: string;
-}) {
-  return (
-    <div className="space-y-2">
-      <p className="text-sm font-medium">{label}</p>
-      <div className="flex items-start gap-3">
-        <FormField
-          control={control}
-          name={minName}
-          render={({ field }) => (
-            <FormItem className="flex-1">
-              <FormLabel className="text-xs text-muted-foreground">
-                Min
-              </FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  step={step}
-                  placeholder={placeholder?.min ?? "No min"}
-                  {...field}
-                  value={field.value ?? ""}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={control}
-          name={maxName}
-          render={({ field }) => (
-            <FormItem className="flex-1">
-              <FormLabel className="text-xs text-muted-foreground">
-                Max
-              </FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  step={step}
-                  placeholder={placeholder?.max ?? "No max"}
-                  {...field}
-                  value={field.value ?? ""}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      </div>
-    </div>
-  );
-}
-
-// ── Form component ────────────────────────────────────────────────────────────
+import { CreatorFilterFormValues, creatorFilterSchema } from "../schemas";
+import {
+  CONTENT_LABELS,
+  COUNTRY_CODES,
+  FOLLOWER_AGES,
+  FOLLOWER_GENDER_RATIOS,
+  LANGUAGES,
+  GENDER_RATIO_LABELS,
+} from "../constants";
+import { RangeFields } from "./RangeSelect";
+import { MultiToggle } from "./MultiSelect";
 
 type CreatorFilterFormProps = {
   onSubmit: (values: CreatorFilterFormValues) => void;
   defaultValues?: Partial<CreatorFilterFormValues>;
 };
 
-export function CreatorFilterForm({
-  onSubmit,
-  defaultValues,
-}: CreatorFilterFormProps) {
+export function CreatorFilterForm({ onSubmit }: CreatorFilterFormProps) {
   const form = useForm<CreatorFilterFormValues>({
     resolver: zodResolver(creatorFilterSchema),
     defaultValues: {
@@ -145,7 +41,7 @@ export function CreatorFilterForm({
       contentLabels: [],
       followerGenderRatio: [],
       followerAge: [],
-      ...defaultValues,
+      followersMin: 10000,
     },
   });
 
@@ -155,9 +51,8 @@ export function CreatorFilterForm({
         Welcome to Creator Hub
       </h1>
       <p className="text-muted-foreground mb-8">
-        To get started, try adjusting the filters related to the creator/(s)
-        you&apos;re interested in. The most popular creators will be displayed
-        first.
+        To get started, try adjusting the filters related to the creator/(s) you
+        are interested in. The most relevant creators will be displayed first.
       </p>
 
       <Form {...form}>
@@ -171,6 +66,7 @@ export function CreatorFilterForm({
                 minName="followersMin"
                 maxName="followersMax"
                 placeholder={{ min: "e.g. 10000", max: "e.g. 1000000" }}
+                step={10000}
               />
 
               {/* Median Views */}
@@ -180,6 +76,7 @@ export function CreatorFilterForm({
                 minName="medianViewsMin"
                 maxName="medianViewsMax"
                 placeholder={{ min: "e.g. 5000", max: "e.g. 500000" }}
+                step={1000}
               />
 
               {/* Engagement Rate */}
@@ -188,7 +85,7 @@ export function CreatorFilterForm({
                 label="Engagement Rate (0 – 1)"
                 minName="engagementRateMin"
                 maxName="engagementRateMax"
-                step="0.01"
+                step={0.1}
                 placeholder={{ min: "e.g. 0.02", max: "e.g. 0.15" }}
               />
 
@@ -308,7 +205,7 @@ export function CreatorFilterForm({
               />
 
               {/* Keyword */}
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="keyword"
                 render={({ field }) => (
@@ -324,7 +221,8 @@ export function CreatorFilterForm({
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
+
             </CardContent>
           </Card>
 

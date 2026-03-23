@@ -32,21 +32,21 @@ export const creatorFilterSchema = z
       d.followersMin == null ||
       d.followersMax == null ||
       d.followersMin <= d.followersMax,
-    { message: "Min must be ≤ max", path: ["followersMax"] },
+    { message: "min must be ≤ max", path: ["followersMax"] },
   )
   .refine(
     (d) =>
       d.medianViewsMin == null ||
       d.medianViewsMax == null ||
       d.medianViewsMin <= d.medianViewsMax,
-    { message: "Min must be ≤ max", path: ["medianViewsMax"] },
+    { message: "min must be ≤ max", path: ["medianViewsMax"] },
   )
   .refine(
     (d) =>
       d.engagementRateMin == null ||
       d.engagementRateMax == null ||
       d.engagementRateMin <= d.engagementRateMax,
-    { message: "Min must be ≤ max", path: ["engagementRateMax"] },
+    { message: "min must be ≤ max", path: ["engagementRateMax"] },
   );
 
 export type CreatorFilterFormValues = z.infer<typeof creatorFilterSchema>;
