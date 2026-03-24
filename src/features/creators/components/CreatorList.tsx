@@ -1,6 +1,6 @@
 import { getCreatorsByFilters } from "@/features/creators/actions";
 import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser";
-import { CreatorFilters } from "@/features/creators/actions";
+import { CreatorFilterFormValues } from "@/features/creators/schemas";
 import {
   Card,
   CardAction,
@@ -21,17 +21,18 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LoadingSwap } from "@/components/ui/loading-swap";
+import { searchParamsToFilters } from "../url";
 
 export async function CreatorList({
   filters = {},
 }: {
-  filters?: CreatorFilters;
+  filters?: CreatorFilterFormValues;
 }) {
   const { userId, redirectToSignIn } = await getCurrentUser();
   if (userId == null) return redirectToSignIn();
 
-  const jsonCreators = 
-  const creators = await getCreatorsByFilters({});
+  const values = searchParamsToFilters(url); 
+  const creators = await getCreatorsByFilters(values);
 
   return <Main creators={creators} />;
 }
@@ -45,7 +46,6 @@ function formatCount(num: number): string {
 function Main({ creators }: { creators: any[] }) {
   return (
     <div className="container my-4 max-w-5xl">
-
       <div className="grid gap-4">
         {creators.map((creator) => (
           <Card key={creator.id}>

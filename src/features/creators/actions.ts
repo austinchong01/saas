@@ -18,7 +18,7 @@ export async function getCreator(creatorId: string) {
   return creator ?? null;
 }
 
-async function getCreatorsByFilters(filters: CreatorFilterFormValues) {
+export async function getCreatorsByFilters(filters: CreatorFilterFormValues) {
   let results = [...mockCreators];
 
   // Keyword search (username, display_name, bio)
@@ -116,11 +116,10 @@ async function getCreatorsByFilters(filters: CreatorFilterFormValues) {
   }
 
   results.sort((a, b) => b.followers - a.followers);
-  const id = filtersToSearchParams(filters);
-  return {results, id};
+  return results;
 }
 
-export async function createFilterInfo(unsafeData: CreatorFilterFormValues) {
+export async function checkFilterInfo(unsafeData: CreatorFilterFormValues) {
   const { userId } = await getCurrentUser();
   if (userId == null) {
     return {
@@ -134,9 +133,8 @@ export async function createFilterInfo(unsafeData: CreatorFilterFormValues) {
     return { error: true, message: "Invalid filter data." };
   }
 
-  const filterInfo = await getCreatorsByFilters(data);
-
-  return filterInfo;
+  const id = filtersToSearchParams(data);
+  return id;
 }
 
 // export async function editFilterInfo(){}

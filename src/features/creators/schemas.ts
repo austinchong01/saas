@@ -13,7 +13,7 @@ export const optionalRate = z.preprocess(
 
 export const creatorFilterSchema = z
   .object({
-    keyword: z.string().nullable(),
+    // keyword: z.string().nullable(),
     followersMin: optionalNonNegativeInt,
     followersMax: optionalNonNegativeInt,
     medianViewsMin: optionalNonNegativeInt,

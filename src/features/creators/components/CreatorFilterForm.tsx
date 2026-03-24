@@ -27,7 +27,7 @@ import { RangeFields } from "./RangeSelect";
 import { MultiToggle } from "./MultiSelect";
 import { LoadingSwap } from "@/components/ui/loading-swap";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createFilterInfo } from "../actions";
+import { checkFilterInfo } from "../actions";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 
@@ -35,7 +35,7 @@ export function CreatorFilterForm({ filterInfo } : { filterInfo? : Partial<Creat
   const form = useForm<CreatorFilterFormValues>({
     resolver: zodResolver(creatorFilterSchema),
     defaultValues: {
-      keyword: "",
+      // keyword: "",
       languages: [],
       followerCountryCodes: [],
       countryCodes: [],
@@ -48,14 +48,13 @@ export function CreatorFilterForm({ filterInfo } : { filterInfo? : Partial<Creat
   });
 
   async function onSubmit(values: CreatorFilterFormValues) {
-    const res = await createFilterInfo(values);
+    const res = await checkFilterInfo(values);
 
     if (res.error) {
-      toast.error(JSON.stringify(res.message));
+      toast.error(res.message);
     }
 
-    // console.log(res.results);
-    redirect(`/app/creators/${res.id}`);
+    redirect(`/app/creators/${res}`);
   }
 
   return (

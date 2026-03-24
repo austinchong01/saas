@@ -18,7 +18,7 @@ export function filtersToSearchParams(filters: CreatorFilterFormValues): string 
 
 export function searchParamsToFilters(params: URLSearchParams): Partial<CreatorFilterFormValues> {
   return {
-    keyword: params.get("keyword") ?? undefined,
+    // keyword: params.get("keyword") ?? undefined,
     followersMin: params.has("followersMin") ? Number(params.get("followersMin")) : undefined,
     followersMax: params.has("followersMax") ? Number(params.get("followersMax")) : undefined,
     medianViewsMin: params.has("medianViewsMin") ? Number(params.get("medianViewsMin")) : undefined,
