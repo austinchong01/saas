@@ -18,7 +18,7 @@ export async function getCreator(creatorId: string) {
   return creator ?? null;
 }
 
-export async function getCreatorsByFilters(filters: CreatorFilterFormValues) {
+export async function getCreatorsByFilters(filters: Partial<CreatorFilterFormValues>) {
   let results = [...mockCreators];
 
   // Keyword search (username, display_name, bio)

@@ -1,6 +1,8 @@
 import { CreatorFilterFormValues } from "./schemas";
 
-export function filtersToSearchParams(filters: CreatorFilterFormValues): string {
+export function filtersToSearchParams(
+  filters: CreatorFilterFormValues,
+): string {
   const params = new URLSearchParams();
 
   for (const [key, value] of Object.entries(filters)) {
@@ -16,20 +18,38 @@ export function filtersToSearchParams(filters: CreatorFilterFormValues): string 
   return params.toString();
 }
 
-export function searchParamsToFilters(params: URLSearchParams): Partial<CreatorFilterFormValues> {
+export function searchParamsToFilters(
+  params: Record<string, string | string[]>,
+): Partial<CreatorFilterFormValues> {
+  
+  const get = (key: string): string | undefined => {
+    const val = params[key];
+    if (Array.isArray(val)) return val[0];
+    return val;
+  };
+
   return {
-    // keyword: params.get("keyword") ?? undefined,
-    followersMin: params.has("followersMin") ? Number(params.get("followersMin")) : undefined,
-    followersMax: params.has("followersMax") ? Number(params.get("followersMax")) : undefined,
-    medianViewsMin: params.has("medianViewsMin") ? Number(params.get("medianViewsMin")) : undefined,
-    medianViewsMax: params.has("medianViewsMax") ? Number(params.get("medianViewsMax")) : undefined,
-    engagementRateMin: params.has("engagementRateMin") ? Number(params.get("engagementRateMin")) : undefined,
-    engagementRateMax: params.has("engagementRateMax") ? Number(params.get("engagementRateMax")) : undefined,
-    contentLabels: params.get("contentLabels")?.split(",") as any,
-    languages: params.get("languages")?.split(",") as any,
-    countryCodes: params.get("countryCodes")?.split(",") as any,
-    followerCountryCodes: params.get("followerCountryCodes")?.split(",") as any,
-    followerGenderRatio: params.get("followerGenderRatio")?.split(",") as any,
-    followerAge: params.get("followerAge")?.split(",") as any,
+    followersMin:
+      get("followersMin") != null ? Number(get("followersMin")) : undefined,
+    followersMax:
+      get("followersMax") != null ? Number(get("followersMax")) : undefined,
+    medianViewsMin:
+      get("medianViewsMin") != null ? Number(get("medianViewsMin")) : undefined,
+    medianViewsMax:
+      get("medianViewsMax") != null ? Number(get("medianViewsMax")) : undefined,
+    engagementRateMin:
+      get("engagementRateMin") != null
+        ? Number(get("engagementRateMin"))
+        : undefined,
+    engagementRateMax:
+      get("engagementRateMax") != null
+        ? Number(get("engagementRateMax"))
+        : undefined,
+    contentLabels: get("contentLabels")?.split(",") as any,
+    languages: get("languages")?.split(",") as any,
+    countryCodes: get("countryCodes")?.split(",") as any,
+    followerCountryCodes: get("followerCountryCodes")?.split(",") as any,
+    followerGenderRatio: get("followerGenderRatio")?.split(",") as any,
+    followerAge: get("followerAge")?.split(",") as any,
   };
 }

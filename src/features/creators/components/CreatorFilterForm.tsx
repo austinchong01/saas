@@ -54,7 +54,7 @@ export function CreatorFilterForm({ filterInfo } : { filterInfo? : Partial<Creat
       toast.error(res.message);
     }
 
-    redirect(`/app/creators/${res}`);
+    redirect(`/app/creators?${res}`);
   }
 
   return (

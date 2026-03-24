@@ -1,6 +1,5 @@
 import { getCreatorsByFilters } from "@/features/creators/actions";
 import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser";
-import { CreatorFilterFormValues } from "@/features/creators/schemas";
 import {
   Card,
   CardAction,
@@ -20,21 +19,23 @@ import {
   Languages,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { LoadingSwap } from "@/components/ui/loading-swap";
 import { searchParamsToFilters } from "../url";
+import Link from "next/link";
 
 export async function CreatorList({
-  filters = {},
+  searchParams = {},
 }: {
-  filters?: CreatorFilterFormValues;
+  searchParams?: Record<string, string | string[]>;
 }) {
   const { userId, redirectToSignIn } = await getCurrentUser();
   if (userId == null) return redirectToSignIn();
 
-  const values = searchParamsToFilters(url); 
-  const creators = await getCreatorsByFilters(values);
+  const filters = searchParamsToFilters(searchParams);
 
-  return <Main creators={creators} />;
+  const results = await getCreatorsByFilters(filters);
+
+  if (results.length == 0) return <NoCreatorsFound />;
+  return <CreatorsFound creators={results} />;
 }
 
 function formatCount(num: number): string {
@@ -43,7 +44,24 @@ function formatCount(num: number): string {
   return num.toString();
 }
 
-function Main({ creators }: { creators: any[] }) {
+function NoCreatorsFound() {
+  return (
+    <div className="container my-4 max-w-5xl">
+      <h1 className="text-3xl md:text-4xl lg:text-5xl mb-4">
+        No Creators Found
+      </h1>
+      <p className="text-muted-foreground mb-8">
+        Try adjusting the filters related to the creator/(s) you are interested
+        in. The most relevant creators will be displayed first.
+      </p>
+      <Button asChild>
+        <Link href="/app">Search Again</Link>
+      </Button>
+    </div>
+  );
+}
+
+function CreatorsFound({ creators }: { creators: any[] }) {
   return (
     <div className="container my-4 max-w-5xl">
       <div className="grid gap-4">
