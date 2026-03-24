@@ -131,12 +131,12 @@ export async function createFilterInfo(unsafeData: CreatorFilterFormValues) {
 
   const { success, data } = creatorFilterSchema.safeParse(unsafeData);
   if (!success) {
-    return { error: true, message: "Invalid job data." };
+    return { error: true, message: "Invalid filter data." };
   }
 
   const filterInfo = await getCreatorsByFilters(data);
 
-  redirect(`/app/creator-infos/${filterInfo.id}`);
+  return filterInfo;
 }
 
 // export async function editFilterInfo(){}

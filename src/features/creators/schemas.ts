@@ -3,12 +3,12 @@ import { CONTENT_LABELS, COUNTRY_CODES, FOLLOWER_AGES, FOLLOWER_GENDER_RATIOS, L
 
 export const optionalNonNegativeInt = z.preprocess(
   (v) => (v === "" || v == null ? undefined : Number(v)),
-  z.number().int().min(0).nullable(),
+  z.number().int().min(0).optional(),
 ) as z.ZodType<number | undefined>;
 
 export const optionalRate = z.preprocess(
   (v) => (v === "" || v == null ? undefined : Number(v)),
-  z.number().min(0).max(1).nullable(),
+  z.number().min(0).max(1).optional(),
 ) as z.ZodType<number | undefined>;
 
 export const creatorFilterSchema = z

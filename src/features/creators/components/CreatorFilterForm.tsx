@@ -28,11 +28,13 @@ import { MultiToggle } from "./MultiSelect";
 import { LoadingSwap } from "@/components/ui/loading-swap";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createFilterInfo } from "../actions";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 export function CreatorFilterForm({ filterInfo } : { filterInfo? : Partial<CreatorFilterFormValues>}) {
   const form = useForm<CreatorFilterFormValues>({
     resolver: zodResolver(creatorFilterSchema),
-    defaultValues: filterInfo ?? {
+    defaultValues: {
       keyword: "",
       languages: [],
       followerCountryCodes: [],
@@ -41,11 +43,19 @@ export function CreatorFilterForm({ filterInfo } : { filterInfo? : Partial<Creat
       followerGenderRatio: [],
       followerAge: [],
       followersMin: 10000,
+      ...filterInfo,
     },
   });
 
   async function onSubmit(values: CreatorFilterFormValues) {
-    const result = await createFilterInfo(values);
+    const res = await createFilterInfo(values);
+
+    if (res.error) {
+      toast.error(JSON.stringify(res.message));
+    }
+
+    // console.log(res.results);
+    redirect(`/app/creators/${res.id}`);
   }
 
   return (
