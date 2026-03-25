@@ -1,7 +1,7 @@
 import { CreatorFilterFormValues } from "./schemas";
 
 export function filtersToSearchParams(
-  filters: CreatorFilterFormValues,
+  filters: Partial<CreatorFilterFormValues>,
 ): string {
   const params = new URLSearchParams();
 
@@ -21,35 +21,26 @@ export function filtersToSearchParams(
 export function searchParamsToFilters(
   params: Record<string, string | string[]>,
 ): Partial<CreatorFilterFormValues> {
-  
   const get = (key: string): string | undefined => {
     const val = params[key];
     if (Array.isArray(val)) return val[0];
     return val;
   };
 
-  return {
-    followersMin:
-      get("followersMin") != null ? Number(get("followersMin")) : undefined,
-    followersMax:
-      get("followersMax") != null ? Number(get("followersMax")) : undefined,
-    medianViewsMin:
-      get("medianViewsMin") != null ? Number(get("medianViewsMin")) : undefined,
-    medianViewsMax:
-      get("medianViewsMax") != null ? Number(get("medianViewsMax")) : undefined,
-    engagementRateMin:
-      get("engagementRateMin") != null
-        ? Number(get("engagementRateMin"))
-        : undefined,
-    engagementRateMax:
-      get("engagementRateMax") != null
-        ? Number(get("engagementRateMax"))
-        : undefined,
-    contentLabels: get("contentLabels")?.split(",") as any,
-    languages: get("languages")?.split(",") as any,
-    countryCodes: get("countryCodes")?.split(",") as any,
-    followerCountryCodes: get("followerCountryCodes")?.split(",") as any,
-    followerGenderRatio: get("followerGenderRatio")?.split(",") as any,
-    followerAge: get("followerAge")?.split(",") as any,
-  };
+  const result: Partial<CreatorFilterFormValues> = {};
+
+  if (get("followersMin") != null) result.followersMin = Number(get("followersMin"));
+  if (get("followersMax") != null) result.followersMax = Number(get("followersMax"));
+  if (get("medianViewsMin") != null) result.medianViewsMin = Number(get("medianViewsMin"));
+  if (get("medianViewsMax") != null) result.medianViewsMax = Number(get("medianViewsMax"));
+  if (get("engagementRateMin") != null) result.engagementRateMin = Number(get("engagementRateMin"));
+  if (get("engagementRateMax") != null) result.engagementRateMax = Number(get("engagementRateMax"));
+  if (get("contentLabels")) result.contentLabels = get("contentLabels")!.split(",") as any;
+  if (get("languages")) result.languages = get("languages")!.split(",") as any;
+  if (get("countryCodes")) result.countryCodes = get("countryCodes")!.split(",") as any;
+  if (get("followerCountryCodes")) result.followerCountryCodes = get("followerCountryCodes")!.split(",") as any;
+  if (get("followerGenderRatio")) result.followerGenderRatio = get("followerGenderRatio")!.split(",") as any;
+  if (get("followerAge")) result.followerAge = get("followerAge")!.split(",") as any;
+
+  return result;
 }

@@ -19,7 +19,7 @@ import {
   Languages,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { searchParamsToFilters } from "../url";
+import { filtersToSearchParams, searchParamsToFilters } from "../url";
 import Link from "next/link";
 
 export async function CreatorList({
@@ -31,11 +31,12 @@ export async function CreatorList({
   if (userId == null) return redirectToSignIn();
 
   const filters = searchParamsToFilters(searchParams);
-
   const results = await getCreatorsByFilters(filters);
 
-  if (results.length == 0) return <NoCreatorsFound />;
-  return <CreatorsFound creators={results} />;
+  const url = filtersToSearchParams(filters);
+
+  if (results.length == 0) return <NoCreatorsFound url={url}/>;
+  return <CreatorsFound creators={results} url={url} />;
 }
 
 function formatCount(num: number): string {
@@ -44,7 +45,7 @@ function formatCount(num: number): string {
   return num.toString();
 }
 
-function NoCreatorsFound() {
+function NoCreatorsFound({ url }: { url: string }) {
   return (
     <div className="container my-4 max-w-5xl">
       <h1 className="text-3xl md:text-4xl lg:text-5xl mb-4">
@@ -55,16 +56,19 @@ function NoCreatorsFound() {
         in. The most relevant creators will be displayed first.
       </p>
       <Button asChild>
-        <Link href="/app">Search Again</Link>
+        <Link href={`/app?${url}`}>Edit Filters</Link>
       </Button>
     </div>
   );
 }
 
-function CreatorsFound({ creators }: { creators: any[] }) {
+function CreatorsFound({ creators, url }: { creators: any[]; url: string }) {
   return (
     <div className="container my-4 max-w-5xl">
       <div className="grid gap-4">
+        <Button asChild>
+          <Link href={`/app?${url}`}>Edit Filters</Link>
+        </Button>
         {creators.map((creator) => (
           <Card key={creator.id}>
             <CardHeader>
