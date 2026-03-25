@@ -69,9 +69,9 @@ export function CreatorFilterForm({
 
     if (res.error) {
       toast.error(res.message);
+    } else {
+      redirect(`/app/creators?${res}`);
     }
-
-    redirect(`/app/creators?${res}`);
   }
 
   return (
