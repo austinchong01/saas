@@ -40,7 +40,7 @@ const defaultFilters: Partial<CreatorFilterFormValues> = {
   followerGenderRatio: [],
   followerAge: ["18-24", "25-34"],
   followersMin: 10000,
-  medianViewsMin: 100000,
+  medianViewsMin: 0,
 };
 
 const resetFilters: Partial<CreatorFilterFormValues> = {
@@ -50,8 +50,6 @@ const resetFilters: Partial<CreatorFilterFormValues> = {
   contentLabels: [],
   followerGenderRatio: [],
   followerAge: [],
-  followersMin: 0,
-  medianViewsMin: 0,
 }
 
 export function CreatorFilterForm({
@@ -63,7 +61,7 @@ export function CreatorFilterForm({
 
   const form = useForm<CreatorFilterFormValues>({
     resolver: zodResolver(creatorFilterSchema),
-    defaultValues: { ...defaultFilters, ...filters },
+    defaultValues: { ...resetFilters, ...filters },
   });
 
   async function onSubmit(values: CreatorFilterFormValues) {
