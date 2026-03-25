@@ -31,12 +31,12 @@ export async function CreatorList({
   if (userId == null) return redirectToSignIn();
 
   const filters = searchParamsToFilters(searchParams);
-  const results = await getCreatorsByFilters(filters);
+  const creators = await getCreatorsByFilters(filters);
 
   const url = filtersToSearchParams(filters);
 
-  if (results.length == 0) return <NoCreatorsFound url={url}/>;
-  return <CreatorsFound creators={results} url={url} />;
+  if (creators.length == 0) return <NoCreatorsFound url={url}/>;
+  return <CreatorsFound creators={creators} url={url} />;
 }
 
 function formatCount(num: number): string {
