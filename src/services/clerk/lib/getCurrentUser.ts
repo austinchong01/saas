@@ -5,6 +5,16 @@ import { UserTable } from "@/drizzle/schema";
 import { getUserIdTag } from "@/features/users/dbCache";
 import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 
+async function getUser(id: string) {
+  "use cache";
+  cacheTag(getUserIdTag(id));
+
+  return db.query.UserTable.findFirst({
+    where: eq(UserTable.id, id),
+  });
+}
+
+
 export async function getCurrentUser({ allData = false } = {}) {
   const { userId, redirectToSignIn } = await auth();
 
@@ -13,13 +23,4 @@ export async function getCurrentUser({ allData = false } = {}) {
     redirectToSignIn,
     user: allData && userId != null ? await getUser(userId) : undefined,
   };
-}
-
-async function getUser(id: string) {
-  "use cache";
-  cacheTag(getUserIdTag(id));
-
-  return db.query.UserTable.findFirst({
-    where: eq(UserTable.id, id),
-  });
 }

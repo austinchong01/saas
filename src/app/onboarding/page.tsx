@@ -5,7 +5,7 @@ import { OnboardingClient } from "./_client";
 export default async function OnboardingPage() {
   const { userId, user } = await getCurrentUser({ allData: true }); // userId from clerk's db, user from our db
 
-  // this allows for the user info to done being ready before redirecting
+  // this allows for the user info to be done before redirecting
 
   if (userId == null) return redirect("/");
   if (user != null) return redirect("/app");

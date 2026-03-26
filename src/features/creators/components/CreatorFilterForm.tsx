@@ -50,7 +50,7 @@ const resetFilters: Partial<CreatorFilterFormValues> = {
   contentLabels: [],
   followerGenderRatio: [],
   followerAge: [],
-}
+};
 
 export function CreatorFilterForm({
   searchParams = {},
@@ -61,7 +61,7 @@ export function CreatorFilterForm({
 
   const form = useForm<CreatorFilterFormValues>({
     resolver: zodResolver(creatorFilterSchema),
-    defaultValues: { ...resetFilters, ...filters },
+    defaultValues: { ...defaultFilters, ...filters },
   });
 
   async function onSubmit(values: CreatorFilterFormValues) {
