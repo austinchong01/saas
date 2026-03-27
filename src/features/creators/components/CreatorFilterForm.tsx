@@ -33,14 +33,15 @@ import { redirect } from "next/navigation";
 import { searchParamsToFilters } from "../url";
 
 const defaultFilters: Partial<CreatorFilterFormValues> = {
-  languages: ["en", "ko"],
-  followerCountryCodes: ["US", "KR"],
-  countryCodes: ["US", "KR"],
-  contentLabels: ["beauty"],
+  languages: [],
+  followerCountryCodes: [],
+  countryCodes: [],
+  contentLabels: [],
   followerGenderRatio: [],
-  followerAge: ["18-24", "25-34"],
+  followerAge: [],
   followersMin: 10000,
   medianViewsMin: 0,
+  engagementRateMin: 0
 };
 
 const resetFilters: Partial<CreatorFilterFormValues> = {
@@ -252,7 +253,7 @@ export function CreatorFilterForm({
           <Button
             type="button"
             variant="secondary"
-            onClick={() => form.reset(resetFilters)}
+            onClick={() => form.reset(defaultFilters)}
           >
             Reset
           </Button>
