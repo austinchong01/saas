@@ -21,6 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { filtersToSearchParams, searchParamsToFilters } from "../url";
 import Link from "next/link";
+import { formatCount } from "@/lib/utils";
 
 export async function CreatorList({
   searchParams = {},
@@ -37,12 +38,6 @@ export async function CreatorList({
 
   if (creators.length == 0) return <NoCreatorsFound url={url}/>;
   return <CreatorsFound creators={creators} url={url} />;
-}
-
-function formatCount(num: number): string {
-  if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(1)}M`;
-  if (num >= 1_000) return `${(num / 1_000).toFixed(1)}K`;
-  return num.toString();
 }
 
 function NoCreatorsFound({ url }: { url: string }) {
