@@ -51,6 +51,12 @@ const resetFilters: Partial<CreatorFilterFormValues> = {
   contentLabels: [],
   followerGenderRatio: [],
   followerAge: [],
+  followersMin: 10000,
+  followersMax: 10000,
+  medianViewsMin: 0,
+  medianViewsMax: 0,
+  engagementRateMin: 0,
+  engagementRateMax: 0
 };
 
 export function CreatorFilterForm({
@@ -253,7 +259,7 @@ export function CreatorFilterForm({
           <Button
             type="button"
             variant="secondary"
-            onClick={() => form.reset(defaultFilters)}
+            onClick={() => form.reset(resetFilters)}
           >
             Reset
           </Button>
