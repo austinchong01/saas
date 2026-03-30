@@ -8,7 +8,6 @@ export default async function AppPage({
   searchParams: Promise<Record<string, string | string[]>>;
 }) {
   const params = await searchParams;
-  console.log(params)
 
   return (
     <Suspense

@@ -14,7 +14,7 @@ export async function getCreator(creatorId: string) {
   // TODO: Replace with TikTok API call once approved
   // const creator = await fetchTikTokCreator(creatorId);
 
-  const creator = mockCreators.find((c) => c.id === creatorId);
+  const creator = mockCreators.find((c) => c.username === creatorId);
   return creator ?? null;
 }
 
