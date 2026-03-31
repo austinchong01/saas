@@ -12,11 +12,12 @@ import {
 import { BadgeCheck } from "lucide-react";
 import { formatCount } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export async function CreatorCard({
   params,
 }: {
-  params: Record<string, string>;
+  params: Record<string, string> & { back?: string };
 }) {
   // check if user is signed in
   const { userId, redirectToSignIn } = await getCurrentUser();
@@ -30,7 +31,15 @@ export async function CreatorCard({
   }
 
   return (
-    <Card className="mx-auto my-6 max-w-3xl pt-0">
+    <>
+      {params.back && (
+        <div className="mx-auto my-4 max-w-3xl">
+          <Button variant="outline" asChild>
+            <Link href={params.back}>← Back</Link>
+          </Button>
+        </div>
+      )}
+    <Card className="relative mx-auto max-w-3xl pt-0 w-full">
       <img
         src={creator.profile_image}
         alt="profile_picture"
@@ -50,7 +59,7 @@ export async function CreatorCard({
         </CardDescription>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="grid grid-cols-2 gap-2">
         <p>Followers: {formatCount(creator.followers)}</p>
         <p>Likes: {formatCount(creator.likes)}</p>
         <p>Videos: {formatCount(creator.video_count)}</p>
@@ -60,5 +69,6 @@ export async function CreatorCard({
       </CardContent>
       
     </Card>
+    </>
   );
 }
