@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { filtersToSearchParams, searchParamsToFilters } from "../url";
 import Link from "next/link";
 import { formatCount } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 
 export async function CreatorList({
   searchParams = {},
@@ -61,6 +62,7 @@ function CreatorsFound({ creators, url }: { creators: any[]; url: string }) {
   return (
     <div className="container my-4 max-w-5xl">
       <div className="grid gap-4">
+        <Input placeholder="Search creators..." value={""} />
         <Button asChild>
           <Link href={`/app?${url}`}>Edit Filters</Link>
         </Button>
