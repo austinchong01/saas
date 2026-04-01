@@ -33,13 +33,13 @@ export async function CreatorCard({
   return (
     <>
       {params.back && (
-        <div className="mx-auto my-4 max-w-3xl">
+        <div className="mx-auto my-4 max-w-xl">
           <Button variant="outline" asChild>
             <Link href={params.back}>← Back</Link>
           </Button>
         </div>
       )}
-    <Card className="relative mx-auto max-w-3xl pt-0 w-full">
+    <Card className="relative mx-auto max-w-xl pt-0 w-full my-4">
       <img
         src={creator.profile_image}
         alt="profile_picture"
