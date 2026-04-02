@@ -6,10 +6,8 @@ import { Card, CardDescription, CardTitle } from "@/components/ui/CreatorCard";
 
 export default async function HomePage() {
   const { userId } = await auth();
+  if (userId != null) redirect("/app");
 
-  if (userId != null) {
-    redirect("/app");
-  }
   return (
     <>
       <div className="p-4 space-y-4">
@@ -19,7 +17,7 @@ export default async function HomePage() {
           <ThemeToggle />
         </div>
       </div>
-    <Card className="relative mx-auto max-w-md w-full px-4 py-8 my-4">
+      <Card className="relative mx-auto max-w-md w-full px-4 py-8 my-4">
         <CardTitle>Welcome to Creator Hub!</CardTitle>
         <CardDescription>Please Sign In to access the app.</CardDescription>
       </Card>

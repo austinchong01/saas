@@ -30,8 +30,8 @@ export async function POST(request: NextRequest) {
         });
 
         revalidateUserCache(clerkData.id);
-
         break;
+        
       case "user.deleted":
         if (event.data.id == null) {
             return new Response("No user ID found", { status: 400 });
