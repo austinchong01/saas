@@ -10,7 +10,11 @@ export function OnboardingClient({ userId }: { userId: string }) {
     useEffect(() => {
         const intervalId = setInterval(async () => {
             const user = await getUser(userId);
-            if (user == null) return;
+            if (user == null) {
+                console.log("user is null");
+                return;
+            }
+
 
             // once the user info is ready, we can redirect to the app
             router.replace("/app");
