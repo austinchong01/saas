@@ -12,13 +12,15 @@ export async function getCreator(creatorId: string) {
   cacheTag(getCreatorIdTag(creatorId));
 
   // TODO: Replace with TikTok API call once approved
-  // const creator = await fetchTikTokCreator(creatorId);
+  console.log("CACHE MISS: getCreator", creatorId);
 
   const creator = mockCreators.find((c) => c.username === creatorId);
   return creator ?? null;
 }
 
-export async function getCreatorsByFilters(filters: Partial<CreatorFilterFormValues>) {
+export async function getCreatorsByFilters(
+  filters: Partial<CreatorFilterFormValues>,
+) {
   let results = [...mockCreators];
 
   // Keyword search (username, display_name, bio)
@@ -35,14 +37,20 @@ export async function getCreatorsByFilters(filters: Partial<CreatorFilterFormVal
   // Content labels (multi-select)
   if (filters.contentLabels?.length) {
     results = results.filter((c) =>
-      filters.contentLabels!.includes(c.content_type as typeof filters.contentLabels extends (infer U)[] | null ? U : never),
+      filters.contentLabels!.includes(
+        c.content_type as typeof filters.contentLabels extends
+          | (infer U)[]
+          | null
+          ? U
+          : never,
+      ),
     );
   }
 
   // Creator country (multi-select)
   if (filters.countryCodes?.length) {
     results = results.filter((c) =>
-      filters.countryCodes!.includes(c.country as any),
+      filters.countryCodes!.some((code) => code === c.country),
     );
   }
 
@@ -108,9 +116,7 @@ export async function getCreatorsByFilters(filters: Partial<CreatorFilterFormVal
   if (filters.followerAge?.length) {
     results = results.filter((c) =>
       filters.followerAge!.some((ageRange) =>
-        c.audience_ages.some(
-          (a) => a.age === ageRange && a.percentage >= 20,
-        ),
+        c.audience_ages.some((a) => a.age === ageRange && a.percentage >= 20),
       ),
     );
   }
@@ -136,4 +142,3 @@ export async function checkFilterInfo(unsafeData: CreatorFilterFormValues) {
   const id = filtersToSearchParams(data);
   return id;
 }
-

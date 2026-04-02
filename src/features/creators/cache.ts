@@ -15,8 +15,8 @@ export function getCreatorInfoUserTag(userId: string) {
 
 // invalidate a specific creator + a user's creator data
 export function revalidateCreatorCache({ userId, creatorId }: { userId: string; creatorId: string }) {
-    revalidateTag(getCreatorInfoUserTag(userId));
-    revalidateTag(getCreatorIdTag(creatorId));
+    revalidateTag(getCreatorInfoUserTag(userId), "max");
+    revalidateTag(getCreatorIdTag(creatorId), "max");
 }
 
 

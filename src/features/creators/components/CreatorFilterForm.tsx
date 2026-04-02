@@ -74,7 +74,7 @@ export function CreatorFilterForm({
   async function onSubmit(values: CreatorFilterFormValues) {
     const res = await checkFilterInfo(values);
 
-    if (res.error) {
+    if (typeof res === "object" && res.error) {
       toast.error(res.message);
     } else {
       redirect(`/app/creators?${res}`);

@@ -10,7 +10,7 @@ export async function getUser(id: string) {
     "use cache";
     cacheTag(getUserIdTag(id));
 
-    // console.log("fetching user from db with id", id);
+    console.log("CACHE MISS: getUser", id);
 
     return db.query.UserTable.findFirst({
         where: eq(UserTable.id, id),
