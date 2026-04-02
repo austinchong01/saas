@@ -15,16 +15,17 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export async function CreatorCard({
-  params,
+  username,
+  back,
 }: {
-  params: Record<string, string> & { back?: string };
+  username: string;
+  back: string | undefined;
 }) {
   // check if user is signed in
   const { userId, redirectToSignIn } = await getCurrentUser();
   if (userId == null) return redirectToSignIn();
 
-  const creator = await getCreator(params.handlename);
-  console.log(creator);
+  const creator = await getCreator(username);;
 
   if (!creator) {
     return <div>Creator not found</div>;
@@ -32,10 +33,10 @@ export async function CreatorCard({
 
   return (
     <>
-      {params.back && (
+      {back && (
         <div className="mx-auto my-4 max-w-xl">
           <Button variant="outline" asChild>
-            <Link href={params.back}>← Back</Link>
+            <Link href={back}>← Back</Link>
           </Button>
         </div>
       )}

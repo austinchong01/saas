@@ -93,7 +93,7 @@ function CreatorsFound({ creators, url }: { creators: any[]; url: string }) {
               <div className="text-sm text-muted-foreground">{creator.bio}</div>
               <CardAction>
                 <Button variant="outline" size="sm" asChild>
-                  <Link href={`/app/creators/creator?handlename=${creator.username}&back=${encodeURIComponent(`/app/creators?${url}`)}`}>
+                  <Link href={`/app/creators/${creator.username}?back=${encodeURIComponent(`/app/creators?${url}`)}`}>
                     Profile
                   </Link>
                 </Button>

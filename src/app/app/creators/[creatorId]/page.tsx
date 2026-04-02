@@ -3,11 +3,14 @@ import { Loader2Icon } from "lucide-react";
 import { Suspense } from "react";
 
 export default async function AppPage({
+  params,
   searchParams,
 }: {
-  searchParams: Promise<Record<string, string>>;
+  params: Promise<{ creatorId: string }>;
+  searchParams: Promise<{ back?: string }>;
 }) {
-  const params = await searchParams;
+  const { creatorId } = await params;
+  const { back } = await searchParams;
 
   return (
     <Suspense
@@ -17,7 +20,7 @@ export default async function AppPage({
         </div>
       }
     >
-      <CreatorCard params={params} />
+      <CreatorCard username={creatorId} back={back} />
     </Suspense>
   );
 }
