@@ -44,7 +44,8 @@ export async function POST(request: NextRequest) {
         
         break;
     }
-  } catch {
+  } catch(error) {
+    console.error("Webhook error:", error);
     return new Response("Invalid webhook", { status: 400 });
   }
 

@@ -21,6 +21,7 @@ export function filtersToSearchParams(
 export function searchParamsToFilters(
   params: Record<string, string | string[]>,
 ): Partial<CreatorFilterFormValues> {
+  console.log(params);
   const get = (key: string): string | undefined => {
     const val = params[key];
     if (Array.isArray(val)) return val[0];
@@ -42,6 +43,7 @@ export function searchParamsToFilters(
   if (get("followerGenderRatio")) result.followerGenderRatio = get("followerGenderRatio")!.split(",") as any;
   if (get("followerAge")) result.followerAge = get("followerAge")!.split(",") as any;
 
+  console.log(result);
   return result;
 }
 

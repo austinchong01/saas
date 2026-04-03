@@ -12,7 +12,6 @@ export async function getCreator(creatorId: string) {
   cacheTag(getCreatorIdTag(creatorId));
 
   // TODO: Replace with TikTok API call once approved
-  console.log("CACHE MISS: getCreator", creatorId);
 
   const creator = mockCreators.find((c) => c.username === creatorId);
   return creator ?? null;
