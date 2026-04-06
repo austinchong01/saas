@@ -40,7 +40,7 @@ export async function CreatorCard({
           </Button>
         </div>
       )}
-    <Card className="relative mx-auto max-w-xl pt-0 w-full my-4">
+    <Card className="relative mx-auto max-w-xl pt-0 w-full my-4 overflow-hidden">
       <img
         src={creator.profile_image}
         alt="profile_picture"
