@@ -7,7 +7,7 @@ import { Card, CardDescription, CardTitle } from "@/components/ui/CreatorCard";
 export default async function HomePage() {
   const { userId } = await auth();
   // console.log(userId)
-  // if (userId != null) redirect("/app");
+  if (userId != null) redirect("/app");
 
   return (
     <>
