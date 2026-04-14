@@ -35,7 +35,7 @@ import { searchParamsToFilters } from "../url";
 const defaultFilters: Partial<CreatorFilterFormValues> = {
   languages: [],
   followerCountryCodes: [],
-  countryCodes: [],
+  countryCodes: ["US"],
   contentLabels: [],
   followerGenderRatio: [],
   followerAge: [],
