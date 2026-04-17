@@ -26,16 +26,20 @@ if (tokenJson.code !== 0) {
 }
 
 const accessToken = tokenJson.data.access_token;
-console.log("Access token:", accessToken);
+// const accessToken = "5d3cc0e50ad8110be4e48642fde1a3b16842eb0f";
+// console.log("Access token:", accessToken);
 
 // Step 2: TCM account IDs
-const tcmRes = await fetch(
+const tcmUrl = new URL(
   "https://business-api.tiktok.com/open_api/v1.3/tto/oauth2/tcm/",
-  {
-    method: "GET",
-    headers: { "Access-Token": accessToken },
-  },
 );
+tcmUrl.searchParams.set("app_id", TT_APP_ID);
+tcmUrl.searchParams.set("secret", TT_SECRET);
+
+const tcmRes = await fetch(tcmUrl, {
+  method: "GET",
+  headers: { "Access-Token": accessToken },
+});
 
 const tcmJson = await tcmRes.json();
 if (tcmJson.code !== 0) {
@@ -45,22 +49,22 @@ if (tcmJson.code !== 0) {
 
 console.log("TCM response:", tcmJson);
 
-const tcmAccountId = tcmJson.data?.tto_tcm_account_ids?.[0];
-if (!tcmAccountId) {
-  throw new Error("No tto_tcm_account_ids returned");
-}
-console.log("Using TCM account ID:", tcmAccountId);
+// const tcmAccountId = tcmJson.data?.tto_tcm_account_ids?.[0];
+// if (!tcmAccountId) {
+//   throw new Error("No tto_tcm_account_ids returned");
+// }
+// console.log("Using TCM account ID:", tcmAccountId);
 
-// Step 3: creator lookup
-const creatorUrl = new URL(
-  "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/public/",
-);
-creatorUrl.searchParams.set("tto_tcm_account_id", tcmAccountId);
-creatorUrl.searchParams.set("handle_name", HANDLE_NAME);
+// // Step 3: creator lookup
+// const creatorUrl = new URL(
+//   "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/public/",
+// );
+// creatorUrl.searchParams.set("tto_tcm_account_id", tcmAccountId);
+// creatorUrl.searchParams.set("handle_name", HANDLE_NAME);
 
-const creatorRes = await fetch(creatorUrl, {
-  method: "GET",
-  headers: { "Access-Token": accessToken },
-});
+// const creatorRes = await fetch(creatorUrl, {
+//   method: "GET",
+//   headers: { "Access-Token": accessToken },
+// });
 
-console.log("Creator response:", await creatorRes.json());
+// console.log("Creator response:", await creatorRes.json());
