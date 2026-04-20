@@ -2,7 +2,7 @@ import arcjet, { detectBot, shield, slidingWindow } from "@arcjet/next";
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { env } from "./data/env/server";
 
-const isPublicRoute = createRouteMatcher(["/sign-in(.*)", "/", "/api/webhooks(.*)"]);
+const isPublicRoute = createRouteMatcher(["/", "/sign-in(.*)", "/api/webhooks(.*)"]);
 
 const aj = arcjet({
   key: env.ARCJET_KEY,
@@ -17,12 +17,17 @@ const aj = arcjet({
 });
 
 export default clerkMiddleware(async (auth, req) => {
+  // arcjet protection (bots, rate limiting)
   const decision = await aj.protect(req);
   if (decision.isDenied()) {
     return new Response(null, { status: 403 });
   }
 
+  // must be logged in to access non-public routes
   if (!isPublicRoute(req)) {
+
+    // if user is signed in, do nothing
+    // else, redirect to sign in page
     await auth.protect();
   }
 });

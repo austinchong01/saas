@@ -2,6 +2,7 @@ import { db } from "@/drizzle/db";
 import { UserTable } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 
+// if user already exists, update. otherwise, insert.
 export async function upsertUser(user: typeof UserTable.$inferInsert) {
   await db
     .insert(UserTable)

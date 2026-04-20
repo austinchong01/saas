@@ -1,22 +1,13 @@
-import { db } from "@/drizzle/db";
 import { auth } from "@clerk/nextjs/server";
-import { eq } from "drizzle-orm";
-import { UserTable } from "@/drizzle/schema";
-import { getUserIdTag } from "@/features/users/dbCache";
-import { cacheTag } from "next/dist/server/use-cache/cache-tag";
-
-async function getUser(id: string) {
-  "use cache";
-  cacheTag(getUserIdTag(id));
-
-  return db.query.UserTable.findFirst({
-    where: eq(UserTable.id, id),
-  });
-}
+import { getUser } from "@/features/users/actions";
 
 
 export async function getCurrentUser({ allData = false } = {}) {
   const { userId, redirectToSignIn } = await auth();
+  // userId from CLERK
+
+  // userId can be present from Clerk sign in, but user can be null if not in DB!
+  // user will return "undefined" in this case
 
   return {
     userId,
