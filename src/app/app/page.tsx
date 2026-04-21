@@ -5,10 +5,10 @@ import { CreatorFilterForm } from "@/features/creators/components/CreatorFilterF
 export default async function AppPage({
   searchParams,
 }: {
-  searchParams: Promise<Record<string, string | string[]>>;
+  searchParams: Promise<Record<string, string>>;
 }) {
   const params = await searchParams;
-  // sanitize and validate params
+  console.log("raw filter params: ", params);
 
   return (
     <Suspense
@@ -27,7 +27,10 @@ export default async function AppPage({
           you are interested in. The most relevant creators will be displayed
           first.
         </p>
-        <CreatorFilterForm searchParams={params} />
+        <CreatorFilterForm
+          key={new URLSearchParams(params as Record<string, string>).toString()} // force remount when search params change
+          searchParams={params}
+        />
       </div>
     </Suspense>
   );

@@ -29,8 +29,6 @@ export async function CreatorList({
 }: {
   searchParams?: Record<string, string | string[]>;
 }) {
-  const { userId, redirectToSignIn } = await getCurrentUser();
-  if (userId == null) return redirectToSignIn();
 
   const filters = searchParamsToFilters(searchParams);
   const creators = await getCreatorsByFilters(filters);

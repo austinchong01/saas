@@ -29,7 +29,7 @@ import { LoadingSwap } from "@/components/ui/loading-swap";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { checkFilterInfo } from "../actions";
 import { toast } from "sonner";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { searchParamsToFilters } from "../url";
 
 const defaultFilters: Partial<CreatorFilterFormValues> = {
@@ -40,31 +40,22 @@ const defaultFilters: Partial<CreatorFilterFormValues> = {
   followerGenderRatio: [],
   followerAge: [],
   followersMin: 10000,
+  followersMax: undefined,
   medianViewsMin: 0,
-  engagementRateMin: 0
-};
-
-const resetFilters: Partial<CreatorFilterFormValues> = {
-  languages: [],
-  followerCountryCodes: [],
-  countryCodes: [],
-  contentLabels: [],
-  followerGenderRatio: [],
-  followerAge: [],
-  followersMin: 10000,
-  followersMax: 10000,
-  medianViewsMin: 0,
-  medianViewsMax: 0,
+  medianViewsMax: undefined,
   engagementRateMin: 0,
-  engagementRateMax: 0
+  engagementRateMax: undefined,
 };
 
 export function CreatorFilterForm({
   searchParams = {},
 }: {
-  searchParams?: Record<string, string | string[]>;
+  searchParams?: Record<string, string>;
 }) {
+  const router = useRouter();
+
   const filters = searchParamsToFilters(searchParams);
+  console.log("filtered params:", filters);
 
   const form = useForm<CreatorFilterFormValues>({
     resolver: zodResolver(creatorFilterSchema),
@@ -259,7 +250,7 @@ export function CreatorFilterForm({
           <Button
             type="button"
             variant="secondary"
-            onClick={() => form.reset(resetFilters)}
+            onClick={() => router.push("/app")}
           >
             Reset
           </Button>
