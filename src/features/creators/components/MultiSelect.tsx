@@ -7,7 +7,7 @@ export function MultiToggle<T extends string>({
   getLabel,
 }: {
   options: readonly T[];
-  value: T[] | null;
+  value: T[] | undefined;
   onChange: (next: T[]) => void;
   getLabel?: (option: T) => string;
 }) {

@@ -55,7 +55,7 @@ export function CreatorFilterForm({
   const router = useRouter();
 
   const filters = searchParamsToFilters(searchParams);
-  console.log("filtered params:", filters);
+  // console.log("filtered params: ", filters);
 
   const form = useForm<CreatorFilterFormValues>({
     resolver: zodResolver(creatorFilterSchema),
@@ -250,7 +250,10 @@ export function CreatorFilterForm({
           <Button
             type="button"
             variant="secondary"
-            onClick={() => router.push("/app")}
+            onClick={() => {
+              form.reset(defaultFilters);
+              router.push("/app");
+            }}
           >
             Reset
           </Button>

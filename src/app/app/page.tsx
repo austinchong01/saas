@@ -8,7 +8,7 @@ export default async function AppPage({
   searchParams: Promise<Record<string, string>>;
 }) {
   const params = await searchParams;
-  console.log("raw filter params: ", params);
+  // console.log("raw filter params: ", params);
 
   return (
     <Suspense

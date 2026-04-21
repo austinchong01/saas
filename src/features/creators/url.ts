@@ -1,4 +1,4 @@
-import { CreatorFilterFormValues } from "./schemas";
+import { CreatorFilterFormValues, creatorFilterSchema } from "./schemas";
 
 export function filtersToSearchParams(
   filters: Partial<CreatorFilterFormValues>,
@@ -19,32 +19,47 @@ export function filtersToSearchParams(
 }
 
 export function searchParamsToFilters(
-  params: Record<string, string>,
+  params: Record<string, string | string[]>,
 ): Partial<CreatorFilterFormValues> {
-  // console.log(params);
   const get = (key: string): string | undefined => {
     const val = params[key];
     if (Array.isArray(val)) return val[0];
     return val;
   };
 
-  const result: Partial<CreatorFilterFormValues> = {};
+  const result: Partial<Record<keyof CreatorFilterFormValues, unknown>> = {};
 
-  if (get("followersMin") != null) result.followersMin = Number(get("followersMin"));
-  if (get("followersMax") != null) result.followersMax = Number(get("followersMax"));
-  if (get("medianViewsMin") != null) result.medianViewsMin = Number(get("medianViewsMin"));
-  if (get("medianViewsMax") != null) result.medianViewsMax = Number(get("medianViewsMax"));
-  if (get("engagementRateMin") != null) result.engagementRateMin = Number(get("engagementRateMin"));
-  if (get("engagementRateMax") != null) result.engagementRateMax = Number(get("engagementRateMax"));
-  if (get("contentLabels")) result.contentLabels = get("contentLabels")!.split(",") as any;
-  if (get("languages")) result.languages = get("languages")!.split(",") as any;
-  if (get("countryCodes")) result.countryCodes = get("countryCodes")!.split(",") as any;
-  if (get("followerCountryCodes")) result.followerCountryCodes = get("followerCountryCodes")!.split(",") as any;
-  if (get("followerGenderRatio")) result.followerGenderRatio = get("followerGenderRatio")!.split(",") as any;
-  if (get("followerAge")) result.followerAge = get("followerAge")!.split(",") as any;
+  if (get("followersMin") != null)
+    result.followersMin = Number(get("followersMin"));
+  if (get("followersMax") != null)
+    result.followersMax = Number(get("followersMax"));
+  if (get("medianViewsMin") != null)
+    result.medianViewsMin = Number(get("medianViewsMin"));
+  if (get("medianViewsMax") != null)
+    result.medianViewsMax = Number(get("medianViewsMax"));
+  if (get("engagementRateMin") != null)
+    result.engagementRateMin = Number(get("engagementRateMin"));
+  if (get("engagementRateMax") != null)
+    result.engagementRateMax = Number(get("engagementRateMax"));
+  if (get("contentLabels"))
+    result.contentLabels = get("contentLabels")!.split(",");
+  if (get("languages")) result.languages = get("languages")!.split(",");
+  if (get("countryCodes"))
+    result.countryCodes = get("countryCodes")!.split(",");
+  if (get("followerCountryCodes"))
+    result.followerCountryCodes = get("followerCountryCodes")!.split(",");
+  if (get("followerGenderRatio"))
+    result.followerGenderRatio = get("followerGenderRatio")!.split(",");
+  if (get("followerAge")) result.followerAge = get("followerAge")!.split(",");
 
-  // console.log(result);
-  return result;
+  // console.log("before safe parse: ", result);
+  const parsed = creatorFilterSchema.safeParse(result);
+  // console.log("safe parsed params: ", parsed.data);
+
+  if (!parsed.success) {
+    console.error("Error parsing search params: ", parsed.error);
+    return {};
+  }
+
+  return parsed.data;
 }
-
-
