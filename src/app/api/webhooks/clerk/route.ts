@@ -4,7 +4,7 @@ import { verifyWebhook } from "@clerk/nextjs/webhooks";
 import { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
-  console.log("Webhook HIT");
+  // console.log("Webhook HIT");
   try {
     const event = await verifyWebhook(request); // verify signature and parse event
 
