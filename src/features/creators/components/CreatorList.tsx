@@ -27,10 +27,10 @@ import { Input } from "@/components/ui/input";
 export async function CreatorList({
   searchParams = {},
 }: {
-  searchParams?: Record<string, string | string[]>;
+  searchParams?: Record<string, string>;
 }) {
 
-  const filters = searchParamsToFilters(searchParams);
+  const { data: filters, error } = searchParamsToFilters(searchParams);
   const creators = await getCreatorsByFilters(filters);
 
   const url = filtersToSearchParams(filters);

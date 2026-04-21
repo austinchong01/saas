@@ -29,8 +29,9 @@ import { LoadingSwap } from "@/components/ui/loading-swap";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { checkFilterInfo } from "../actions";
 import { toast } from "sonner";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { searchParamsToFilters } from "../url";
+import { useEffect } from "react";
 
 const defaultFilters: Partial<CreatorFilterFormValues> = {
   languages: [],
@@ -54,8 +55,11 @@ export function CreatorFilterForm({
 }) {
   const router = useRouter();
 
-  const filters = searchParamsToFilters(searchParams);
-  // console.log("filtered params: ", filters);
+  const { data: filters, error } = searchParamsToFilters(searchParams);
+
+  useEffect(() => {
+    if (error) router.replace("/app");
+  }, [error, router]);
 
   const form = useForm<CreatorFilterFormValues>({
     resolver: zodResolver(creatorFilterSchema),
@@ -68,7 +72,7 @@ export function CreatorFilterForm({
     if (typeof res === "object" && res.error) {
       toast.error(res.message);
     } else {
-      redirect(`/app/creators?${res}`);
+      router.push(`/app/creators?${res}`);
     }
   }
 

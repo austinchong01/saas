@@ -19,8 +19,8 @@ export function filtersToSearchParams(
 }
 
 export function searchParamsToFilters(
-  params: Record<string, string | string[]>,
-): Partial<CreatorFilterFormValues> {
+  params: Record<string, string>,
+): { data: Partial<CreatorFilterFormValues>; error: string | null } {
   const get = (key: string): string | undefined => {
     const val = params[key];
     if (Array.isArray(val)) return val[0];
@@ -52,14 +52,10 @@ export function searchParamsToFilters(
     result.followerGenderRatio = get("followerGenderRatio")!.split(",");
   if (get("followerAge")) result.followerAge = get("followerAge")!.split(",");
 
-  // console.log("before safe parse: ", result);
   const parsed = creatorFilterSchema.safeParse(result);
-  // console.log("safe parsed params: ", parsed.data);
-
   if (!parsed.success) {
-    console.error("Error parsing search params: ", parsed.error);
-    return {};
+    return { data: {}, error: "Invalid filter parameters in URL" };
   }
 
-  return parsed.data;
+  return { data: parsed.data, error: null };
 }
