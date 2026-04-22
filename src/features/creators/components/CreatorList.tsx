@@ -1,5 +1,4 @@
 import { getCreatorsByFilters } from "@/features/creators/actions";
-import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser";
 import {
   Card,
   CardAction,
@@ -30,7 +29,7 @@ export async function CreatorList({
   searchParams?: Record<string, string>;
 }) {
 
-  const { data: filters, error } = searchParamsToFilters(searchParams);
+  const { data: filters, error } = searchParamsToFilters(searchParams); // error on invalid param filters
   const creators = await getCreatorsByFilters(filters);
 
   const url = filtersToSearchParams(filters);

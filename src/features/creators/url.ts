@@ -18,9 +18,10 @@ export function filtersToSearchParams(
   return params.toString();
 }
 
-export function searchParamsToFilters(
-  params: Record<string, string>,
-): { data: Partial<CreatorFilterFormValues>; error: string | null } {
+export function searchParamsToFilters(params: Record<string, string>): {
+  data: Partial<CreatorFilterFormValues>;
+  error: string | null;
+} {
   const get = (key: string): string | undefined => {
     const val = params[key];
     if (Array.isArray(val)) return val[0];

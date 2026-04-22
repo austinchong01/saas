@@ -5,10 +5,10 @@ import { Suspense } from "react";
 export default async function AppPage({
   searchParams,
 }: {
-  searchParams: Promise<Record<string, string | string[]>>;
+  searchParams: Promise<Record<string, string>>;
 }) {
   const params = await searchParams;
-  console.log("raw params:", params);
+  // console.log("raw params:", params);
 
   return (
     <Suspense
