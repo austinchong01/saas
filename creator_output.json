@@ -1,0 +1,27 @@
+{
+  "code": 0,
+  "message": "OK",
+  "request_id": "20260424064026EA529E2921ED4196549D",
+  "data": {
+    "bio": "makeup, skincare, and random shet\n💌 lydia@starlinemgmt.com",
+    "content_labels": [
+      {
+        "label_id": "11002002",
+        "label_name": "Beauty Tutorials & Tips"
+      }
+    ],
+    "creator_id": "7512619512014127150",
+    "creator_price": 0,
+    "currency": "USD",
+    "display_name": "Lydia 🎈",
+    "engagement_rate": 0.0425,
+    "followers_count": 150758,
+    "following_count": 243,
+    "handle_name": "lydia.chae",
+    "industry_labels": [],
+    "likes_count": 10038067,
+    "median_views": 54839,
+    "profile_image": "https://p16-common-sign.tiktokcdn-us.com/tos-useast8-avt-0068-tx2/30ae3145090c73dc0304de18f74aa1fb~tplv-photomode-zoomcover-tcm:200:200.jpeg?dr=10986&nonce=79231&refresh_token=8c18a6e1d2263893eebf6fb4b3a291c8&x-expires=1777586400&x-signature=v1SrTjQPevUIIY7YJWyj473y1Yo%3D&idc=useast5&ps=223449c4&shcp=690928d5&shp=429d27ce&t=e8257cf9",
+    "videos_count": 370
+  }
+}

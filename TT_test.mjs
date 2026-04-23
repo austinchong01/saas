@@ -48,39 +48,33 @@ const scope = [18020000, 13020000, 18010000, 14020000, 14010000];
 // console.log("Authorized Accounts:", authJSON);
 // const tto_tcm_account_ids = ['7632039214632484865'];
 
-// Step 2: TCM account IDs
-// const tcmUrl = new URL(
-//   "https://business-api.tiktok.com/open_api/v1.3/tto/oauth2/tcm/",
-// );
-// tcmUrl.searchParams.set("app_id", TT_APP_ID);
-// tcmUrl.searchParams.set("secret", TT_SECRET);
 
-// const tcmRes = await fetch(tcmUrl, {
-//   method: "GET",
-//   headers: { "Access-Token": accessToken },
-// });
 
-// const tcmJson = await tcmRes.json();
-// if (tcmJson.code !== 0) {
-//   console.error("TCM account request failed:", tcmJson);
-//   process.exit(1);
-// }
-
-// console.log("TCM response:", tcmJson);
-
-// const tcmAccountId = tcmJson.data?.tto_tcm_account_ids?.[0];
-// if (!tcmAccountId) {
-//   throw new Error("No tto_tcm_account_ids returned");
-// }
-// console.log("Using TCM account ID:", tcmAccountId);
-
-// Step 3: creator lookup
+// GET LIST OF CREATORS FROM FILTERS
 const creatorUrl = new URL(
-  "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/public/",
+  "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/discover/",
 );
 creatorUrl.searchParams.set("tto_tcm_account_id", TTO_ACC_ID);
-creatorUrl.searchParams.set("handle_name", HANDLE_NAME);
-// console.log(creatorUrl.toString());
+
+creatorUrl.searchParams.set("country_codes", ["US", "KR"]);
+
+creatorUrl.searchParams.set("content_label_ids", ["Beauty Tutorials & Tips"]); // Beauty Tutorials & Tips CONTENT!!!!
+creatorUrl.searchParams.set("industry_label_ids", ["Beauty & Personal Care"]); // Beauty & Personal Care CONTENT!!!!
+
+creatorUrl.searchParams.set("languages", ["en", "ko"]);
+creatorUrl.searchParams.set("min_median_views", 50000);
+
+
+creatorUrl.searchParams.set("min_followers", 1000000);
+// creatorUrl.searchParams.set("max_followers", 10000);
+
+creatorUrl.searchParams.set("follower_country_codes", '["US", "KR"]');
+creatorUrl.searchParams.set("follower_gender_ratio", "FEMALE_70");
+creatorUrl.searchParams.set("follower_age", "18-24");
+
+creatorUrl.searchParams.set("sort_field", "RELEVANCE");
+creatorUrl.searchParams.set("sort_order", "DESC");
+creatorUrl.searchParams.set("page_size", 10);
 
 const creatorRes = await fetch(creatorUrl, {
   method: "GET",
@@ -88,5 +82,24 @@ const creatorRes = await fetch(creatorUrl, {
 });
 
 const creatorData = await creatorRes.json();
-writeFileSync("creator_output.json", JSON.stringify(creatorData, null, 2));
-console.log("Written to creator_output.json");
+writeFileSync("z_creators_output.json", JSON.stringify(creatorData, null, 2));
+console.log("Written to z_creators_output.json");
+
+
+
+// SINGLE CREATOR LOOKUP
+// const creatorUrl = new URL(
+//   "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/public/",
+// );
+// creatorUrl.searchParams.set("tto_tcm_account_id", TTO_ACC_ID);
+// creatorUrl.searchParams.set("handle_name", HANDLE_NAME);
+// // console.log(creatorUrl.toString());
+
+// const creatorRes = await fetch(creatorUrl, {
+//   method: "GET",
+//   headers: { "Access-Token": TT_ACCESS_TOKEN },
+// });
+
+// const creatorData = await creatorRes.json();
+// writeFileSync("z_creator_output.json", JSON.stringify(creatorData, null, 2));
+// console.log("Written to z_creator_output.json");
