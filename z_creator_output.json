@@ -1,0 +1,27 @@
+{
+  "code": 0,
+  "message": "OK",
+  "request_id": "202604240630144FB0ADF31DE4D1926077",
+  "data": {
+    "bio": "",
+    "content_labels": [
+      {
+        "label_id": "11015001",
+        "label_name": "Tech Products & Tests"
+      }
+    ],
+    "creator_id": "7567256869103452174",
+    "creator_price": 0,
+    "currency": "USD",
+    "display_name": "aweston.live",
+    "engagement_rate": 0.0132,
+    "followers_count": 11978,
+    "following_count": 31,
+    "handle_name": "aweston.live",
+    "industry_labels": [],
+    "likes_count": 35566,
+    "median_views": 671,
+    "profile_image": "https://p19-common-sign.tiktokcdn-us.com/tos-useast8-avt-0068-tx2/50b68636d94859de7c7b1ee491714678~tplv-photomode-zoomcover-tcm:200:200.jpeg?dr=10986&nonce=6118&refresh_token=f906180b344e7cb29cac5cc0656cc409&x-expires=1777586400&x-signature=dRjX1sMdjy37sVe6K4yM6rUlkbc%3D&idc=useast5&ps=223449c4&shcp=690928d5&shp=429d27ce&t=e8257cf9",
+    "videos_count": 9
+  }
+}

@@ -1,4 +1,5 @@
-const { TT_APP_ID, AUTH_CODE, TT_SECRET, TT_ACCESS_TOKEN } = process.env;
+import { writeFileSync } from "fs";
+const { TT_APP_ID, AUTH_CODE, TT_SECRET, TT_ACCESS_TOKEN, TTO_ACC_ID } = process.env;
 
 const HANDLE_NAME = "aweston.live"; // USERNAME TEST
 
@@ -25,9 +26,27 @@ const HANDLE_NAME = "aweston.live"; // USERNAME TEST
 // const accessToken = tokenJson.data;
 // console.log("Access token:", accessToken);
 
-// console.log("Access token: ", TT_ACCESS_TOKEN);
 const ad_ids = ['7576387230785142785'];
 const scope = [18020000, 13020000, 18010000, 14020000, 14010000];
+
+// check advertiser accounts that can be access w/ current access token
+// const advertiserUrl = new URL(
+//   "https://business-api.tiktok.com/open_api/v1.3/tto/oauth2/tcm/",
+// );
+// advertiserUrl.searchParams.set("app_id", TT_APP_ID);
+// advertiserUrl.searchParams.set("secret", TT_SECRET);
+// const tcmRes = await fetch(advertiserUrl, {
+//   method: "GET",
+//   headers: { "Access-Token": TT_ACCESS_TOKEN },
+// });
+// const authJSON = await tcmRes.json();
+// if (authJSON.code !== 0) {
+//   console.error("Authorized Accounts Check request failed:", authJSON);
+//   process.exit(1);
+// }
+
+// console.log("Authorized Accounts:", authJSON);
+// const tto_tcm_account_ids = ['7632039214632484865'];
 
 // Step 2: TCM account IDs
 // const tcmUrl = new URL(
@@ -59,7 +78,7 @@ const scope = [18020000, 13020000, 18010000, 14020000, 14010000];
 const creatorUrl = new URL(
   "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/public/",
 );
-creatorUrl.searchParams.set("tto_tcm_account_id", ad_ids[0]);
+creatorUrl.searchParams.set("tto_tcm_account_id", TTO_ACC_ID);
 creatorUrl.searchParams.set("handle_name", HANDLE_NAME);
 // console.log(creatorUrl.toString());
 
@@ -68,4 +87,6 @@ const creatorRes = await fetch(creatorUrl, {
   headers: { "Access-Token": TT_ACCESS_TOKEN },
 });
 
-console.log("Creator response:", await creatorRes.json());
+const creatorData = await creatorRes.json();
+writeFileSync("creator_output.json", JSON.stringify(creatorData, null, 2));
+console.log("Written to creator_output.json");
