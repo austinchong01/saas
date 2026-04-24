@@ -56,21 +56,21 @@ const creatorUrl = new URL(
 );
 creatorUrl.searchParams.set("tto_tcm_account_id", TTO_ACC_ID);
 
-creatorUrl.searchParams.set("country_codes", JSON.stringify(["US"]));
+creatorUrl.searchParams.set("country_codes", JSON.stringify(["US"])); // can only choose one region
 
-// creatorUrl.searchParams.set("content_label_ids", JSON.stringify(["Beauty Tutorials & Tips"])); // Beauty Tutorials & Tips CONTENT!!!!
-// creatorUrl.searchParams.set("industry_label_ids", JSON.stringify(["Beauty & Personal Care"])); // Beauty & Personal Care CONTENT!!!!
+creatorUrl.searchParams.set("content_label_ids", JSON.stringify(["11002002"])); // Beauty Tutorials & Tips CONTENT!!!!
+creatorUrl.searchParams.set("industry_label_ids", JSON.stringify(["14000000000"])); // Beauty & Personal Care CONTENT!!!!
 
 creatorUrl.searchParams.set("languages", JSON.stringify(["en", "ko"]));
-creatorUrl.searchParams.set("min_median_views", 50000);
+// creatorUrl.searchParams.set("min_median_views", 5000);
 
 
-creatorUrl.searchParams.set("min_followers", 1000000);
+creatorUrl.searchParams.set("min_followers", 100000);
 // creatorUrl.searchParams.set("max_followers", 10000);
 
 creatorUrl.searchParams.set("follower_country_codes", JSON.stringify(["US", "KR"]));
-creatorUrl.searchParams.set("follower_gender_ratio", "FEMALE_70");
-creatorUrl.searchParams.set("follower_age", "18-24");
+creatorUrl.searchParams.set("follower_gender_ratio", "FEMALE_50");
+creatorUrl.searchParams.set("follower_age", "25-34");
 
 creatorUrl.searchParams.set("sort_field", "RELEVANCE");
 creatorUrl.searchParams.set("sort_order", "DESC");
@@ -104,3 +104,20 @@ console.log("Written to z_creators_output.json");
 // const creatorData = await creatorRes.json();
 // writeFileSync("z_creator_output.json", JSON.stringify(creatorData, null, 2));
 // console.log("Written to z_creator_output.json");
+
+
+// LABEL LOOKUP
+// const creatorUrl = new URL(
+//   "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/category/label/",
+// );
+// creatorUrl.searchParams.set("tto_tcm_account_id", TTO_ACC_ID);
+// creatorUrl.searchParams.set("label_type", "SEARCH");
+
+// const creatorRes = await fetch(creatorUrl, {
+//   method: "GET",
+//   headers: { "Access-Token": TT_ACCESS_TOKEN },
+// });
+
+// const creatorData = await creatorRes.json();
+// writeFileSync("z_label_output.json", JSON.stringify(creatorData, null, 2));
+// console.log("Written to label_output.json");

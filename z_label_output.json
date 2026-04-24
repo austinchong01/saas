@@ -1,0 +1,583 @@
+{
+  "code": 0,
+  "message": "OK",
+  "request_id": "202604250327030F3E0E4759BD6B39C4F8",
+  "data": {
+    "content_labels": [
+      {
+        "label_id": "11001",
+        "label_name": "Nature & Animals"
+      },
+      {
+        "label_id": "11001001",
+        "label_name": "Pet Tips & Care"
+      },
+      {
+        "label_id": "11001002",
+        "label_name": "Wildlife & Exotic Pets"
+      },
+      {
+        "label_id": "11001003",
+        "label_name": "Nature & Scenery"
+      },
+      {
+        "label_id": "11002",
+        "label_name": "Beauty & Care"
+      },
+      {
+        "label_id": "11002001",
+        "label_name": "Nail Art & Care"
+      },
+      {
+        "label_id": "11002002",
+        "label_name": "Beauty Tutorials & Tips"
+      },
+      {
+        "label_id": "11002006",
+        "label_name": "Hair Design & Care"
+      },
+      {
+        "label_id": "11003",
+        "label_name": "Fashion"
+      },
+      {
+        "label_id": "11003001",
+        "label_name": "Outfits"
+      },
+      {
+        "label_id": "11003006",
+        "label_name": "Fashion and Body Art"
+      },
+      {
+        "label_id": "11004",
+        "label_name": "Music & Entertainment"
+      },
+      {
+        "label_id": "11004001",
+        "label_name": "Movies & TV"
+      },
+      {
+        "label_id": "11004002",
+        "label_name": "Theater & Stage"
+      },
+      {
+        "label_id": "11004003",
+        "label_name": "Music"
+      },
+      {
+        "label_id": "11004004",
+        "label_name": "Dance"
+      },
+      {
+        "label_id": "11004005",
+        "label_name": "Animation & Cosplay"
+      },
+      {
+        "label_id": "11004006",
+        "label_name": "Entertainment News"
+      },
+      {
+        "label_id": "11004007",
+        "label_name": "Supernatural & Horror"
+      },
+      {
+        "label_id": "11005",
+        "label_name": "Games"
+      },
+      {
+        "label_id": "11005001",
+        "label_name": "Video Games"
+      },
+      {
+        "label_id": "11005001001",
+        "label_name": "Action Games"
+      },
+      {
+        "label_id": "11005001002",
+        "label_name": "Casino Games"
+      },
+      {
+        "label_id": "11005001003",
+        "label_name": "Match Games"
+      },
+      {
+        "label_id": "11005001004",
+        "label_name": "Puzzle Games"
+      },
+      {
+        "label_id": "11005001005",
+        "label_name": "Racing Games"
+      },
+      {
+        "label_id": "11005001006",
+        "label_name": "RPG Games"
+      },
+      {
+        "label_id": "11005001007",
+        "label_name": "Shooting Games"
+      },
+      {
+        "label_id": "11005001008",
+        "label_name": "Simulation Games"
+      },
+      {
+        "label_id": "11005001009",
+        "label_name": "Sports Games"
+      },
+      {
+        "label_id": "11005001010",
+        "label_name": "Strategy Games"
+      },
+      {
+        "label_id": "11005001011",
+        "label_name": "Party Games"
+      },
+      {
+        "label_id": "11005001012",
+        "label_name": "Tabletop Games"
+      },
+      {
+        "label_id": "11005001013",
+        "label_name": "Kids Games"
+      },
+      {
+        "label_id": "11005002",
+        "label_name": "Non-video Games"
+      },
+      {
+        "label_id": "11006",
+        "label_name": "Education & Work"
+      },
+      {
+        "label_id": "11006001",
+        "label_name": "School Education"
+      },
+      {
+        "label_id": "11006002",
+        "label_name": "Career Development"
+      },
+      {
+        "label_id": "11006003",
+        "label_name": "Humanities & Science"
+      },
+      {
+        "label_id": "11007",
+        "label_name": "Sports & Outdoor"
+      },
+      {
+        "label_id": "11007001",
+        "label_name": "Fitness"
+      },
+      {
+        "label_id": "11007002",
+        "label_name": "Health & Wellness"
+      },
+      {
+        "label_id": "11007003",
+        "label_name": "Fishing, Hunting, & Camping"
+      },
+      {
+        "label_id": "11007004",
+        "label_name": "Traditional Sports"
+      },
+      {
+        "label_id": "11007005",
+        "label_name": "Extreme Sports"
+      },
+      {
+        "label_id": "11007006",
+        "label_name": "Sports News"
+      },
+      {
+        "label_id": "11008",
+        "label_name": "Creativity & Talent"
+      },
+      {
+        "label_id": "11008001",
+        "label_name": "Comedy"
+      },
+      {
+        "label_id": "11008002",
+        "label_name": "Lip Syncing"
+      },
+      {
+        "label_id": "11008003",
+        "label_name": "Skits"
+      },
+      {
+        "label_id": "11008004",
+        "label_name": "Talent Showcase"
+      },
+      {
+        "label_id": "11008005",
+        "label_name": "Art"
+      },
+      {
+        "label_id": "11008006",
+        "label_name": "Photography & Special Effects"
+      },
+      {
+        "label_id": "11009",
+        "label_name": "Family & Relationship"
+      },
+      {
+        "label_id": "11009001",
+        "label_name": "Love & Romantic Relationships"
+      },
+      {
+        "label_id": "11009002",
+        "label_name": "Babies"
+      },
+      {
+        "label_id": "11009003",
+        "label_name": "Family"
+      },
+      {
+        "label_id": "11010",
+        "label_name": "Food & Beverage"
+      },
+      {
+        "label_id": "11010001",
+        "label_name": "Food Display & Reviews"
+      },
+      {
+        "label_id": "11010002",
+        "label_name": "Beverages & Production"
+      },
+      {
+        "label_id": "11010003",
+        "label_name": "Mukbang & Food Tasting"
+      },
+      {
+        "label_id": "11010004",
+        "label_name": "Cooking & Recipes"
+      },
+      {
+        "label_id": "11010005",
+        "label_name": "Restaurant Exploration"
+      },
+      {
+        "label_id": "11011",
+        "label_name": "Vlog & Selfie"
+      },
+      {
+        "label_id": "11011001",
+        "label_name": "Campus Life"
+      },
+      {
+        "label_id": "11011002",
+        "label_name": "Daily Life"
+      },
+      {
+        "label_id": "11011003",
+        "label_name": "Life Motivation"
+      },
+      {
+        "label_id": "11011004",
+        "label_name": "Selfie"
+      },
+      {
+        "label_id": "11011007",
+        "label_name": "Jobs & Careers"
+      },
+      {
+        "label_id": "11012",
+        "label_name": "Society"
+      },
+      {
+        "label_id": "11012001",
+        "label_name": "Street Interviews & Social Experiments"
+      },
+      {
+        "label_id": "11012002",
+        "label_name": "Social News & Events"
+      },
+      {
+        "label_id": "11013",
+        "label_name": "Lifestyle & Leisure"
+      },
+      {
+        "label_id": "11013001",
+        "label_name": "Toys & Collectibles"
+      },
+      {
+        "label_id": "11013002",
+        "label_name": "Slime, ASMR, & Aesthetics"
+      },
+      {
+        "label_id": "11013003",
+        "label_name": "Recreation Facility"
+      },
+      {
+        "label_id": "11013004",
+        "label_name": "DIY & Life Hacks"
+      },
+      {
+        "label_id": "11013005",
+        "label_name": "Travel"
+      },
+      {
+        "label_id": "11013006",
+        "label_name": "Home & Garden"
+      },
+      {
+        "label_id": "11014",
+        "label_name": "Vehicles & Transportation"
+      },
+      {
+        "label_id": "11014001",
+        "label_name": "Automobiles"
+      },
+      {
+        "label_id": "11014002",
+        "label_name": "Other transportation"
+      },
+      {
+        "label_id": "11015",
+        "label_name": "Technology & Finance"
+      },
+      {
+        "label_id": "11015001",
+        "label_name": "Tech Products & Tests"
+      },
+      {
+        "label_id": "11015002",
+        "label_name": "Software & Apps"
+      },
+      {
+        "label_id": "11015003",
+        "label_name": "Business & Finance"
+      },
+      {
+        "label_id": "11016",
+        "label_name": "Product Info & Tests"
+      }
+    ],
+    "industry_labels": [
+      {
+        "label_id": "10000000000",
+        "label_name": "Education"
+      },
+      {
+        "label_id": "11000000000",
+        "label_name": "Vehicle & Transportation"
+      },
+      {
+        "label_id": "12000000000",
+        "label_name": "Baby, Kids & Maternity"
+      },
+      {
+        "label_id": "13000000000",
+        "label_name": "Financial Services"
+      },
+      {
+        "label_id": "14000000000",
+        "label_name": "Beauty & Personal Care"
+      },
+      {
+        "label_id": "14100000000",
+        "label_name": "Oral Care"
+      },
+      {
+        "label_id": "14101000000",
+        "label_name": "Haircare"
+      },
+      {
+        "label_id": "14102000000",
+        "label_name": "Wig & Hair Styling"
+      },
+      {
+        "label_id": "14103000000",
+        "label_name": "Skincare"
+      },
+      {
+        "label_id": "14104000000",
+        "label_name": "Cosmetics"
+      },
+      {
+        "label_id": "14105000000",
+        "label_name": "Aesthetic Medicine"
+      },
+      {
+        "label_id": "14106000000",
+        "label_name": "Fragrances & Perfumes"
+      },
+      {
+        "label_id": "14107000000",
+        "label_name": "Feminine Care"
+      },
+      {
+        "label_id": "14999000000",
+        "label_name": "Other Beauty & Personal Care"
+      },
+      {
+        "label_id": "15000000000",
+        "label_name": "Tech & Electronics"
+      },
+      {
+        "label_id": "16000000000",
+        "label_name": "Appliances"
+      },
+      {
+        "label_id": "17000000000",
+        "label_name": "Travel"
+      },
+      {
+        "label_id": "18000000000",
+        "label_name": "Household Products"
+      },
+      {
+        "label_id": "19000000000",
+        "label_name": "Pets"
+      },
+      {
+        "label_id": "20000000000",
+        "label_name": "Apps"
+      },
+      {
+        "label_id": "21000000000",
+        "label_name": "Home Improvement"
+      },
+      {
+        "label_id": "22000000000",
+        "label_name": "Apparel & Accessories"
+      },
+      {
+        "label_id": "22101000000",
+        "label_name": "Clothing Accessories"
+      },
+      {
+        "label_id": "22102000000",
+        "label_name": "Bags"
+      },
+      {
+        "label_id": "22105000000",
+        "label_name": "Watches"
+      },
+      {
+        "label_id": "22106000000",
+        "label_name": "Ordinary Jewelry"
+      },
+      {
+        "label_id": "22107000000",
+        "label_name": "High-end Jewelry"
+      },
+      {
+        "label_id": "22108000000",
+        "label_name": "Men's Clothing"
+      },
+      {
+        "label_id": "22109000000",
+        "label_name": "Men's Shoes"
+      },
+      {
+        "label_id": "22110000000",
+        "label_name": "Women's Clothing"
+      },
+      {
+        "label_id": "22111000000",
+        "label_name": "Women's Shoes"
+      },
+      {
+        "label_id": "22112000000",
+        "label_name": "Traditional & Ceremonial Clothing"
+      },
+      {
+        "label_id": "22113000000",
+        "label_name": "Wearable Tech Devices"
+      },
+      {
+        "label_id": "22999000000",
+        "label_name": "Other Apparel & Accessories"
+      },
+      {
+        "label_id": "22114000000",
+        "label_name": "Shoes Accessories"
+      },
+      {
+        "label_id": "23000000000",
+        "label_name": "News & Entertainment"
+      },
+      {
+        "label_id": "24000000000",
+        "label_name": "Business Services"
+      },
+      {
+        "label_id": "25000000000",
+        "label_name": "Games"
+      },
+      {
+        "label_id": "25100101000",
+        "label_name": "Simulation Games"
+      },
+      {
+        "label_id": "25100102000",
+        "label_name": "Strategy Games"
+      },
+      {
+        "label_id": "25100103000",
+        "label_name": "Shooting Games"
+      },
+      {
+        "label_id": "25100104000",
+        "label_name": "Sports Games"
+      },
+      {
+        "label_id": "25100105000",
+        "label_name": "Action Games"
+      },
+      {
+        "label_id": "25100107000",
+        "label_name": "Racing Games"
+      },
+      {
+        "label_id": "25100110000",
+        "label_name": "Puzzle Games"
+      },
+      {
+        "label_id": "25100115000",
+        "label_name": "Casino Games"
+      },
+      {
+        "label_id": "25100118000",
+        "label_name": "Match Games"
+      },
+      {
+        "label_id": "25100119000",
+        "label_name": "RPG Games"
+      },
+      {
+        "label_id": "25100120000",
+        "label_name": "Party Games"
+      },
+      {
+        "label_id": "25100121000",
+        "label_name": "Tabletop Games"
+      },
+      {
+        "label_id": "25100122000",
+        "label_name": "Kids Games"
+      },
+      {
+        "label_id": "26000000000",
+        "label_name": "Life Services"
+      },
+      {
+        "label_id": "27000000000",
+        "label_name": "Food & Beverage"
+      },
+      {
+        "label_id": "28000000000",
+        "label_name": "Sports & Outdoor"
+      },
+      {
+        "label_id": "29000000000",
+        "label_name": "Health"
+      },
+      {
+        "label_id": "30000000000",
+        "label_name": "E-Commerce (Non-app)"
+      }
+    ]
+  }
+}
