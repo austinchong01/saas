@@ -58,18 +58,18 @@ creatorUrl.searchParams.set("tto_tcm_account_id", TTO_ACC_ID);
 
 creatorUrl.searchParams.set("country_codes", JSON.stringify(["US"])); // can only choose one region
 
-creatorUrl.searchParams.set("content_label_ids", JSON.stringify(["11002002"])); // Beauty Tutorials & Tips CONTENT!!!!
-creatorUrl.searchParams.set("industry_label_ids", JSON.stringify(["14000000000"])); // Beauty & Personal Care CONTENT!!!!
+creatorUrl.searchParams.set("content_label_ids", JSON.stringify(["11002", "11002002"]));
+// creatorUrl.searchParams.set("industry_label_ids", JSON.stringify(["14000000000"]));
 
 creatorUrl.searchParams.set("languages", JSON.stringify(["en", "ko"]));
 // creatorUrl.searchParams.set("min_median_views", 5000);
 
 
-creatorUrl.searchParams.set("min_followers", 100000);
+creatorUrl.searchParams.set("min_followers", 50000);
 // creatorUrl.searchParams.set("max_followers", 10000);
 
 creatorUrl.searchParams.set("follower_country_codes", JSON.stringify(["US", "KR"]));
-creatorUrl.searchParams.set("follower_gender_ratio", "FEMALE_50");
+creatorUrl.searchParams.set("follower_gender_ratio", "FEMALE_60");
 creatorUrl.searchParams.set("follower_age", "25-34");
 
 creatorUrl.searchParams.set("sort_field", "RELEVANCE");
