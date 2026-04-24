@@ -56,25 +56,26 @@ const creatorUrl = new URL(
 );
 creatorUrl.searchParams.set("tto_tcm_account_id", TTO_ACC_ID);
 
-creatorUrl.searchParams.set("country_codes", ["US", "KR"]);
+creatorUrl.searchParams.set("country_codes", JSON.stringify(["US"]));
 
-creatorUrl.searchParams.set("content_label_ids", ["Beauty Tutorials & Tips"]); // Beauty Tutorials & Tips CONTENT!!!!
-creatorUrl.searchParams.set("industry_label_ids", ["Beauty & Personal Care"]); // Beauty & Personal Care CONTENT!!!!
+// creatorUrl.searchParams.set("content_label_ids", JSON.stringify(["Beauty Tutorials & Tips"])); // Beauty Tutorials & Tips CONTENT!!!!
+// creatorUrl.searchParams.set("industry_label_ids", JSON.stringify(["Beauty & Personal Care"])); // Beauty & Personal Care CONTENT!!!!
 
-creatorUrl.searchParams.set("languages", ["en", "ko"]);
+creatorUrl.searchParams.set("languages", JSON.stringify(["en", "ko"]));
 creatorUrl.searchParams.set("min_median_views", 50000);
 
 
 creatorUrl.searchParams.set("min_followers", 1000000);
 // creatorUrl.searchParams.set("max_followers", 10000);
 
-creatorUrl.searchParams.set("follower_country_codes", '["US", "KR"]');
+creatorUrl.searchParams.set("follower_country_codes", JSON.stringify(["US", "KR"]));
 creatorUrl.searchParams.set("follower_gender_ratio", "FEMALE_70");
 creatorUrl.searchParams.set("follower_age", "18-24");
 
 creatorUrl.searchParams.set("sort_field", "RELEVANCE");
 creatorUrl.searchParams.set("sort_order", "DESC");
 creatorUrl.searchParams.set("page_size", 10);
+
 
 const creatorRes = await fetch(creatorUrl, {
   method: "GET",
