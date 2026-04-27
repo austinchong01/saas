@@ -1,7 +1,7 @@
 import { writeFileSync } from "fs";
 const { TT_APP_ID, AUTH_CODE, TT_SECRET, TT_ACCESS_TOKEN, TTO_ACC_ID } = process.env;
 
-const HANDLE_NAME = "aweston.live"; // USERNAME TEST
+const HANDLE_NAME = "rachelheheh"; // USERNAME TEST
 
 // Step 1: access token
 // const tokenRes = await fetch(
@@ -51,50 +51,31 @@ const scope = [18020000, 13020000, 18010000, 14020000, 14010000];
 
 
 // GET LIST OF CREATORS FROM FILTERS
-const creatorUrl = new URL(
-  "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/discover/",
-);
-creatorUrl.searchParams.set("tto_tcm_account_id", TTO_ACC_ID);
-
-creatorUrl.searchParams.set("country_codes", JSON.stringify(["US"])); // can only choose one region
-
-creatorUrl.searchParams.set("content_label_ids", JSON.stringify(["11002", "11002002"]));
-// creatorUrl.searchParams.set("industry_label_ids", JSON.stringify(["14000000000"]));
-
-creatorUrl.searchParams.set("languages", JSON.stringify(["en", "ko"]));
-// creatorUrl.searchParams.set("min_median_views", 5000);
-
-
-creatorUrl.searchParams.set("min_followers", 50000);
-// creatorUrl.searchParams.set("max_followers", 10000);
-
-creatorUrl.searchParams.set("follower_country_codes", JSON.stringify(["US", "KR"]));
-creatorUrl.searchParams.set("follower_gender_ratio", "FEMALE_60");
-creatorUrl.searchParams.set("follower_age", "25-34");
-
-creatorUrl.searchParams.set("sort_field", "RELEVANCE");
-creatorUrl.searchParams.set("sort_order", "DESC");
-creatorUrl.searchParams.set("page_size", 10);
-
-
-const creatorRes = await fetch(creatorUrl, {
-  method: "GET",
-  headers: { "Access-Token": TT_ACCESS_TOKEN },
-});
-
-const creatorData = await creatorRes.json();
-writeFileSync("z_creators_output.json", JSON.stringify(creatorData, null, 2));
-console.log("Written to z_creators_output.json");
-
-
-
-// SINGLE CREATOR LOOKUP
 // const creatorUrl = new URL(
-//   "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/public/",
+//   "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/discover/",
 // );
 // creatorUrl.searchParams.set("tto_tcm_account_id", TTO_ACC_ID);
-// creatorUrl.searchParams.set("handle_name", HANDLE_NAME);
-// // console.log(creatorUrl.toString());
+
+// creatorUrl.searchParams.set("country_codes", JSON.stringify(["KR"])); // can only choose one region
+
+// creatorUrl.searchParams.set("content_label_ids", JSON.stringify(["11002", "11002002"]));
+// // creatorUrl.searchParams.set("industry_label_ids", JSON.stringify(["14000000000"]));
+
+// creatorUrl.searchParams.set("languages", JSON.stringify(["en", "ko"]));
+// // creatorUrl.searchParams.set("min_median_views", 5000);
+
+
+// creatorUrl.searchParams.set("min_followers", 100000);
+// // creatorUrl.searchParams.set("max_followers", 10000);
+
+// creatorUrl.searchParams.set("follower_country_codes", JSON.stringify(["US", "KR"]));
+// creatorUrl.searchParams.set("follower_gender_ratio", "FEMALE_60");
+// creatorUrl.searchParams.set("follower_age", "18-24");
+
+// creatorUrl.searchParams.set("sort_field", "RELEVANCE");
+// creatorUrl.searchParams.set("sort_order", "DESC");
+// creatorUrl.searchParams.set("page_size", 10);
+
 
 // const creatorRes = await fetch(creatorUrl, {
 //   method: "GET",
@@ -102,8 +83,27 @@ console.log("Written to z_creators_output.json");
 // });
 
 // const creatorData = await creatorRes.json();
-// writeFileSync("z_creator_output.json", JSON.stringify(creatorData, null, 2));
-// console.log("Written to z_creator_output.json");
+// writeFileSync("z_creators_output.json", JSON.stringify(creatorData, null, 2));
+// console.log("Written to z_creators_output.json");
+
+
+
+// SINGLE CREATOR LOOKUP
+const creatorUrl = new URL(
+  "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/public/",
+);
+creatorUrl.searchParams.set("tto_tcm_account_id", TTO_ACC_ID);
+creatorUrl.searchParams.set("handle_name", HANDLE_NAME);
+// console.log(creatorUrl.toString());
+
+const creatorRes = await fetch(creatorUrl, {
+  method: "GET",
+  headers: { "Access-Token": TT_ACCESS_TOKEN },
+});
+
+const creatorData = await creatorRes.json();
+writeFileSync("z_creator_output.json", JSON.stringify(creatorData, null, 2));
+console.log("Written to z_creator_output.json");
 
 
 // LABEL LOOKUP
