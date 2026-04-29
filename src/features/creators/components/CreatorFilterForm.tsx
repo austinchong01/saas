@@ -32,14 +32,16 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { searchParamsToFilters } from "../url";
 import { useEffect } from "react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 
 const defaultFilters: Partial<CreatorFilterFormValues> = {
   languages: [],
   followerCountryCodes: [],
-  countryCodes: ["US"],
+  countryCode: "US",
   contentLabels: [],
-  followerGenderRatio: [],
-  followerAge: [],
+  followerGenderRatio: undefined,
+  followerAge: undefined,
   followersMin: 10000,
   followersMax: undefined,
   medianViewsMin: 0,
@@ -81,6 +83,37 @@ export function CreatorFilterForm({
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <Card>
           <CardContent className={cn("p-6 space-y-8")}>
+            
+            {/* Creator Country */}
+            <FormField
+              control={form.control}
+              name="countryCode"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Creator Country <span className="text-destructive">*</span>
+                  </FormLabel>
+
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      className="flex flex-wrap gap-4"
+                    >
+                      {COUNTRY_CODES.map((code) => (
+                        <div key={code} className="flex items-center gap-2">
+                          <RadioGroupItem value={code} id={`country-${code}`} />
+                          <Label htmlFor={`country-${code}`}>{code}</Label>
+                        </div>
+                      ))}
+                    </RadioGroup>
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             {/* Followers */}
             <RangeFields
               control={form.control}
@@ -143,26 +176,6 @@ export function CreatorFilterForm({
                       value={field.value}
                       onChange={field.onChange}
                       getLabel={(option) => LANGUAGE_LABELS[option]}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Creator Country */}
-            <FormField
-              control={form.control}
-              name="countryCodes"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Creator Country</FormLabel>
-                  <FormControl>
-                    <MultiToggle
-                      options={COUNTRY_CODES}
-                      value={field.value}
-                      onChange={field.onChange}
-                      // getLabel={(option) => COUNTRY_LABELS[option]}
                     />
                   </FormControl>
                   <FormMessage />

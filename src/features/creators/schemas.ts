@@ -28,10 +28,10 @@ export const creatorFilterSchema = z
     engagementRateMax: optionalRate,
     languages: z.array(z.enum(LANGUAGES)).optional(),
     followerCountryCodes: z.array(z.enum(COUNTRY_CODES)).optional(),
-    countryCodes: z.array(z.enum(COUNTRY_CODES)).optional(),
+    countryCode: z.enum(COUNTRY_CODES, { required_error: "Select a creator country" }),
     contentLabels: z.array(z.enum(CONTENT_LABELS)).optional(),
-    followerGenderRatio: z.array(z.enum(FOLLOWER_GENDER_RATIOS)).optional(),
-    followerAge: z.array(z.enum(FOLLOWER_AGES)).optional(),
+    followerGenderRatio: z.enum(FOLLOWER_GENDER_RATIOS).optional(),
+    followerAge: z.enum(FOLLOWER_AGES).optional(),
   })
   .refine(
     (d) =>

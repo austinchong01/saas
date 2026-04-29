@@ -6,121 +6,74 @@ import mockCreators from "@/data/mock/creators.json";
 import { CreatorFilterFormValues, creatorFilterSchema } from "./schemas";
 import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser";
 import { filtersToSearchParams } from "./url";
+import { env } from "../../data/env/server";
 
 export async function getCreator(creatorId: string) {
   "use cache";
   cacheTag(getCreatorIdTag(creatorId));
 
   // TODO: Replace with TikTok API call once approved
+  const creatorUrl = new URL(
+    "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/public/",
+  );
+  creatorUrl.searchParams.set("tto_tcm_account_id", env.TT_ACC_ID);
+  creatorUrl.searchParams.set("handle_name", creatorId);
 
-  const creator = mockCreators.find((c) => c.username === creatorId);
-  return creator ?? null;
+  const creatorRes = await fetch(creatorUrl, {
+    method: "GET",
+    headers: { "Access-Token": env.TT_ACCESS_TOKEN },
+  });
+
+  const creatorData = await creatorRes.json();
+
+  if (!creatorData.success) {
+    console.log("Failed to fetch creator data:", creatorData.message);
+    return null;
+  }
+  console.log(creatorData.data);
+  return;
+  
+  // return creatorData.data;
 }
 
 export async function getCreatorsByFilters(
   filters: Partial<CreatorFilterFormValues>,
 ) {
   let results = [...mockCreators];
+  console.log(filters);
 
-  // Keyword search (username, display_name, bio)
-  // if (filters.keyword) {
-  //   const kw = filters.keyword.toLowerCase();
-  //   results = results.filter(
-  //     (c) =>
-  //       c.username.toLowerCase().includes(kw) ||
-  //       c.display_name.toLowerCase().includes(kw) ||
-  //       c.bio.toLowerCase().includes(kw),
-  //   );
-  // }
+  const creatorListURL = new URL(
+    "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/discover/",
+  );
+  creatorListURL.searchParams.set("tto_tcm_account_id", env.TT_ACC_ID);
 
-  // Content labels (multi-select)
-  if (filters.contentLabels?.length) {
-    results = results.filter((c) =>
-      filters.contentLabels!.includes(
-        c.content_type as typeof filters.contentLabels extends
-          | (infer U)[]
-          | null
-          ? U
-          : never,
-      ),
-    );
-  }
+  creatorListURL.searchParams.set("country_codes", JSON.stringify(["US"])); // can only choose one region
 
-  // Creator country (multi-select)
-  if (filters.countryCodes?.length) {
-    results = results.filter((c) =>
-      filters.countryCodes!.some((code) => code === c.country),
-    );
-  }
+  creatorListURL.searchParams.set("content_label_ids", JSON.stringify(["11002", "11002002"]));
+  // creatorListURL.searchParams.set("industry_label_ids", JSON.stringify(["14000000000"]));
 
-  // Languages (multi-select)
-  if (filters.languages?.length) {
-    results = results.filter((c) =>
-      filters.languages!.some(
-        (lang) => lang === c.language.toLowerCase().slice(0, 2),
-      ),
-    );
-  }
+  creatorListURL.searchParams.set("languages", JSON.stringify(["en", "ko"]));
+  // creatorListURL.searchParams.set("min_median_views", 5000);
 
-  // Range filters
-  if (filters.followersMin != null) {
-    results = results.filter((c) => c.followers >= filters.followersMin!);
-  }
-  if (filters.followersMax != null) {
-    results = results.filter((c) => c.followers <= filters.followersMax!);
-  }
+  creatorListURL.searchParams.set("min_followers", 1000);
+  creatorListURL.searchParams.set("max_followers", 15000);
 
-  if (filters.medianViewsMin != null) {
-    results = results.filter((c) => c.median_views >= filters.medianViewsMin!);
-  }
-  if (filters.medianViewsMax != null) {
-    results = results.filter((c) => c.median_views <= filters.medianViewsMax!);
-  }
+  creatorListURL.searchParams.set("follower_country_codes", JSON.stringify(["US", "KR"]));
+  // creatorListURL.searchParams.set("follower_gender_ratio", "FEMALE_60");
+  creatorListURL.searchParams.set("follower_age", "18-24");
 
-  if (filters.engagementRateMin != null) {
-    results = results.filter(
-      (c) => c.engagement_rate >= filters.engagementRateMin!,
-    );
-  }
-  if (filters.engagementRateMax != null) {
-    results = results.filter(
-      (c) => c.engagement_rate <= filters.engagementRateMax!,
-    );
-  }
+  creatorListURL.searchParams.set("sort_field", "RELEVANCE");
+  creatorListURL.searchParams.set("sort_order", "DESC");
+  // creatorListURL.searchParams.set("page_size", 10);
 
-  // Audience country (multi-select)
-  if (filters.followerCountryCodes?.length) {
-    results = results.filter((c) =>
-      filters.followerCountryCodes!.some((code) =>
-        c.audience_countries.some((ac) => ac.country === code),
-      ),
-    );
-  }
+  const creatorListRES = await fetch(creatorListURL, {
+    method: "GET",
+    headers: { "Access-Token": env.TT_ACCESS_TOKEN },
+  });
 
-  // Audience gender ratio
-  if (filters.followerGenderRatio?.length) {
-    results = results.filter((c) =>
-      filters.followerGenderRatio!.some((ratio) => {
-        const [gender, threshold] = ratio.split("_");
-        const percentage = Number(threshold);
-        const match = c.audience_genders.find(
-          (g) => g.gender === gender.toLowerCase(),
-        );
-        return match != null && match.percentage >= percentage;
-      }),
-    );
-  }
+  const creatorList = await creatorListRES.json();
+  console.log(creatorList.data);
 
-  // Audience age
-  if (filters.followerAge?.length) {
-    results = results.filter((c) =>
-      filters.followerAge!.some((ageRange) =>
-        c.audience_ages.some((a) => a.age === ageRange && a.percentage >= 20),
-      ),
-    );
-  }
-
-  results.sort((a, b) => b.followers - a.followers);
   return results;
 }
 

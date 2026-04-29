@@ -45,13 +45,12 @@ export function searchParamsToFilters(params: Record<string, string>): {
   if (get("contentLabels"))
     result.contentLabels = get("contentLabels")!.split(",");
   if (get("languages")) result.languages = get("languages")!.split(",");
-  if (get("countryCodes"))
-    result.countryCodes = get("countryCodes")!.split(",");
+  if (get("countryCode")) result.countryCode = get("countryCode");
   if (get("followerCountryCodes"))
     result.followerCountryCodes = get("followerCountryCodes")!.split(",");
   if (get("followerGenderRatio"))
-    result.followerGenderRatio = get("followerGenderRatio")!.split(",");
-  if (get("followerAge")) result.followerAge = get("followerAge")!.split(",");
+    result.followerGenderRatio = get("followerGenderRatio");
+  if (get("followerAge")) result.followerAge = get("followerAge");
 
   const parsed = creatorFilterSchema.safeParse(result);
   if (!parsed.success) {
