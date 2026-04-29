@@ -1,31 +1,27 @@
 {
   "code": 0,
   "message": "OK",
-  "request_id": "20260428023213AC3C502DC03DBAF2C9DA",
+  "request_id": "2026042905233428234086058AF9A3FE35",
   "data": {
-    "bio": "📍🇰🇷🇺🇸\nYouTube: Rachel Kwon\n💌rachel@teamwildent.com",
+    "bio": "makeup, skincare, and random shet\n💌 lydia@starlinemgmt.com",
     "content_labels": [
       {
         "label_id": "11002002",
         "label_name": "Beauty Tutorials & Tips"
-      },
-      {
-        "label_id": "11002006",
-        "label_name": "Hair Design & Care"
       }
     ],
-    "creator_id": "7091646600098873350",
+    "creator_id": "7512619512014127150",
     "creator_price": 0,
-    "currency": "KRW",
-    "display_name": "Rachel Kwon",
-    "engagement_rate": 0.1141,
-    "followers_count": 950570,
-    "following_count": 189,
-    "handle_name": "rachelheheh",
+    "currency": "USD",
+    "display_name": "Lydia 🎈",
+    "engagement_rate": 0.0425,
+    "followers_count": 151085,
+    "following_count": 244,
+    "handle_name": "lydia.chae",
     "industry_labels": [],
-    "likes_count": 104909401,
-    "median_views": 92599,
-    "profile_image": "https://p16-sign-sg.tiktokcdn.com/tos-alisg-avt-0068/e54e32544e8e6a4b4eac372a8ac739a4~tplv-photomode-zoomcover-tcm:200:200.jpeg?dr=16668&nonce=94043&refresh_token=f967d6d9a19808d2aa8fe2361106e85d&x-expires=1777917600&x-signature=egmKKO5uJWLX88z9UPvjQy%2FeHak%3D&idc=sg1&ps=223449c4&shcp=690928d5&shp=429d27ce&t=e8257cf9",
-    "videos_count": 1032
+    "likes_count": 10066895,
+    "median_views": 54839,
+    "profile_image": "https://p16-common-sign.tiktokcdn-us.com/tos-useast8-avt-0068-tx2/30ae3145090c73dc0304de18f74aa1fb~tplv-photomode-zoomcover-tcm:200:200.jpeg?dr=10986&nonce=99184&refresh_token=585c79ea04d4ec81ec930e8a3956febf&x-expires=1778014800&x-signature=aIRSBrThO3%2FkdwBXRMx7IchKhhA%3D&idc=useast5&ps=223449c4&shcp=690928d5&shp=429d27ce&t=e8257cf9",
+    "videos_count": 371
   }
 }

@@ -1,7 +1,7 @@
 import { writeFileSync } from "fs";
 const { TT_APP_ID, AUTH_CODE, TT_SECRET, TT_ACCESS_TOKEN, TTO_ACC_ID } = process.env;
 
-const HANDLE_NAME = "rachelheheh"; // USERNAME TEST
+const HANDLE_NAME = "lydia.chae"; // USERNAME TEST
 
 // Step 1: access token
 // const tokenRes = await fetch(
@@ -56,7 +56,7 @@ const scope = [18020000, 13020000, 18010000, 14020000, 14010000];
 // );
 // creatorUrl.searchParams.set("tto_tcm_account_id", TTO_ACC_ID);
 
-// creatorUrl.searchParams.set("country_codes", JSON.stringify(["KR"])); // can only choose one region
+// creatorUrl.searchParams.set("country_codes", JSON.stringify(["US"])); // can only choose one region
 
 // creatorUrl.searchParams.set("content_label_ids", JSON.stringify(["11002", "11002002"]));
 // // creatorUrl.searchParams.set("industry_label_ids", JSON.stringify(["14000000000"]));
@@ -65,16 +65,16 @@ const scope = [18020000, 13020000, 18010000, 14020000, 14010000];
 // // creatorUrl.searchParams.set("min_median_views", 5000);
 
 
-// creatorUrl.searchParams.set("min_followers", 100000);
-// // creatorUrl.searchParams.set("max_followers", 10000);
+// creatorUrl.searchParams.set("min_followers", 1000);
+// creatorUrl.searchParams.set("max_followers", 15000);
 
 // creatorUrl.searchParams.set("follower_country_codes", JSON.stringify(["US", "KR"]));
-// creatorUrl.searchParams.set("follower_gender_ratio", "FEMALE_60");
+// // creatorUrl.searchParams.set("follower_gender_ratio", "FEMALE_60");
 // creatorUrl.searchParams.set("follower_age", "18-24");
 
 // creatorUrl.searchParams.set("sort_field", "RELEVANCE");
 // creatorUrl.searchParams.set("sort_order", "DESC");
-// creatorUrl.searchParams.set("page_size", 10);
+// // creatorUrl.searchParams.set("page_size", 10);
 
 
 // const creatorRes = await fetch(creatorUrl, {
