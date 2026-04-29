@@ -33,7 +33,7 @@ import { useRouter } from "next/navigation";
 import { searchParamsToFilters } from "../url";
 import { useEffect } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
+import { stripUndefined } from "@/lib/utils";
 
 const defaultFilters: Partial<CreatorFilterFormValues> = {
   languages: [],
@@ -65,10 +65,11 @@ export function CreatorFilterForm({
 
   const form = useForm<CreatorFilterFormValues>({
     resolver: zodResolver(creatorFilterSchema),
-    defaultValues: { ...defaultFilters, ...filters },
+    defaultValues: { ...defaultFilters, ...stripUndefined(filters) },
   });
 
   async function onSubmit(values: CreatorFilterFormValues) {
+    console.log("Submitting filters:", values);
     const res = await checkFilterInfo(values);
 
     if (typeof res === "object" && res.error) {
@@ -83,7 +84,6 @@ export function CreatorFilterForm({
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <Card>
           <CardContent className={cn("p-6 space-y-8")}>
-            
             {/* Creator Country */}
             <FormField
               control={form.control}
@@ -98,13 +98,10 @@ export function CreatorFilterForm({
                     <RadioGroup
                       onValueChange={field.onChange}
                       value={field.value}
-                      className="flex flex-wrap gap-4"
+                      className="flex flex-wrap gap-2"
                     >
                       {COUNTRY_CODES.map((code) => (
-                        <div key={code} className="flex items-center gap-2">
-                          <RadioGroupItem value={code} id={`country-${code}`} />
-                          <Label htmlFor={`country-${code}`}>{code}</Label>
-                        </div>
+                        <RadioGroupItem key={code} value={code} />
                       ))}
                     </RadioGroup>
                   </FormControl>
@@ -210,14 +207,19 @@ export function CreatorFilterForm({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Audience Gender Ratio</FormLabel>
+
                   <FormControl>
-                    <MultiToggle
-                      options={FOLLOWER_GENDER_RATIOS}
-                      value={field.value}
-                      onChange={field.onChange}
-                      getLabel={(option) => GENDER_RATIO_LABELS[option]}
-                    />
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      value={field.value ?? ""}
+                      className="flex flex-wrap gap-2"
+                    >
+                      {FOLLOWER_GENDER_RATIOS.map((code) => (
+                        <RadioGroupItem key={code} value={code} />
+                      ))}
+                    </RadioGroup>
                   </FormControl>
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -230,13 +232,19 @@ export function CreatorFilterForm({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Audience Age</FormLabel>
+
                   <FormControl>
-                    <MultiToggle
-                      options={FOLLOWER_AGES}
-                      value={field.value}
-                      onChange={field.onChange}
-                    />
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      value={field.value ?? ""}
+                      className="flex flex-wrap gap-2"
+                    >
+                      {FOLLOWER_AGES.map((code) => (
+                        <RadioGroupItem key={code} value={code} />
+                      ))}
+                    </RadioGroup>
                   </FormControl>
+
                   <FormMessage />
                 </FormItem>
               )}
