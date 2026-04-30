@@ -5,7 +5,6 @@ import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import mockCreators from "@/data/mock/creators.json";
 import { CreatorFilterFormValues, creatorFilterSchema } from "./schemas";
 import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser";
-import { filtersToSearchParams } from "./url";
 import { env } from "../../data/env/server";
 
 export async function getCreator(creatorId: string) {
@@ -77,7 +76,7 @@ export async function getCreatorsByFilters(
   return results;
 }
 
-export async function checkFilterInfo(unsafeData: CreatorFilterFormValues) {
+export async function checkFilterInfo(unsafeData: Partial<CreatorFilterFormValues>) {
   const { userId } = await getCurrentUser();
   if (userId == null) {
     return {
@@ -87,10 +86,9 @@ export async function checkFilterInfo(unsafeData: CreatorFilterFormValues) {
   }
 
   const { success, data } = creatorFilterSchema.safeParse(unsafeData);
+
   if (!success) {
     return { error: true, message: "Invalid filter data." };
   }
-
-  const id = filtersToSearchParams(data);
-  return id;
+  return data;
 }

@@ -30,7 +30,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { checkFilterInfo } from "../actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { searchParamsToFilters } from "../url";
+import { filtersToSearchParams, searchParamsToFilters } from "../url";
 import { useEffect } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { stripUndefined } from "@/lib/utils";
@@ -69,13 +69,14 @@ export function CreatorFilterForm({
   });
 
   async function onSubmit(values: CreatorFilterFormValues) {
-    console.log("Submitting filters:", values);
-    const res = await checkFilterInfo(values);
+    const safeParsed = await checkFilterInfo(values);
+    console.log(safeParsed)
+    const url = filtersToSearchParams(safeParsed);
 
-    if (typeof res === "object" && res.error) {
-      toast.error(res.message);
+    if (typeof url === "object" && url.error) {
+      toast.error(url.message);
     } else {
-      router.push(`/app/creators?${res}`);
+      router.push(`/app/creators?${url}`);
     }
   }
 
