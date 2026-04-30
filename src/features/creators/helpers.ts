@@ -59,3 +59,22 @@ export function searchParamsToFilters(params: Record<string, string>): {
 
   return { data: parsed.data, error: null };
 }
+
+
+export function setIfDefined(
+  params: URLSearchParams,
+  key: string,
+  value: unknown,
+) {
+  if (value == null) return;
+  params.set(key, String(value));
+}
+
+export function setArrayIfDefined(
+  params: URLSearchParams,
+  key: string,
+  value: unknown[] | undefined,
+) {
+  if (!value || value.length === 0) return;
+  params.set(key, JSON.stringify(value));
+}

@@ -6,6 +6,8 @@ import mockCreators from "@/data/mock/creators.json";
 import { CreatorFilterFormValues, creatorFilterSchema } from "./schemas";
 import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser";
 import { env } from "../../data/env/server";
+import { setIfDefined, setArrayIfDefined } from "./helpers";
+import { set } from "zod/v4-mini";
 
 export async function getCreator(creatorId: string) {
   "use cache";
@@ -31,52 +33,62 @@ export async function getCreator(creatorId: string) {
   }
   console.log(creatorData.data);
   return;
-  
+
   // return creatorData.data;
 }
 
 export async function getCreatorsByFilters(
   filters: Partial<CreatorFilterFormValues>,
 ) {
-  let results = [...mockCreators];
-  console.log(filters);
+  const creatorListURL = new URL(
+    "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/discover/",
+  );
+  const params = creatorListURL.searchParams;
 
-  // const creatorListURL = new URL(
-  //   "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/discover/",
-  // );
-  // creatorListURL.searchParams.set("tto_tcm_account_id", env.TT_ACC_ID);
+  // REQUIRED PARAMS
+  params.set("tto_tcm_account_id", env.TT_ACC_ID);
+  params.set(
+    "country_codes",
+    JSON.stringify([filters.countryCode]),
+  );
 
-  // creatorListURL.searchParams.set("country_codes", JSON.stringify(["US"])); // can only choose one region
+  setIfDefined(params, "min_followers", filters.followersMin);
+  setIfDefined(params, "max_followers", filters.followersMax);
+  setIfDefined(params, "min_median_views", filters.medianViewsMin);
+  setIfDefined(params, "max_median_views", filters.medianViewsMax);
+  setIfDefined(params, "min_engagement_rate", filters.engagementRateMin);
+  setIfDefined(params, "max_engagement_rate", filters.engagementRateMax);
+  setIfDefined(params, "follower_age", filters.followerAge);
+  setIfDefined(params, "follower_gender_ratio", filters.followerGenderRatio);
+  // keyword search?
 
-  // creatorListURL.searchParams.set("content_label_ids", JSON.stringify(["11002", "11002002"]));
-  // // creatorListURL.searchParams.set("industry_label_ids", JSON.stringify(["14000000000"]));
+  setArrayIfDefined(params, "languages", filters.languages);
+  setArrayIfDefined(params, "content_labels", filters.contentLabels);
+  setArrayIfDefined(params, "follower_country_codes", filters.followerCountryCodes);
+  // industry labels?
 
-  // creatorListURL.searchParams.set("languages", JSON.stringify(["en", "ko"]));
-  // // creatorListURL.searchParams.set("min_median_views", 5000);
+  params.set("sort_field", "RELEVANCE");
+  params.set("sort_order", "DESC");
+  params.set("page", 1); // why is this number?
+  params.set("page_size", 20); 
 
-  // creatorListURL.searchParams.set("min_followers", 1000);
-  // creatorListURL.searchParams.set("max_followers", 15000);
+  // DO I NEED TO JSON?
+  // CACHE RESULTS? Saved id based on filters?
 
-  // creatorListURL.searchParams.set("follower_country_codes", JSON.stringify(["US", "KR"]));
-  // // creatorListURL.searchParams.set("follower_gender_ratio", "FEMALE_60");
-  // creatorListURL.searchParams.set("follower_age", "18-24");
 
-  // creatorListURL.searchParams.set("sort_field", "RELEVANCE");
-  // creatorListURL.searchParams.set("sort_order", "DESC");
-  // // creatorListURL.searchParams.set("page_size", 10);
+  const creatorListRES = await fetch(creatorListURL, {
+    method: "GET",
+    headers: { "Access-Token": env.TT_ACCESS_TOKEN },
+  });
+  const creatorList = await creatorListRES.json();
+  console.log(creatorList.data);
 
-  // const creatorListRES = await fetch(creatorListURL, {
-  //   method: "GET",
-  //   headers: { "Access-Token": env.TT_ACCESS_TOKEN },
-  // });
-
-  // const creatorList = await creatorListRES.json();
-  // console.log(creatorList.data);
-
-  return results;
+  return "ran getCreatorsByFilters";
 }
 
-export async function checkFilterInfo(unsafeData: Partial<CreatorFilterFormValues>) {
+export async function checkFilterInfo(
+  unsafeData: Partial<CreatorFilterFormValues>,
+) {
   const { userId } = await getCurrentUser();
   if (userId == null) {
     return {

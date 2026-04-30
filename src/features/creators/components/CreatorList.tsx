@@ -18,24 +18,25 @@ import {
   Languages,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { filtersToSearchParams, searchParamsToFilters } from "../url";
+import { filtersToSearchParams, searchParamsToFilters } from "../helpers";
 import Link from "next/link";
 import { formatCount } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
 
 export async function CreatorList({
   searchParams = {},
 }: {
   searchParams?: Record<string, string>;
 }) {
-
   const { data: filters, error } = searchParamsToFilters(searchParams); // error on invalid param filters
-  const creators = await getCreatorsByFilters(filters);
+  // const creators = await getCreatorsByFilters(filters);
 
-  const url = filtersToSearchParams(filters);
+  // const url = filtersToSearchParams(filters);
 
-  if (creators.length == 0) return <NoCreatorsFound url={url}/>;
-  return <CreatorsFound creators={creators} url={url} />;
+  // if (creators.length == 0) return <NoCreatorsFound url={url}/>;
+  // return <CreatorsFound creators={creators} url={url} />;
+
+  console.log(filters);
+  return <div>Creator List</div>;
 }
 
 function NoCreatorsFound({ url }: { url: string }) {
@@ -90,7 +91,9 @@ function CreatorsFound({ creators, url }: { creators: any[]; url: string }) {
               <div className="text-sm text-muted-foreground">{creator.bio}</div>
               <CardAction>
                 <Button variant="outline" size="sm" asChild>
-                  <Link href={`/app/creators/${creator.username}?back=${encodeURIComponent(`/app/creators?${url}`)}`}>
+                  <Link
+                    href={`/app/creators/${creator.username}?back=${encodeURIComponent(`/app/creators?${url}`)}`}
+                  >
                     Profile
                   </Link>
                 </Button>
