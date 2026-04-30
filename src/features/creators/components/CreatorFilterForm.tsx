@@ -70,14 +70,14 @@ export function CreatorFilterForm({
 
   async function onSubmit(values: CreatorFilterFormValues) {
     const safeParsed = await checkFilterInfo(values);
-    console.log(safeParsed)
-    const url = filtersToSearchParams(safeParsed);
 
-    if (typeof url === "object" && url.error) {
-      toast.error(url.message);
-    } else {
-      router.push(`/app/creators?${url}`);
+    if ("error" in safeParsed) {
+      toast.error(safeParsed.message);
+      return;
     }
+
+    const url = filtersToSearchParams(safeParsed);
+    router.push(`/app/creators?${url}`);
   }
 
   return (
