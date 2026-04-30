@@ -69,8 +69,8 @@ export async function getCreatorsByFilters(
 
   params.set("sort_field", "RELEVANCE");
   params.set("sort_order", "DESC");
-  params.set("page", 1); // why is this number?
-  params.set("page_size", 20); 
+  params.set("page", "1");
+  params.set("page_size", "10"); 
 
   // DO I NEED TO JSON?
   // CACHE RESULTS? Saved id based on filters?
@@ -81,9 +81,11 @@ export async function getCreatorsByFilters(
     headers: { "Access-Token": env.TT_ACCESS_TOKEN },
   });
   const creatorList = await creatorListRES.json();
-  console.log(creatorList.data);
+  if (creatorList.message !== "OK") {
+    return { error: true, message: `Failed to fetch creator list: ${creatorList.message}` };
+  }
 
-  return "ran getCreatorsByFilters";
+  return creatorList.data.creators;
 }
 
 export async function checkFilterInfo(

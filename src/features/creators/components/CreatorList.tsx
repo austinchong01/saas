@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { filtersToSearchParams, searchParamsToFilters } from "../helpers";
 import Link from "next/link";
 import { formatCount } from "@/lib/utils";
+import { toast } from "sonner";
 
 export async function CreatorList({
   searchParams = {},
@@ -28,15 +29,16 @@ export async function CreatorList({
   searchParams?: Record<string, string>;
 }) {
   const { data: filters, error } = searchParamsToFilters(searchParams); // error on invalid param filters
-  // const creators = await getCreatorsByFilters(filters);
+  const url = filtersToSearchParams(filters);
 
-  // const url = filtersToSearchParams(filters);
+  const creators = await getCreatorsByFilters(filters);
+  if ("error" in creators) {
+    toast.error(creators.message);
+    return <NoCreatorsFound url={url} />;
+  }
 
-  // if (creators.length == 0) return <NoCreatorsFound url={url}/>;
-  // return <CreatorsFound creators={creators} url={url} />;
-
-  console.log(filters);
-  return <div>Creator List</div>;
+  if (creators.length == 0) return <NoCreatorsFound url={url} />;
+  return <CreatorsFound creators={creators} url={url} />;
 }
 
 function NoCreatorsFound({ url }: { url: string }) {
@@ -65,7 +67,7 @@ function CreatorsFound({ creators, url }: { creators: any[]; url: string }) {
           <Link href={`/app?${url}`}>Edit Filters</Link>
         </Button>
         {creators.map((creator) => (
-          <Card key={creator.id}>
+          <Card key={creator.handle_name}>
             <CardHeader>
               <div className="flex flex-0 gap-4 items-center">
                 <Avatar size="lg">
@@ -79,16 +81,15 @@ function CreatorsFound({ creators, url }: { creators: any[]; url: string }) {
                 </Avatar>
                 <div>
                   <CardTitle>{creator.display_name}</CardTitle>
-                  <CardDescription>@{creator.username}</CardDescription>
+                  <CardDescription>@{creator.handle_name}</CardDescription>
                 </div>
-                <div>
+                {/* <div>
                   {creator.is_verified && (
                     <BadgeCheck className="size-6 text-blue-500" />
                   )}
-                </div>
+                </div> */}
               </div>
 
-              <div className="text-sm text-muted-foreground">{creator.bio}</div>
               <CardAction>
                 <Button variant="outline" size="sm" asChild>
                   <Link
@@ -104,31 +105,17 @@ function CreatorsFound({ creators, url }: { creators: any[]; url: string }) {
               <div className="grid grid-cols-2 gap-6 text-sm">
                 <div className="flex items-center gap-2 h-5 w-56">
                   <Users className="size-4 text-muted-foreground" />
-                  <span>{formatCount(creator.followers)} followers</span>
+                  <span>{formatCount(creator.followers_count)} followers</span>
                 </div>
                 <div className="flex items-center gap-2 h-5 w-56">
                   <Heart className="size-4 text-muted-foreground" />
                   <span className="nowraptext">
-                    {formatCount(creator.likes)} likes
+                    {formatCount(creator.likes_count)} likes
                   </span>
-                </div>
-                <div className="flex items-center gap-2 h-5 w-56">
-                  <Tag className="size-4 text-muted-foreground" />
-                  <span>{creator.content_type}</span>
-                </div>
-                <div className="flex items-center gap-2 h-5 w-56">
-                  <Eye className="size-4 text-muted-foreground" />
-                  <span className="nowraptext">
-                    {formatCount(creator.median_views)} views (median)
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 h-5 w-56">
-                  <Globe className="size-4 text-muted-foreground" />
-                  <span>{creator.country}</span>
                 </div>
                 <div className="flex items-center gap-2 h-5 w-56">
                   <Languages className="size-4 text-muted-foreground" />
-                  <span>{creator.language} (language)</span>
+                  <span>{formatCount(creator.videos_count)} videos</span>
                 </div>
               </div>
             </CardContent>
