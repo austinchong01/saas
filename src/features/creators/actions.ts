@@ -2,18 +2,15 @@
 
 import { getCreatorIdTag } from "./cache";
 import { cacheTag } from "next/dist/server/use-cache/cache-tag";
-import mockCreators from "@/data/mock/creators.json";
 import { CreatorFilterFormValues, creatorFilterSchema } from "./schemas";
 import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser";
 import { env } from "../../data/env/server";
 import { setIfDefined, setArrayIfDefined } from "./helpers";
-import { set } from "zod/v4-mini";
 
 export async function getCreator(creatorId: string) {
   "use cache";
   cacheTag(getCreatorIdTag(creatorId));
 
-  // TODO: Replace with TikTok API call once approved
   const creatorUrl = new URL(
     "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/public/",
   );
@@ -27,14 +24,11 @@ export async function getCreator(creatorId: string) {
 
   const creatorData = await creatorRes.json();
 
-  if (!creatorData.success) {
-    console.log("Failed to fetch creator data:", creatorData.message);
-    return null;
+  if (creatorData.message !== "OK") {
+    return { error: true, message: `Failed to fetch creator: ${creatorData.message}` };
   }
-  console.log(creatorData.data);
-  return;
-
-  // return creatorData.data;
+  console.log(creatorData);
+  return creatorData.data;
 }
 
 export async function getCreatorsByFilters(
@@ -72,7 +66,6 @@ export async function getCreatorsByFilters(
   params.set("page", "1");
   params.set("page_size", "10"); 
 
-  // DO I NEED TO JSON?
   // CACHE RESULTS? Saved id based on filters?
 
 

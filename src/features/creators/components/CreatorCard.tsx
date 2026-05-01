@@ -12,6 +12,7 @@ import { BadgeCheck } from "lucide-react";
 import { formatCount } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export async function CreatorCard({
   username,
@@ -22,7 +23,8 @@ export async function CreatorCard({
 }) {
   const creator = await getCreator(username);
 
-  if (!creator) {
+  if ("error" in creator) {
+    toast.error(creator.message);
     return <div>Creator not found</div>;
   }
 
@@ -44,25 +46,25 @@ export async function CreatorCard({
 
         <CardHeader>
           <CardTitle className="text-2xl font-bold">
-            {creator.username}
+            {creator.handle_name}
           </CardTitle>
           <p>{creator.display_name}</p>
-          <CardAction>
+          {/* <CardAction>
             {creator.is_verified && (
               <BadgeCheck className="size-6 text-blue-500" />
             )}
-          </CardAction>
+          </CardAction> */}
           <CardDescription>
             <p>{creator.bio}</p>
           </CardDescription>
         </CardHeader>
 
         <CardContent className="grid grid-cols-2 gap-2">
-          <p>Followers: {formatCount(creator.followers)}</p>
-          <p>Likes: {formatCount(creator.likes)}</p>
-          <p>Videos: {formatCount(creator.video_count)}</p>
-          <p>Content Type: {creator.content_type}</p>
-          <p>Median Views: {formatCount(creator.median_views)}</p>
+          <p>Followers: {(creator.followers_count)}</p>
+          <p>Likes: {(creator.likes_count)}</p>
+          <p>Videos: {(creator.videos_count)}</p>
+          <p>Content Type: {creator.content_labels[0]}</p>
+          <p>Median Views: {(creator.median_views)}</p>
           <p>Engagement Rate: {creator.engagement_rate}%</p>
         </CardContent>
       </Card>
