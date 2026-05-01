@@ -6,6 +6,7 @@ import { CreatorFilterFormValues, creatorFilterSchema } from "./schemas";
 import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser";
 import { env } from "../../data/env/server";
 import { setIfDefined, setArrayIfDefined } from "./helpers";
+import { CONTENT_LABEL_IDS } from "./constants";
 
 export async function getCreator(creatorId: string) {
   "use cache";
@@ -38,6 +39,9 @@ export async function getCreatorsByFilters(
     "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/discover/",
   );
   const params = creatorListURL.searchParams;
+  // console.log(filters)
+  const labelIds = filters.contentLabels?.map(name => CONTENT_LABEL_IDS[name]);
+  // console.log(labelIds);
 
   // REQUIRED PARAMS
   params.set("tto_tcm_account_id", env.TT_ACC_ID);
@@ -57,7 +61,7 @@ export async function getCreatorsByFilters(
   // keyword search?
 
   setArrayIfDefined(params, "languages", filters.languages);
-  setArrayIfDefined(params, "content_labels", filters.contentLabels);
+  setArrayIfDefined(params, "content_label_ids", labelIds);
   setArrayIfDefined(params, "follower_country_codes", filters.followerCountryCodes);
   // industry labels?
 
@@ -67,6 +71,8 @@ export async function getCreatorsByFilters(
   params.set("page_size", "10"); 
 
   // CACHE RESULTS? Saved id based on filters?
+
+  console.log(creatorListURL.toString());
 
 
   const creatorListRES = await fetch(creatorListURL, {

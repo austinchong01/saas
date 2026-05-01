@@ -12,7 +12,6 @@ import { BadgeCheck } from "lucide-react";
 import { formatCount } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { toast } from "sonner";
 
 export async function CreatorCard({
   username,
