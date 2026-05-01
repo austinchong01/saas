@@ -21,7 +21,6 @@ import { Button } from "@/components/ui/button";
 import { filtersToSearchParams, searchParamsToFilters } from "../helpers";
 import Link from "next/link";
 import { formatCount } from "@/lib/utils";
-import { toast } from "sonner";
 
 export async function CreatorList({
   searchParams = {},
@@ -32,12 +31,8 @@ export async function CreatorList({
   const url = filtersToSearchParams(filters);
 
   const creators = await getCreatorsByFilters(filters);
-  if ("error" in creators) {
-    toast.error(creators.message);
-    return <NoCreatorsFound url={url} />;
-  }
 
-  if (creators.length == 0) return <NoCreatorsFound url={url} />;
+  if (creators.length == 0 || "error" in creators) return <NoCreatorsFound url={url} />;
   return <CreatorsFound creators={creators} url={url} />;
 }
 
@@ -93,7 +88,7 @@ function CreatorsFound({ creators, url }: { creators: any[]; url: string }) {
               <CardAction>
                 <Button variant="outline" size="sm" asChild>
                   <Link
-                    href={`/app/creators/${creator.username}?back=${encodeURIComponent(`/app/creators?${url}`)}`}
+                    href={`/app/creators/${creator.handle_name}?back=${encodeURIComponent(`/app/creators?${url}`)}`}
                   >
                     Profile
                   </Link>

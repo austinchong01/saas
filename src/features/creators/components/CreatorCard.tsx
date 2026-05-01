@@ -24,8 +24,7 @@ export async function CreatorCard({
   const creator = await getCreator(username);
 
   if ("error" in creator) {
-    toast.error(creator.message);
-    return <div>Creator not found</div>;
+    return <div>Creator not found: {creator.message}</div>;
   }
 
   return (
