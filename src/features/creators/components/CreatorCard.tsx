@@ -41,7 +41,7 @@ export async function CreatorCard({
         <img
           src={creator.profile_image}
           alt="profile_picture"
-          className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"
+          className="relative z-20 aspect-video w-full object-cover brightness-60 dark:brightness-40"
         />
 
         <CardHeader>
@@ -60,11 +60,18 @@ export async function CreatorCard({
         </CardHeader>
 
         <CardContent className="grid grid-cols-2 gap-2">
-          <p>Followers: {(creator.followers_count)}</p>
-          <p>Likes: {(creator.likes_count)}</p>
-          <p>Videos: {(creator.videos_count)}</p>
-          <p>Content Type: {creator.content_labels[0]}</p>
-          <p>Median Views: {(creator.median_views)}</p>
+          <p>Followers: {creator.followers_count}</p>
+          <p>Likes: {creator.likes_count}</p>
+          <p>Videos: {creator.videos_count}</p>
+          <p>
+            Content Type:{" "}
+            {creator.content_labels
+              .map(
+                (l: { label_id: string; label_name: string }) => l.label_name,
+              )
+              .join(", ")}
+          </p>
+          <p>Median Views: {creator.median_views}</p>
           <p>Engagement Rate: {creator.engagement_rate}%</p>
         </CardContent>
       </Card>
