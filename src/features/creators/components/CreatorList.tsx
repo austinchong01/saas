@@ -63,7 +63,7 @@ function NoCreatorsFound({ url, filters }: { url: string; filters: Partial<Creat
   );
 }
 
-function FilterBadges({
+export function FilterBadges({
   filters,
 }: {
   filters: Partial<CreatorFilterFormValues>;

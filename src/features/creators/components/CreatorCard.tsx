@@ -12,6 +12,8 @@ import { BadgeCheck } from "lucide-react";
 import { formatCount } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { FilterBadges } from "./CreatorList";
+import { searchParamsToFilters } from "../helpers";
 
 export async function CreatorCard({
   username,
@@ -20,6 +22,10 @@ export async function CreatorCard({
   username: string;
   back: string | undefined;
 }) {
+  const queryString = back?.split("?")[1] ?? "";
+  const params = Object.fromEntries(new URLSearchParams(queryString));
+  const { data: filters } = searchParamsToFilters(params);
+
   const creator = await getCreator(username);
 
   if ("error" in creator) {
@@ -29,10 +35,11 @@ export async function CreatorCard({
   return (
     <>
       {back && (
-        <div className="mx-auto my-4 max-w-xl">
-          <Button variant="outline" asChild>
+        <div className="mx-auto my-4 max-w-xl flex flex-col gap-2">
+          <Button variant="outline" asChild className="self-start">
             <Link href={back}>← Back</Link>
           </Button>
+          <FilterBadges filters={filters} />
         </div>
       )}
       <Card className="relative mx-auto max-w-xl pt-0 w-full my-4 overflow-hidden">
@@ -47,11 +54,6 @@ export async function CreatorCard({
             {creator.handle_name}
           </CardTitle>
           <p>{creator.display_name}</p>
-          {/* <CardAction>
-            {creator.is_verified && (
-              <BadgeCheck className="size-6 text-blue-500" />
-            )}
-          </CardAction> */}
           <CardDescription>
             <p>{creator.bio}</p>
           </CardDescription>
