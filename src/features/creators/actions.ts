@@ -72,7 +72,7 @@ export async function getCreatorsByFilters(
 
   // CACHE RESULTS? Saved id based on filters?
 
-  console.log(creatorListURL.toString());
+  console.log(decodeURIComponent(creatorListURL.toString()));
 
 
   const creatorListRES = await fetch(creatorListURL, {

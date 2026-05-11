@@ -34,23 +34,33 @@ export async function CreatorList({
 }: {
   searchParams?: Record<string, string>;
 }) {
+  console.log("CreatorList searchParams:", searchParams);
   const { data: filters, error } = searchParamsToFilters(searchParams); // error on invalid param filters
   const url = filtersToSearchParams(filters);
+  console.log("CreatorList filters:", filters, "url:", url);
 
   const creators = await getCreatorsByFilters(filters);
 
-  if (creators.length == 0 || "error" in creators)
+  if (!creators || "error" in creators) {
+    if ("error" in creators) return <div>{creators.message}</div>;
     return <NoCreatorsFound url={url} filters={filters} />;
+  }
   return <CreatorsFound creators={creators} url={url} filters={filters} />;
 }
 
-function NoCreatorsFound({ url, filters }: { url: string; filters: Partial<CreatorFilterFormValues> }) {
+function NoCreatorsFound({
+  url,
+  filters,
+}: {
+  url: string;
+  filters: Partial<CreatorFilterFormValues>;
+}) {
   return (
     <div className="container my-4 max-w-5xl">
       <h1 className="text-3xl md:text-4xl lg:text-5xl mb-4">
         No Creators Found
       </h1>
-      
+
       <p className="text-muted-foreground mb-8">
         Try adjusting the filters related to the creator/(s) you are interested
         in. The most relevant creators will be displayed first.
@@ -71,7 +81,10 @@ export function FilterBadges({
   const chips: { label: string; value: string }[] = [];
 
   if (filters.countryCode) {
-    chips.push({ label: "Country", value: COUNTRY_LABELS[filters.countryCode] });
+    chips.push({
+      label: "Country",
+      value: COUNTRY_LABELS[filters.countryCode],
+    });
   }
 
   if (filters.followersMin != null || filters.followersMax != null) {
