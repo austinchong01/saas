@@ -40,14 +40,14 @@ const defaultFilters: Partial<CreatorFilterFormValues> = {
   followerCountryCodes: [],
   countryCode: "US",
   contentLabels: [],
-  followerGenderRatio: undefined,
-  followerAge: undefined,
-  followersMin: 10000,
-  followersMax: undefined,
-  medianViewsMin: 0,
-  medianViewsMax: undefined,
-  engagementRateMin: 0,
-  engagementRateMax: undefined,
+  followerGenderRatio: "",
+  followerAge: "",
+  followersMin: "",
+  followersMax: "",
+  medianViewsMin: "",
+  medianViewsMax: "",
+  engagementRateMin: "",
+  engagementRateMax: "",
 };
 
 export function CreatorFilterForm({

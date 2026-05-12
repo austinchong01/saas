@@ -79,68 +79,57 @@ function NoCreatorsFound({
 export function FilterBadges({
   filters,
 }: {
-  filters: Partial<CreatorFilterFormValues>;
+  filters: CreatorFilterFormValues;
 }) {
   const chips: { label: string; value: string }[] = [];
 
   if (filters.countryCode) {
-    chips.push({
-      label: "Country",
-      value: COUNTRY_LABELS[filters.countryCode],
-    });
+    chips.push({ label: "Country", value: COUNTRY_LABELS[filters.countryCode] });
   }
 
-  if (filters.followersMin != undefined || filters.followersMax != undefined) {
-    const min =
-      filters.followersMin != undefined ? formatCount(filters.followersMin) : undefined;
-    const max =
-      filters.followersMax != undefined ? formatCount(filters.followersMax) : undefined;
+  if (filters.followersMin !== "" || filters.followersMax !== "") {
+    const min = filters.followersMin !== "" ? formatCount(filters.followersMin) : "";
+    const max = filters.followersMax !== "" ? formatCount(filters.followersMax) : "";
     chips.push({
       label: "Followers",
       value: min && max ? `${min}–${max}` : min ? `${min}+` : `≤${max}`,
     });
   }
 
-  if (filters.medianViewsMin != undefined || filters.medianViewsMax != undefined) {
-    const min =
-      filters.medianViewsMin != undefined
-        ? formatCount(filters.medianViewsMin)
-        : undefined;
-    const max =
-      filters.medianViewsMax != undefined
-        ? formatCount(filters.medianViewsMax)
-        : undefined;
+  if (filters.medianViewsMin !== "" || filters.medianViewsMax !== "") {
+    const min = filters.medianViewsMin !== "" ? formatCount(filters.medianViewsMin) : "";
+    const max = filters.medianViewsMax !== "" ? formatCount(filters.medianViewsMax) : "";
     chips.push({
       label: "Median views",
       value: min && max ? `${min}–${max}` : min ? `${min}+` : `≤${max}`,
     });
   }
 
-  if (filters.engagementRateMin != undefined || filters.engagementRateMax != undefined) {
+  if (filters.engagementRateMin !== "" || filters.engagementRateMax !== "") {
     const min =
-      filters.engagementRateMin != undefined
+      filters.engagementRateMin !== ""
         ? `${(filters.engagementRateMin * 100).toFixed(1)}%`
-        : undefined;
+        : "";
     const max =
-      filters.engagementRateMax != undefined
+      filters.engagementRateMax !== ""
         ? `${(filters.engagementRateMax * 100).toFixed(1)}%`
-        : undefined;
+        : "";
     chips.push({
       label: "Engagement",
       value: min && max ? `${min}–${max}` : min ? `${min}+` : `≤${max}`,
     });
   }
 
-  if (filters.contentLabels?.length) {
+  if (filters.contentLabels.length) {
     chips.push({ label: "Content", value: filters.contentLabels.join(", ") });
   }
-  if (filters.languages?.length) {
+  if (filters.languages.length) {
     chips.push({
       label: "Language",
       value: filters.languages.map((lang) => LANGUAGE_LABELS[lang]).join(", "),
     });
   }
-  if (filters.followerCountryCodes?.length) {
+  if (filters.followerCountryCodes.length) {
     chips.push({
       label: "Audience Country",
       value: filters.followerCountryCodes

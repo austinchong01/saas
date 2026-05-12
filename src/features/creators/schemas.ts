@@ -7,15 +7,15 @@ import {
   LANGUAGES,
 } from "./constants";
 
-export const optionalNonNegativeInt = z.preprocess(
-  (v) => (v === "" || v == null ? undefined : Number(v)),
-  z.number().int().min(0).optional(),
-) as z.ZodType<number | undefined>;
+export const optionalNonNegativeInt = z.union([
+  z.literal(""),
+  z.coerce.number().int().min(0),
+]);
 
-export const optionalRate = z.preprocess(
-  (v) => (v === "" || v == null ? undefined : Number(v)),
-  z.number().min(0).max(1).optional(),
-) as z.ZodType<number | undefined>;
+export const optionalRate = z.union([
+  z.literal(""),
+  z.coerce.number().min(0).max(1),
+]);
 
 export const creatorFilterSchema = z
   .object({
@@ -26,31 +26,36 @@ export const creatorFilterSchema = z
     medianViewsMax: optionalNonNegativeInt,
     engagementRateMin: optionalRate,
     engagementRateMax: optionalRate,
-    languages: z.array(z.enum(LANGUAGES)).optional(),
-    followerCountryCodes: z.array(z.enum(COUNTRY_CODES)).optional(),
-    countryCode: z.enum(COUNTRY_CODES, { required_error: "Select a creator country" }),
-    contentLabels: z.array(z.enum(CONTENT_LABELS)).optional(),
-    followerGenderRatio: z.enum(FOLLOWER_GENDER_RATIOS).optional(),
-    followerAge: z.enum(FOLLOWER_AGES).optional(),
+    languages: z.array(z.enum(LANGUAGES)),
+    followerCountryCodes: z.array(z.enum(COUNTRY_CODES)),
+    countryCode: z.enum(COUNTRY_CODES, {
+      required_error: "Select a creator country",
+    }),
+    contentLabels: z.array(z.enum(CONTENT_LABELS)),
+    followerGenderRatio: z.union([
+      z.enum(FOLLOWER_GENDER_RATIOS),
+      z.literal(""),
+    ]),
+    followerAge: z.union([z.enum(FOLLOWER_AGES), z.literal("")]),
   })
   .refine(
     (d) =>
-      d.followersMin == null ||
-      d.followersMax == null ||
+      d.followersMin === "" ||
+      d.followersMax === "" ||
       d.followersMin <= d.followersMax,
     { message: "min must be ≤ max", path: ["followersMax"] },
   )
   .refine(
     (d) =>
-      d.medianViewsMin == null ||
-      d.medianViewsMax == null ||
+      d.medianViewsMin === "" ||
+      d.medianViewsMax === "" ||
       d.medianViewsMin <= d.medianViewsMax,
     { message: "min must be ≤ max", path: ["medianViewsMax"] },
   )
   .refine(
     (d) =>
-      d.engagementRateMin == null ||
-      d.engagementRateMax == null ||
+      d.engagementRateMin === "" ||
+      d.engagementRateMax === "" ||
       d.engagementRateMin <= d.engagementRateMax,
     { message: "min must be ≤ max", path: ["engagementRateMax"] },
   );
