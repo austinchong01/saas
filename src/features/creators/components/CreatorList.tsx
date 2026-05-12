@@ -34,16 +34,19 @@ export async function CreatorList({
 }: {
   searchParams?: Record<string, string>;
 }) {
-  console.log("CreatorList searchParams:", searchParams);
+  // console.log("CreatorList searchParams:", searchParams);
   const { data: filters, error } = searchParamsToFilters(searchParams); // error on invalid param filters
   const url = filtersToSearchParams(filters);
-  console.log("CreatorList filters:", filters, "url:", url);
+  // console.log("CreatorList filters:", filters, "url:", url);
 
   const creators = await getCreatorsByFilters(filters);
 
-  if (!creators || "error" in creators) {
-    if ("error" in creators) return <div>{creators.message}</div>;
-    return <NoCreatorsFound url={url} filters={filters} />;
+  // console.log(creators);
+  if ("error" in creators) {
+    if (creators.message === "No creators found matching those filters.")
+      return <NoCreatorsFound url={url} filters={filters} />;
+    else
+      return <div>{creators.message}</div>
   }
   return <CreatorsFound creators={creators} url={url} filters={filters} />;
 }

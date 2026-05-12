@@ -207,7 +207,7 @@ export function CreatorFilterForm({
               name="followerGenderRatio"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Audience Gender Ratio</FormLabel>
+                  <FormLabel>Primary Audience Gender Ratio</FormLabel>
 
                   <FormControl>
                     <RadioGroup
@@ -232,7 +232,7 @@ export function CreatorFilterForm({
               name="followerAge"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Audience Age</FormLabel>
+                  <FormLabel>Primary Audience Age</FormLabel>
 
                   <FormControl>
                     <RadioGroup

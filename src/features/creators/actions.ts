@@ -7,10 +7,13 @@ import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser";
 import { env } from "../../data/env/server";
 import { setIfDefined, setArrayIfDefined } from "./helpers";
 import { CONTENT_LABEL_IDS } from "./constants";
+import { mock_creators, mock_creator } from "./mock_data";
 
 export async function getCreator(creatorId: string) {
   "use cache";
   cacheTag(getCreatorIdTag(creatorId));
+
+  // return mock_creator; // MOCK DATA
 
   const creatorUrl = new URL(
     "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/public/",
@@ -28,13 +31,16 @@ export async function getCreator(creatorId: string) {
   if (creatorData.message !== "OK") {
     return { error: true, message: `Failed to fetch creator: ${creatorData.message}` };
   }
-  console.log(creatorData);
+
+  // console.log(creatorData.data);
   return creatorData.data;
 }
 
 export async function getCreatorsByFilters(
   filters: Partial<CreatorFilterFormValues>,
 ) {
+  // return mock_creators; // MOCK DATA
+
   const creatorListURL = new URL(
     "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/discover/",
   );
@@ -72,7 +78,7 @@ export async function getCreatorsByFilters(
 
   // CACHE RESULTS? Saved id based on filters?
 
-  console.log(decodeURIComponent(creatorListURL.toString()));
+  // console.log(decodeURIComponent(creatorListURL.toString()));
 
 
   const creatorListRES = await fetch(creatorListURL, {
@@ -80,10 +86,14 @@ export async function getCreatorsByFilters(
     headers: { "Access-Token": env.TT_ACCESS_TOKEN },
   });
   const creatorList = await creatorListRES.json();
-  if (creatorList.message !== "OK") {
+  // console.log(creatorList);
+  if (creatorList.message !== "OK")
     return { error: true, message: `Failed to fetch creator list: ${creatorList.message}` };
-  }
 
+  if (!creatorList.data.creators)
+    return { error: true, message: "No creators found matching those filters." };
+  
+  // console.log(creatorList.data.creators);
   return creatorList.data.creators;
 }
 

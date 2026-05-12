@@ -4,30 +4,30 @@ const { TT_APP_ID, AUTH_CODE, TT_SECRET, TT_ACCESS_TOKEN, TTO_ACC_ID } = process
 const HANDLE_NAME = "lydia.chae"; // USERNAME TEST
 
 // Step 1: access token
-// const tokenRes = await fetch(
-//   "https://business-api.tiktok.com/open_api/v1.3/oauth2/access_token/",
-//   {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify({
-//       app_id: TT_APP_ID,
-//       auth_code: AUTH_CODE,
-//       secret: TT_SECRET,
-//     }),
-//   },
-// );
+const tokenRes = await fetch(
+  "https://business-api.tiktok.com/open_api/v1.3/oauth2/access_token/",
+  {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      app_id: TT_APP_ID,
+      auth_code: AUTH_CODE,
+      secret: TT_SECRET,
+    }),
+  },
+);
 
-// const tokenJson = await tokenRes.json();
-// if (tokenJson.code !== 0) {
-//   console.error("Token request failed:", tokenJson);
-//   process.exit(1);
-// }
+const tokenJson = await tokenRes.json();
+if (tokenJson.code !== 0) {
+  console.error("Token request failed:", tokenJson);
+  process.exit(1);
+}
 
-// const accessToken = tokenJson.data;
-// console.log("Access token:", accessToken);
+const accessToken = tokenJson.data;
+console.log("Access token:", accessToken);
 
-const ad_ids = ['7576387230785142785'];
-const scope = [18020000, 13020000, 18010000, 14020000, 14010000];
+// const ad_ids = ['7576387230785142785'];
+// const scope = [18020000, 13020000, 18010000, 14020000, 14010000];
 
 // check advertiser accounts that can be access w/ current access token
 // const advertiserUrl = new URL(
@@ -89,21 +89,21 @@ const scope = [18020000, 13020000, 18010000, 14020000, 14010000];
 
 
 // SINGLE CREATOR LOOKUP
-const creatorUrl = new URL(
-  "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/public/",
-);
-creatorUrl.searchParams.set("tto_tcm_account_id", TTO_ACC_ID);
-creatorUrl.searchParams.set("handle_name", HANDLE_NAME);
-// console.log(creatorUrl.toString());
+// const creatorUrl = new URL(
+//   "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/public/",
+// );
+// creatorUrl.searchParams.set("tto_tcm_account_id", TTO_ACC_ID);
+// creatorUrl.searchParams.set("handle_name", HANDLE_NAME);
+// // console.log(creatorUrl.toString());
 
-const creatorRes = await fetch(creatorUrl, {
-  method: "GET",
-  headers: { "Access-Token": TT_ACCESS_TOKEN },
-});
+// const creatorRes = await fetch(creatorUrl, {
+//   method: "GET",
+//   headers: { "Access-Token": TT_ACCESS_TOKEN },
+// });
 
-const creatorData = await creatorRes.json();
-writeFileSync("z_creator_output.json", JSON.stringify(creatorData, null, 2));
-console.log("Written to z_creator_output.json");
+// const creatorData = await creatorRes.json();
+// writeFileSync("z_creator_output.json", JSON.stringify(creatorData, null, 2));
+// console.log("Written to z_creator_output.json");
 
 
 // LABEL LOOKUP
