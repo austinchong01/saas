@@ -90,41 +90,41 @@ export function FilterBadges({
     });
   }
 
-  if (filters.followersMin != null || filters.followersMax != null) {
+  if (filters.followersMin != undefined || filters.followersMax != undefined) {
     const min =
-      filters.followersMin != null ? formatCount(filters.followersMin) : null;
+      filters.followersMin != undefined ? formatCount(filters.followersMin) : undefined;
     const max =
-      filters.followersMax != null ? formatCount(filters.followersMax) : null;
+      filters.followersMax != undefined ? formatCount(filters.followersMax) : undefined;
     chips.push({
       label: "Followers",
       value: min && max ? `${min}–${max}` : min ? `${min}+` : `≤${max}`,
     });
   }
 
-  if (filters.medianViewsMin != null || filters.medianViewsMax != null) {
+  if (filters.medianViewsMin != undefined || filters.medianViewsMax != undefined) {
     const min =
-      filters.medianViewsMin != null
+      filters.medianViewsMin != undefined
         ? formatCount(filters.medianViewsMin)
-        : null;
+        : undefined;
     const max =
-      filters.medianViewsMax != null
+      filters.medianViewsMax != undefined
         ? formatCount(filters.medianViewsMax)
-        : null;
+        : undefined;
     chips.push({
       label: "Median views",
       value: min && max ? `${min}–${max}` : min ? `${min}+` : `≤${max}`,
     });
   }
 
-  if (filters.engagementRateMin != null || filters.engagementRateMax != null) {
+  if (filters.engagementRateMin != undefined || filters.engagementRateMax != undefined) {
     const min =
-      filters.engagementRateMin != null
+      filters.engagementRateMin != undefined
         ? `${(filters.engagementRateMin * 100).toFixed(1)}%`
-        : null;
+        : undefined;
     const max =
-      filters.engagementRateMax != null
+      filters.engagementRateMax != undefined
         ? `${(filters.engagementRateMax * 100).toFixed(1)}%`
-        : null;
+        : undefined;
     chips.push({
       label: "Engagement",
       value: min && max ? `${min}–${max}` : min ? `${min}+` : `≤${max}`,

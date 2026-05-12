@@ -13,7 +13,7 @@ export async function getCreator(creatorId: string) {
   "use cache";
   cacheTag(getCreatorIdTag(creatorId));
 
-  // return mock_creator; // MOCK DATA
+  return mock_creator; // MOCK DATA
 
   const creatorUrl = new URL(
     "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/public/",
@@ -39,7 +39,7 @@ export async function getCreator(creatorId: string) {
 export async function getCreatorsByFilters(
   filters: Partial<CreatorFilterFormValues>,
 ) {
-  // return mock_creators; // MOCK DATA
+  return mock_creators; // MOCK DATA
 
   const creatorListURL = new URL(
     "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/discover/",
