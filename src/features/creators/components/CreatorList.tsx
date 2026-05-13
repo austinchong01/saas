@@ -80,18 +80,18 @@ function NoCreatorsFound({
 export function FilterBadges({
   filters,
 }: {
-  filters: Partial<CreatorFilterFormValues>;
+  filters: CreatorFilterFormValues;
 }) {
+  console.log(filters);
   const chips: { label: string; value: string }[] = [];
 
-  if (filters.countryCode) {
-    chips.push({
-      label: "Country",
-      value: COUNTRY_LABELS[filters.countryCode],
-    });
-  }
+  // REQUIRED country code parameter
+  chips.push({
+    label: "Country",
+    value: COUNTRY_LABELS[filters.countryCode],
+  });
 
-  if (filters.followersMin || filters.followersMax) {
+  if (filters.followersMin != "" || filters.followersMax != "") {
     const min = filters.followersMin ? formatCount(filters.followersMin) : "";
     const max = filters.followersMax ? formatCount(filters.followersMax) : "";
     chips.push({
@@ -100,42 +100,42 @@ export function FilterBadges({
     });
   }
 
-  if (filters.medianViewsMin || filters.medianViewsMax) {
-    const min = filters.medianViewsMin
-      ? formatCount(filters.medianViewsMin)
-      : "";
-    const max = filters.medianViewsMax
-      ? formatCount(filters.medianViewsMax)
-      : "";
+  if (filters.medianViewsMin != "" || filters.medianViewsMax != "") {
+    const min =
+      filters.medianViewsMin != "" ? formatCount(filters.medianViewsMin) : "";
+    const max =
+      filters.medianViewsMax != "" ? formatCount(filters.medianViewsMax) : "";
     chips.push({
       label: "Median views",
       value: min && max ? `${min}–${max}` : min ? `${min}+` : `≤${max}`,
     });
   }
 
-  if (filters.engagementRateMin || filters.engagementRateMax) {
-    const min = filters.engagementRateMin
-      ? `${(filters.engagementRateMin * 100).toFixed(1)}%`
-      : "";
-    const max = filters.engagementRateMax
-      ? `${(filters.engagementRateMax * 100).toFixed(1)}%`
-      : "";
+  if (filters.engagementRateMin != "" || filters.engagementRateMax != "") {
+    const min =
+      filters.engagementRateMin != ""
+        ? `${(filters.engagementRateMin * 100).toFixed(1)}%`
+        : "";
+    const max =
+      filters.engagementRateMax != ""
+        ? `${(filters.engagementRateMax * 100).toFixed(1)}%`
+        : "";
     chips.push({
       label: "Engagement",
       value: min && max ? `${min}–${max}` : min ? `${min}+` : `≤${max}`,
     });
   }
 
-  if (filters.contentLabels) {
+  if (filters.contentLabels.length > 0) {
     chips.push({ label: "Content", value: filters.contentLabels.join(", ") });
   }
-  if (filters.languages) {
+  if (filters.languages.length > 0) {
     chips.push({
       label: "Language",
       value: filters.languages.map((lang) => LANGUAGE_LABELS[lang]).join(", "),
     });
   }
-  if (filters.followerCountryCodes) {
+  if (filters.followerCountryCodes.length > 0) {
     chips.push({
       label: "Audience Country",
       value: filters.followerCountryCodes
@@ -144,15 +144,17 @@ export function FilterBadges({
     });
   }
 
-  if (filters.followerGenderRatio) {
+  if (filters.followerGenderRatio !== "") {
     chips.push({
       label: "Audience Gender",
       value: GENDER_RATIO_LABELS[filters.followerGenderRatio],
     });
   }
-  if (filters.followerAge) {
+  if (filters.followerAge !== "") {
     chips.push({ label: "Audience Age", value: filters.followerAge });
   }
+
+  console.log(chips);
 
   if (chips.length === 0) return null;
 
