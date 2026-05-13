@@ -220,7 +220,13 @@ export function CreatorFilterForm({
                       className="flex flex-wrap gap-2"
                     >
                       {FOLLOWER_GENDER_RATIOS.map((code) => (
-                        <RadioGroupItem key={code} value={code} />
+                        <RadioGroupItem
+                          key={code}
+                          value={code}
+                          onClick={() => {
+                            if (field.value === code) field.onChange("");
+                          }}
+                        />
                       ))}
                     </RadioGroup>
                   </FormControl>
@@ -245,7 +251,13 @@ export function CreatorFilterForm({
                       className="flex flex-wrap gap-2"
                     >
                       {FOLLOWER_AGES.map((code) => (
-                        <RadioGroupItem key={code} value={code} />
+                        <RadioGroupItem
+                          key={code}
+                          value={code}
+                          onClick={() => {
+                            if (field.value === code) field.onChange("");
+                          }}
+                        />
                       ))}
                     </RadioGroup>
                   </FormControl>
