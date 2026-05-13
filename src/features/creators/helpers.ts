@@ -28,38 +28,35 @@ export function searchParamsToFilters(params: Record<string, string>): {
     return val;
   };
 
-  const result: Partial<Record<keyof CreatorFilterFormValues, unknown>> = {};
+  const getArray = (key: string): string[] => {
+    const val = get(key);
+    return val ? val.split(",") : [];
+  };
 
-  if (get("followersMin") != null)
-    result.followersMin = Number(get("followersMin"));
-  if (get("followersMax") != null)
-    result.followersMax = Number(get("followersMax"));
-  if (get("medianViewsMin") != null)
-    result.medianViewsMin = Number(get("medianViewsMin"));
-  if (get("medianViewsMax") != null)
-    result.medianViewsMax = Number(get("medianViewsMax"));
-  if (get("engagementRateMin") != null)
-    result.engagementRateMin = Number(get("engagementRateMin"));
-  if (get("engagementRateMax") != null)
-    result.engagementRateMax = Number(get("engagementRateMax"));
-  if (get("contentLabels"))
-    result.contentLabels = get("contentLabels")!.split(",");
-  if (get("languages")) result.languages = get("languages")!.split(",");
-  if (get("countryCode")) result.countryCode = get("countryCode");
-  if (get("followerCountryCodes"))
-    result.followerCountryCodes = get("followerCountryCodes")!.split(",");
-  if (get("followerGenderRatio"))
-    result.followerGenderRatio = get("followerGenderRatio");
-  if (get("followerAge")) result.followerAge = get("followerAge");
+  const result = {
+    followersMin: get("followersMin") ?? "",
+    followersMax: get("followersMax") ?? "",
+    medianViewsMin: get("medianViewsMin") ?? "",
+    medianViewsMax: get("medianViewsMax") ?? "",
+    engagementRateMin: get("engagementRateMin") ?? "",
+    engagementRateMax: get("engagementRateMax") ?? "",
+    contentLabels: getArray("contentLabels"),
+    languages: getArray("languages"),
+    countryCode: get("countryCode") ?? "US",
+    followerCountryCodes: getArray("followerCountryCodes"),
+    followerGenderRatio: get("followerGenderRatio") ?? "",
+    followerAge: get("followerAge") ?? "",
+  };
 
   const parsed = creatorFilterSchema.safeParse(result);
+  // console.log(parsed)
   if (!parsed.success) {
+    console.log(parsed.error.issues);
     return { data: {}, error: "Invalid filter parameters in URL" };
   }
 
   return { data: parsed.data, error: null };
 }
-
 
 export function setIfDefined(
   params: URLSearchParams,

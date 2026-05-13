@@ -11,8 +11,12 @@ export function formatCount(num: number): string {
   return num.toString();
 }
 
-export function stripUndefined<T extends object>(obj: T): Partial<T> {
+export function stripEmptyFields<T extends object>(obj: T): Partial<T> {
   return Object.fromEntries(
-    Object.entries(obj).filter(([, v]) => v !== undefined),
+    Object.entries(obj).filter(([, v]) => {
+      if (v === "") return false;
+      if (Array.isArray(v) && v.length === 0) return false;
+      return true;
+    }),
   ) as Partial<T>;
 }

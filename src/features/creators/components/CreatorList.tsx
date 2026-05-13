@@ -36,7 +36,9 @@ export async function CreatorList({
 }) {
   // console.log("CreatorList searchParams:", searchParams);
   const { data: filters, error } = searchParamsToFilters(searchParams); // error on invalid param filters
+  // console.log("CreatorList filters:", searchParams);
   const url = filtersToSearchParams(filters);
+  // console.log(url);
   // console.log("CreatorList filters:", filters, "url:", url);
 
   const creators = await getCreatorsByFilters(filters);
@@ -45,8 +47,7 @@ export async function CreatorList({
   if ("error" in creators) {
     if (creators.message === "No creators found matching those filters.")
       return <NoCreatorsFound url={url} filters={filters} />;
-    else
-      return <div>{creators.message}</div>
+    else return <div>{creators.message}</div>;
   }
   return <CreatorsFound creators={creators} url={url} filters={filters} />;
 }
@@ -79,57 +80,62 @@ function NoCreatorsFound({
 export function FilterBadges({
   filters,
 }: {
-  filters: CreatorFilterFormValues;
+  filters: Partial<CreatorFilterFormValues>;
 }) {
   const chips: { label: string; value: string }[] = [];
 
   if (filters.countryCode) {
-    chips.push({ label: "Country", value: COUNTRY_LABELS[filters.countryCode] });
+    chips.push({
+      label: "Country",
+      value: COUNTRY_LABELS[filters.countryCode],
+    });
   }
 
-  if (filters.followersMin !== "" || filters.followersMax !== "") {
-    const min = filters.followersMin !== "" ? formatCount(filters.followersMin) : "";
-    const max = filters.followersMax !== "" ? formatCount(filters.followersMax) : "";
+  if (filters.followersMin || filters.followersMax) {
+    const min = filters.followersMin ? formatCount(filters.followersMin) : "";
+    const max = filters.followersMax ? formatCount(filters.followersMax) : "";
     chips.push({
       label: "Followers",
       value: min && max ? `${min}–${max}` : min ? `${min}+` : `≤${max}`,
     });
   }
 
-  if (filters.medianViewsMin !== "" || filters.medianViewsMax !== "") {
-    const min = filters.medianViewsMin !== "" ? formatCount(filters.medianViewsMin) : "";
-    const max = filters.medianViewsMax !== "" ? formatCount(filters.medianViewsMax) : "";
+  if (filters.medianViewsMin || filters.medianViewsMax) {
+    const min = filters.medianViewsMin
+      ? formatCount(filters.medianViewsMin)
+      : "";
+    const max = filters.medianViewsMax
+      ? formatCount(filters.medianViewsMax)
+      : "";
     chips.push({
       label: "Median views",
       value: min && max ? `${min}–${max}` : min ? `${min}+` : `≤${max}`,
     });
   }
 
-  if (filters.engagementRateMin !== "" || filters.engagementRateMax !== "") {
-    const min =
-      filters.engagementRateMin !== ""
-        ? `${(filters.engagementRateMin * 100).toFixed(1)}%`
-        : "";
-    const max =
-      filters.engagementRateMax !== ""
-        ? `${(filters.engagementRateMax * 100).toFixed(1)}%`
-        : "";
+  if (filters.engagementRateMin || filters.engagementRateMax) {
+    const min = filters.engagementRateMin
+      ? `${(filters.engagementRateMin * 100).toFixed(1)}%`
+      : "";
+    const max = filters.engagementRateMax
+      ? `${(filters.engagementRateMax * 100).toFixed(1)}%`
+      : "";
     chips.push({
       label: "Engagement",
       value: min && max ? `${min}–${max}` : min ? `${min}+` : `≤${max}`,
     });
   }
 
-  if (filters.contentLabels.length) {
+  if (filters.contentLabels) {
     chips.push({ label: "Content", value: filters.contentLabels.join(", ") });
   }
-  if (filters.languages.length) {
+  if (filters.languages) {
     chips.push({
       label: "Language",
       value: filters.languages.map((lang) => LANGUAGE_LABELS[lang]).join(", "),
     });
   }
-  if (filters.followerCountryCodes.length) {
+  if (filters.followerCountryCodes) {
     chips.push({
       label: "Audience Country",
       value: filters.followerCountryCodes

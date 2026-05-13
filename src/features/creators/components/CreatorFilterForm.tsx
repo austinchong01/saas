@@ -33,9 +33,9 @@ import { useRouter } from "next/navigation";
 import { filtersToSearchParams, searchParamsToFilters } from "../helpers";
 import { useEffect } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { stripUndefined } from "@/lib/utils";
+import { stripEmptyFields } from "@/lib/utils";
 
-const defaultFilters: Partial<CreatorFilterFormValues> = {
+const defaultFilters: CreatorFilterFormValues = {
   languages: [],
   followerCountryCodes: [],
   countryCode: "US",
@@ -58,6 +58,7 @@ export function CreatorFilterForm({
   const router = useRouter();
 
   const { data: filters, error } = searchParamsToFilters(searchParams);
+  // console.log(filters);
 
   useEffect(() => {
     if (error) router.replace("/app");
@@ -65,7 +66,7 @@ export function CreatorFilterForm({
 
   const form = useForm<CreatorFilterFormValues>({
     resolver: zodResolver(creatorFilterSchema),
-    defaultValues: { ...defaultFilters, ...stripUndefined(filters) },
+    defaultValues: { ...defaultFilters, ...stripEmptyFields(filters) },
   });
 
   async function onSubmit(values: CreatorFilterFormValues) {
@@ -76,7 +77,10 @@ export function CreatorFilterForm({
       return;
     }
 
-    const url = filtersToSearchParams(safeParsed);
+    const strippedValues = stripEmptyFields(values);
+    // console.log(strippedValues);
+
+    const url = filtersToSearchParams(strippedValues);
     router.push(`/app/creators?${url}`);
   }
 
