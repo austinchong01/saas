@@ -19,7 +19,7 @@ export function filtersToSearchParams(
 }
 
 export function searchParamsToFilters(params: Record<string, string>): {
-  data: Partial<CreatorFilterFormValues>;
+  data: CreatorFilterFormValues;
   error: string | null;
 } {
   const get = (key: string): string | undefined => {

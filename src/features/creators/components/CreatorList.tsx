@@ -82,7 +82,7 @@ export function FilterBadges({
 }: {
   filters: CreatorFilterFormValues;
 }) {
-  console.log(filters);
+  // console.log(filters);
   const chips: { label: string; value: string }[] = [];
 
   // REQUIRED country code parameter
@@ -154,7 +154,7 @@ export function FilterBadges({
     chips.push({ label: "Audience Age", value: filters.followerAge });
   }
 
-  console.log(chips);
+  // console.log(chips);
 
   if (chips.length === 0) return null;
 
