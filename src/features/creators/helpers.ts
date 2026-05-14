@@ -52,7 +52,7 @@ export function searchParamsToFilters(params: Record<string, string>): {
   // console.log(parsed)
   if (!parsed.success) {
     console.log(parsed.error.issues);
-    return { data: {}, error: "Invalid filter parameters in URL" };
+    return { error: "Invalid filter parameters in URL" };
   }
 
   return { data: parsed.data, error: null };

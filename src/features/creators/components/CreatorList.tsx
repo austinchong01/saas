@@ -34,16 +34,11 @@ export async function CreatorList({
 }: {
   searchParams?: Record<string, string>;
 }) {
-  // console.log("CreatorList searchParams:", searchParams);
   const { data: filters, error } = searchParamsToFilters(searchParams); // error on invalid param filters
-  // console.log("CreatorList filters:", searchParams);
   const url = filtersToSearchParams(filters);
-  // console.log(url);
-  // console.log("CreatorList filters:", filters, "url:", url);
 
   const creators = await getCreatorsByFilters(filters);
 
-  // console.log(creators);
   if ("error" in creators) {
     if (creators.message === "No creators found matching those filters.")
       return <NoCreatorsFound url={url} filters={filters} />;
@@ -57,7 +52,7 @@ function NoCreatorsFound({
   filters,
 }: {
   url: string;
-  filters: Partial<CreatorFilterFormValues>;
+  filters: CreatorFilterFormValues;
 }) {
   return (
     <div className="container my-4 max-w-5xl">
@@ -82,7 +77,6 @@ export function FilterBadges({
 }: {
   filters: CreatorFilterFormValues;
 }) {
-  // console.log(filters);
   const chips: { label: string; value: string }[] = [];
 
   // REQUIRED country code parameter
@@ -91,7 +85,7 @@ export function FilterBadges({
     value: COUNTRY_LABELS[filters.countryCode],
   });
 
-  if (filters.followersMin != "" || filters.followersMax != "") {
+  if (filters.followersMin !== "" || filters.followersMax !== "") {
     const min = filters.followersMin ? formatCount(filters.followersMin) : "";
     const max = filters.followersMax ? formatCount(filters.followersMax) : "";
     chips.push({
@@ -100,24 +94,24 @@ export function FilterBadges({
     });
   }
 
-  if (filters.medianViewsMin != "" || filters.medianViewsMax != "") {
+  if (filters.medianViewsMin !== "" || filters.medianViewsMax !== "") {
     const min =
-      filters.medianViewsMin != "" ? formatCount(filters.medianViewsMin) : "";
+      filters.medianViewsMin !== "" ? formatCount(filters.medianViewsMin) : "";
     const max =
-      filters.medianViewsMax != "" ? formatCount(filters.medianViewsMax) : "";
+      filters.medianViewsMax !== "" ? formatCount(filters.medianViewsMax) : "";
     chips.push({
       label: "Median views",
       value: min && max ? `${min}–${max}` : min ? `${min}+` : `≤${max}`,
     });
   }
 
-  if (filters.engagementRateMin != "" || filters.engagementRateMax != "") {
+  if (filters.engagementRateMin !== "" || filters.engagementRateMax !== "") {
     const min =
-      filters.engagementRateMin != ""
+      filters.engagementRateMin !== ""
         ? `${(filters.engagementRateMin * 100).toFixed(1)}%`
         : "";
     const max =
-      filters.engagementRateMax != ""
+      filters.engagementRateMax !== ""
         ? `${(filters.engagementRateMax * 100).toFixed(1)}%`
         : "";
     chips.push({
@@ -154,8 +148,6 @@ export function FilterBadges({
     chips.push({ label: "Audience Age", value: filters.followerAge });
   }
 
-  // console.log(chips);
-
   if (chips.length === 0) return null;
 
   return (
@@ -177,7 +169,7 @@ function CreatorsFound({
 }: {
   creators: any[];
   url: string;
-  filters: Partial<CreatorFilterFormValues>;
+  filters: CreatorFilterFormValues;
 }) {
   return (
     <div className="container my-4 max-w-5xl">
