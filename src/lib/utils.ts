@@ -14,7 +14,7 @@ export function formatCount(num: number): string {
 export function stripEmptyFields<T extends object>(obj: T): Partial<T> {
   return Object.fromEntries(
     Object.entries(obj).filter(([, v]) => {
-      if (v === "") return false;
+      if (v == "") return false;
       if (Array.isArray(v) && v.length === 0) return false;
       return true;
     }),

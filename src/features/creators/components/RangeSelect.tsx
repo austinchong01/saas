@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   FormField,
   FormItem,
@@ -6,6 +7,45 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+
+function NumberInput({
+  field,
+  placeholder,
+  step,
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  field: any;
+  placeholder?: string;
+  step?: number;
+}) {
+  const [isFocused, setIsFocused] = useState(false);
+
+  const showFormatted =
+    !isFocused &&
+    field.value !== "" &&
+    field.value !== null &&
+    field.value !== undefined &&
+    Number(field.value) > 9999;
+
+  return (
+    <Input
+      type={showFormatted ? "text" : "number"}
+      step={step}
+      placeholder={placeholder}
+      {...field}
+      value={
+        showFormatted
+          ? Number(field.value).toLocaleString("en-US")
+          : field.value ?? ""
+      }
+      onFocus={() => setIsFocused(true)}
+      onBlur={(e) => {
+        setIsFocused(false);
+        field.onBlur(e);
+      }}
+    />
+  );
+}
 
 export function RangeFields({
   minName,
@@ -36,12 +76,10 @@ export function RangeFields({
                 Min
               </FormLabel>
               <FormControl>
-                <Input
-                  type="number"
-                  step={step}
+                <NumberInput
+                  field={field}
                   placeholder={placeholder?.min ?? "No min"}
-                  {...field}
-                  value={field.value ?? ""}
+                  step={step}
                 />
               </FormControl>
               <FormMessage />
@@ -57,12 +95,10 @@ export function RangeFields({
                 Max
               </FormLabel>
               <FormControl>
-                <Input
-                  type="number"
-                  step={step}
+                <NumberInput
+                  field={field}
                   placeholder={placeholder?.max ?? "No max"}
-                  {...field}
-                  value={field.value ?? ""}
+                  step={step}
                 />
               </FormControl>
               <FormMessage />

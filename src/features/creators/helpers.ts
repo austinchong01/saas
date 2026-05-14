@@ -1,13 +1,28 @@
 import { CreatorFilterFormValues, creatorFilterSchema } from "./schemas";
 
+const defaultFilters: CreatorFilterFormValues = {
+  languages: [],
+  followerCountryCodes: [],
+  countryCode: "US",
+  contentLabels: [],
+  followerGenderRatio: "",
+  followerAge: "",
+  followersMin: "",
+  followersMax: "",
+  medianViewsMin: "",
+  medianViewsMax: "",
+  engagementRateMin: "",
+  engagementRateMax: "",
+};
+
 export function filtersToSearchParams(
   filters: Partial<CreatorFilterFormValues>,
 ): string {
   const params = new URLSearchParams();
 
   for (const [key, value] of Object.entries(filters)) {
-    if (value == null) continue;
-    if (Array.isArray(value) && value.length === 0) continue;
+    if (value == "") continue;
+    if (Array.isArray(value) && value.length == 0) continue;
     if (Array.isArray(value)) {
       params.set(key, value.join(","));
     } else {
@@ -52,7 +67,7 @@ export function searchParamsToFilters(params: Record<string, string>): {
   // console.log(parsed)
   if (!parsed.success) {
     console.log(parsed.error.issues);
-    return { error: "Invalid filter parameters in URL" };
+    return { data: defaultFilters, error: "Invalid filter parameters in URL" };
   }
 
   return { data: parsed.data, error: null };

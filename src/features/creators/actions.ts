@@ -1,6 +1,6 @@
 "use server";
 
-import { getCreatorIdTag } from "./cache";
+import { getCreatorIdTag, getCreatorsByFiltersTag } from "./cache";
 import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import { CreatorFilterFormValues, creatorFilterSchema } from "./schemas";
 import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser";
@@ -12,6 +12,7 @@ import { mock_creators, mock_creator } from "./mock_data";
 export async function getCreator(creatorId: string) {
   "use cache";
   cacheTag(getCreatorIdTag(creatorId));
+  console.log("getOneCreator CACHE MISS");
 
   return mock_creator; // MOCK DATA
 
@@ -37,17 +38,21 @@ export async function getCreator(creatorId: string) {
 }
 
 export async function getCreatorsByFilters(
-  filters: Partial<CreatorFilterFormValues>,
+  filters: CreatorFilterFormValues,
 ) {
+  "use cache";
+  cacheTag(getCreatorsByFiltersTag(filters));
+  console.log("getCreators CACHE MISS");
+
   return mock_creators; // MOCK DATA
 
   const creatorListURL = new URL(
     "https://business-api.tiktok.com/open_api/v1.3/tto/tcm/creator/discover/",
   );
   const params = creatorListURL.searchParams;
-  // console.log(filters)
+
+  // map content labels to ids
   const labelIds = filters.contentLabels?.map(name => CONTENT_LABEL_IDS[name]);
-  // console.log(labelIds);
 
   // REQUIRED PARAMS
   params.set("tto_tcm_account_id", env.TT_ACC_ID);
@@ -86,14 +91,12 @@ export async function getCreatorsByFilters(
     headers: { "Access-Token": env.TT_ACCESS_TOKEN },
   });
   const creatorList = await creatorListRES.json();
-  // console.log(creatorList);
   if (creatorList.message !== "OK")
     return { error: true, message: `Failed to fetch creator list: ${creatorList.message}` };
 
   if (!creatorList.data.creators)
     return { error: true, message: "No creators found matching those filters." };
   
-  // console.log(creatorList.data.creators);
   return creatorList.data.creators;
 }
 

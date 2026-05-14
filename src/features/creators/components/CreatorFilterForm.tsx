@@ -78,7 +78,7 @@ export function CreatorFilterForm({
     }
 
     const strippedValues = stripEmptyFields(values);
-    // console.log(strippedValues);
+    console.log(strippedValues);
 
     const url = filtersToSearchParams(strippedValues);
     router.push(`/app/creators?${url}`);
@@ -122,7 +122,7 @@ export function CreatorFilterForm({
               label="Followers"
               minName="followersMin"
               maxName="followersMax"
-              placeholder={{ min: "e.g. 10000", max: "e.g. 1000000" }}
+              placeholder={{ min: "e.g. 10,000", max: "e.g. 1,000,000" }}
               step={10000}
             />
 
@@ -132,7 +132,7 @@ export function CreatorFilterForm({
               label="Median Views"
               minName="medianViewsMin"
               maxName="medianViewsMax"
-              placeholder={{ min: "e.g. 5000", max: "e.g. 500000" }}
+              placeholder={{ min: "e.g. 5,000", max: "e.g. 500,000" }}
               step={1000}
             />
 
