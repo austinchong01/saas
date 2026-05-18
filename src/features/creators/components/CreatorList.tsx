@@ -28,6 +28,7 @@ import {
 import { CreatorFilterFormValues } from "../schemas";
 import Link from "next/link";
 import { formatCount } from "@/lib/utils";
+import { CreatorSearchInput } from "./CreatorSearchInput";
 
 export async function CreatorList({
   searchParams = {},
@@ -179,8 +180,9 @@ function CreatorsFound({
         <Button asChild>
           <Link href={`/app?${url}`}>Edit Filters</Link>
         </Button>
+        <CreatorSearchInput backUrl={url} />
         {creators.map((creator) => (
-          <Card key={creator.handle_name}>
+          <Card key={creator.handle_name} className="">
             <CardHeader>
               <div className="flex flex-0 gap-4 items-center">
                 <Avatar size="lg">
@@ -203,18 +205,10 @@ function CreatorsFound({
                 </div> */}
               </div>
 
-              <CardAction>
-                <Button variant="outline" size="sm" asChild>
-                  <Link
-                    href={`/app/creators/${creator.handle_name}?back=${encodeURIComponent(`/app/creators?${url}`)}`}
-                  >
-                    Profile
-                  </Link>
-                </Button>
-              </CardAction>
+
             </CardHeader>
 
-            <CardContent>
+            <CardContent className="flex items-center justify-center">
               <div className="grid grid-cols-2 gap-6 text-sm">
                 <div className="flex items-center gap-2 h-5 w-56">
                   <Users className="size-4 text-muted-foreground" />
@@ -230,6 +224,13 @@ function CreatorsFound({
                   <Languages className="size-4 text-muted-foreground" />
                   <span>{formatCount(creator.videos_count)} videos</span>
                 </div>
+                <Button variant="outline" size="sm" asChild className="w-20">
+                  <Link
+                    href={`/app/creators/${creator.handle_name}?back=${encodeURIComponent(`/app/creators?${url}`)}`}
+                  >
+                    Profile
+                  </Link>
+                </Button>
               </div>
             </CardContent>
           </Card>
