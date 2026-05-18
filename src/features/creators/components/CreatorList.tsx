@@ -9,12 +9,9 @@ import {
 } from "@/components/ui/CreatorCard";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import {
-  BadgeCheck,
-  Eye,
   Heart,
   Users,
-  Tag,
-  Globe,
+  Video,
   Languages,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -221,7 +218,7 @@ function CreatorsFound({
                   </span>
                 </div>
                 <div className="flex items-center gap-2 h-5 w-56">
-                  <Languages className="size-4 text-muted-foreground" />
+                  <Video className="size-4 text-muted-foreground" />
                   <span>{formatCount(creator.videos_count)} videos</span>
                 </div>
                 <Button variant="outline" size="sm" asChild className="w-20">
