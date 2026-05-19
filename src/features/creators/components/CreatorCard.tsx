@@ -1,14 +1,5 @@
 import { getCreator } from "../actions";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { BadgeCheck } from "lucide-react";
+import Image from "next/image"
 import { formatCount } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -29,7 +20,19 @@ export async function CreatorCard({
   const creator = await getCreator(username);
 
   if ("error" in creator) {
-    return <div>Creator not found: {creator.message}</div>;
+    return (
+      <div className="mx-auto my-4 max-w-xl flex flex-col gap-2">
+        {back && (
+          <div>
+            <Button variant="outline" asChild className="self-start">
+              <Link href={back}>← Back</Link>
+            </Button>
+            <FilterBadges filters={filters} />
+          </div>
+        )}
+        <b>Creator not found: </b> {creator.message}
+      </div>
+    );
   }
 
   return (
@@ -42,24 +45,26 @@ export async function CreatorCard({
           <FilterBadges filters={filters} />
         </div>
       )}
-      <Card className="relative mx-auto max-w-xl pt-0 w-full my-4 overflow-hidden">
-        <img
+      <div className="relative mx-auto max-w-xl pt-0 w-full my-4 overflow-hidden">
+        <Image
           src={creator.profile_image}
           alt="profile_picture"
+          width={500}
+          height={500}
           className="relative z-20 aspect-video w-full object-cover brightness-60 dark:brightness-40"
         />
 
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">
+        <div>
+          <div className="text-2xl font-bold">
             {creator.handle_name}
-          </CardTitle>
+          </div>
           <p>{creator.display_name}</p>
-          <CardDescription>
+          <div>
             <p>{creator.bio}</p>
-          </CardDescription>
-        </CardHeader>
+          </div>
+        </div>
 
-        <CardContent className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-2">
           <p>Followers: {creator.followers_count}</p>
           <p>Likes: {creator.likes_count}</p>
           <p>Videos: {creator.videos_count}</p>
@@ -73,8 +78,8 @@ export async function CreatorCard({
           </p>
           <p>Median Views: {creator.median_views}</p>
           <p>Engagement Rate: {creator.engagement_rate}%</p>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </>
   );
 }
