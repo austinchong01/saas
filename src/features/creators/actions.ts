@@ -7,7 +7,7 @@ import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser";
 import { env } from "../../data/env/server";
 import { setIfDefined, setArrayIfDefined } from "./helpers";
 import { CONTENT_LABEL_IDS } from "./constants";
-import { mock_creators, mock_creator } from "./mock_data";
+// import { mock_creators, mock_creator } from "./mock_data";
 
 export async function getCreator(creatorId: string) {
   "use cache";

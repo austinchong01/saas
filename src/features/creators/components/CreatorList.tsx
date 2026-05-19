@@ -1,7 +1,6 @@
 import { getCreatorsByFilters } from "@/features/creators/actions";
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardHeader,
@@ -12,7 +11,6 @@ import {
   Heart,
   Users,
   Video,
-  Languages,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
