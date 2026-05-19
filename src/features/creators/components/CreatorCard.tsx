@@ -1,5 +1,5 @@
 import { getCreator } from "../actions";
-import Image from "next/image"
+import Image from "next/image";
 import { formatCount } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -38,46 +38,63 @@ export async function CreatorCard({
   return (
     <>
       {back && (
-        <div className="mx-auto my-4 max-w-xl flex flex-col gap-2">
+        <div className="mx-auto my-4 max-w-2xl flex flex-col gap-2">
           <Button variant="outline" asChild className="self-start">
             <Link href={back}>← Back</Link>
           </Button>
           <FilterBadges filters={filters} />
         </div>
       )}
-      <div className="relative mx-auto max-w-xl pt-0 w-full my-4 overflow-hidden">
+      <div className="mx-auto max-w-2xl flex flex-col gap-8 justify-center">
         <Image
           src={creator.profile_image}
           alt="profile_picture"
-          width={500}
-          height={500}
-          className="relative z-20 aspect-video w-full object-cover brightness-60 dark:brightness-40"
+          width={300}
+          height={300}
         />
 
-        <div>
-          <div className="text-2xl font-bold">
-            {creator.handle_name}
-          </div>
-          <p>{creator.display_name}</p>
+        <div className="flex flex-col gap-2">
+          <div className="text-3xl font-bold">{creator.handle_name}</div>
           <div>
-            <p>{creator.bio}</p>
+            {" "}
+            <b>Display Name:</b>{" "}
+            <span className="text-lg">{creator.display_name}</span>
+          </div>
+          <div>
+            <b>Bio:</b> {creator.bio}
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-2">
-          <p>Followers: {creator.followers_count}</p>
-          <p>Likes: {creator.likes_count}</p>
-          <p>Videos: {creator.videos_count}</p>
-          <p>
-            Content Type:{" "}
-            {creator.content_labels
-              .map(
-                (l: { label_id: string; label_name: string }) => l.label_name,
-              )
-              .join(", ")}
-          </p>
-          <p>Median Views: {creator.median_views}</p>
-          <p>Engagement Rate: {creator.engagement_rate}%</p>
+          <div>
+            <b>Followers:</b>{" "}
+            <span className="text-lg">{creator.followers_count}</span>
+          </div>
+          <div>
+            <b>Likes:</b> <span className="text-lg">{creator.likes_count}</span>
+          </div>
+          <div>
+            <b>Videos:</b>{" "}
+            <span className="text-lg">{creator.videos_count}</span>
+          </div>
+          <div>
+            <b>Content Type:</b>{" "}
+            <span className="text-lg">
+              {creator.content_labels
+                .map(
+                  (l: { label_id: string; label_name: string }) => l.label_name,
+                )
+                .join(", ")}
+            </span>
+          </div>
+          <div>
+            <b>Median Views:</b>{" "}
+            <span className="text-lg">{creator.median_views}</span>
+          </div>
+          <div>
+            <b>Engagement Rate:</b>{" "}
+            <span className="text-lg">{creator.engagement_rate}%</span>
+          </div>
         </div>
       </div>
     </>
