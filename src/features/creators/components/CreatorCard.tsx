@@ -45,40 +45,42 @@ export async function CreatorCard({
           <FilterBadges filters={filters} />
         </div>
       )}
-      <div className="mx-auto max-w-2xl flex flex-col gap-8 justify-center">
+      <div className="mx-auto max-w-2xl flex flex-col gap-8 justify-center py-4">
         <Image
           src={creator.profile_image}
           alt="profile_picture"
-          width={300}
-          height={300}
+          width={250}
+          height={250}
+          className="rounded-lg mx-auto"
         />
 
         <div className="flex flex-col gap-2">
           <div className="text-3xl font-bold">{creator.handle_name}</div>
           <div>
             {" "}
-            <b>Display Name:</b>{" "}
+            <p className="text-muted-foreground">Display Name:</p>{" "}
             <span className="text-lg">{creator.display_name}</span>
           </div>
           <div>
-            <b>Bio:</b> {creator.bio}
+            <p className="text-muted-foreground">Bio:</p> {creator.bio}
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <b>Followers:</b>{" "}
-            <span className="text-lg">{creator.followers_count}</span>
+            <p className="text-muted-foreground">Followers:</p>
+            <span className="text-lg">{formatCount(creator.followers_count)}</span>
           </div>
           <div>
-            <b>Likes:</b> <span className="text-lg">{creator.likes_count}</span>
+            <p className="text-muted-foreground">Likes:</p>
+            <span className="text-lg">{formatCount(creator.likes_count)}</span>
           </div>
           <div>
-            <b>Videos:</b>{" "}
-            <span className="text-lg">{creator.videos_count}</span>
+            <p className="text-muted-foreground">Videos:</p>
+            <span className="text-lg">{formatCount(creator.videos_count)}</span>
           </div>
           <div>
-            <b>Content Type:</b>{" "}
+            <p className="text-muted-foreground">Content Type:</p>
             <span className="text-lg">
               {creator.content_labels
                 .map(
@@ -88,11 +90,11 @@ export async function CreatorCard({
             </span>
           </div>
           <div>
-            <b>Median Views:</b>{" "}
-            <span className="text-lg">{creator.median_views}</span>
+            <p className="text-muted-foreground">Median Views:</p>
+            <span className="text-lg">{formatCount(creator.median_views)}</span>
           </div>
           <div>
-            <b>Engagement Rate:</b>{" "}
+            <p className="text-muted-foreground">Engagement Rate:</p>
             <span className="text-lg">{creator.engagement_rate}%</span>
           </div>
         </div>

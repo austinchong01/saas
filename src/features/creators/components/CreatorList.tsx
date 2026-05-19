@@ -22,7 +22,7 @@ import {
   LANGUAGE_LABELS,
   GENDER_RATIO_LABELS,
 } from "../constants";
-import { CreatorFilterFormValues } from "../schemas";
+import { CreatorFilterFormValues, Creator } from "../schemas";
 import Link from "next/link";
 import { formatCount } from "@/lib/utils";
 import { CreatorSearchInput } from "./CreatorSearchInput";
@@ -165,7 +165,7 @@ function CreatorsFound({
   url,
   filters,
 }: {
-  creators: any[];
+  creators: Creator[];
   url: string;
   filters: CreatorFilterFormValues;
 }) {
