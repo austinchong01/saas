@@ -17,6 +17,15 @@ export const optionalRate = z.union([
   z.coerce.number().min(0).max(1),
 ]);
 
+export type Creator = {
+  handle_name: string;
+  display_name: string;
+  profile_image: string;
+  followers_count: number;
+  likes_count: number;
+  videos_count: number;
+};
+
 export const creatorFilterSchema = z
   .object({
     // keyword: z.string().nullable(),
