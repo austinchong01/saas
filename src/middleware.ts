@@ -2,7 +2,14 @@ import arcjet, { detectBot, shield, slidingWindow } from "@arcjet/next";
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { env } from "./data/env/server";
 
-const isPublicRoute = createRouteMatcher(["/", "/sign-in(.*)", "/api/webhooks(.*)"]);
+// Clerk auth is currently disabled: "/app(.*)" added here so auth.protect()
+// below no longer gates it. Remove "/app(.*)" to re-enable the auth wall.
+const isPublicRoute = createRouteMatcher([
+  "/",
+  "/sign-in(.*)",
+  "/api/webhooks(.*)",
+  "/app(.*)",
+]);
 
 const aj = arcjet({
   key: env.ARCJET_KEY,

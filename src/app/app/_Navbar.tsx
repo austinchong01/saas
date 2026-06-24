@@ -1,21 +1,20 @@
 "use client";
 
-import { useClerk, SignOutButton } from "@clerk/nextjs";
-import { BrainCircuitIcon, LogOut, User } from "lucide-react";
+import { BrainCircuitIcon, User } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { UserAvatar } from "@/features/users/components/UserAvatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-export function Navbar({ user }: { user: { name: string; imageUrl: string } }) {
-  const { openUserProfile } = useClerk();
-
+// Clerk auth is currently disabled; this Navbar no longer receives a real
+// user. The dropdown is kept as a placeholder so it's a small diff to wire
+// Clerk back in later (see _Navbar.tsx history / Clerk components left in repo).
+export function Navbar() {
   return (
     <nav className="h-header flex items-center justify-between border-b px-4">
       <Link href="/app" className="flex items-center gap-2">
@@ -28,23 +27,16 @@ export function Navbar({ user }: { user: { name: string; imageUrl: string } }) {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <UserAvatar user={user} className="cursor-pointer" />
+            <Avatar className="cursor-pointer">
+              <AvatarFallback>
+                <User className="size-4" />
+              </AvatarFallback>
+            </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem
-              className="cursor-pointer"
-              onClick={() => openUserProfile()}
-            >
-              <User className="mr-2" />
-              Profile
+            <DropdownMenuItem disabled>
+              Auth disabled
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <SignOutButton>
-              <DropdownMenuItem className="cursor-pointer">
-                <LogOut className="mr-2" />
-                Logout
-              </DropdownMenuItem>
-            </SignOutButton>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

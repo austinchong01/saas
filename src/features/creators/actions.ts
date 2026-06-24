@@ -102,14 +102,8 @@ export async function getCreatorsByFilters(
 export async function checkFilterInfo(
   unsafeData: Partial<CreatorFilterFormValues>,
 ) {
-  const { userId } = await getCurrentUser();
-  if (userId == null) {
-    return {
-      error: true,
-      message: "You do not have permission to do this.",
-    };
-  }
-
+  // Clerk auth is currently disabled, so there is no userId to check here.
+  // This function now only validates the filter shape.
   const { success, data } = creatorFilterSchema.safeParse(unsafeData);
 
   if (!success) {
