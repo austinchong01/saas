@@ -51,15 +51,10 @@ export async function getCreatorsByFilters(
   );
   const params = creatorListURL.searchParams;
 
-  // map content labels to ids
   const labelIds = filters.contentLabels?.map(name => CONTENT_LABEL_IDS[name]);
 
-  // REQUIRED PARAMS
   params.set("tto_tcm_account_id", env.TT_ACC_ID);
-  params.set(
-    "country_codes",
-    JSON.stringify([filters.countryCode]),
-  );
+  params.set("country_codes", JSON.stringify([filters.countryCode]));
 
   setIfDefined(params, "min_followers", filters.followersMin);
   setIfDefined(params, "max_followers", filters.followersMax);
@@ -69,34 +64,32 @@ export async function getCreatorsByFilters(
   setIfDefined(params, "max_engagement_rate", filters.engagementRateMax);
   setIfDefined(params, "follower_age", filters.followerAge);
   setIfDefined(params, "follower_gender_ratio", filters.followerGenderRatio);
-  // keyword search?
 
   setArrayIfDefined(params, "languages", filters.languages);
   setArrayIfDefined(params, "content_label_ids", labelIds);
   setArrayIfDefined(params, "follower_country_codes", filters.followerCountryCodes);
-  // industry labels?
 
   params.set("sort_field", "RELEVANCE");
   params.set("sort_order", "DESC");
-  params.set("page", "1");
-  params.set("page_size", "10"); 
-
-
-  // console.log(decodeURIComponent(creatorListURL.toString()));
-
+  params.set("page", String(filters.page));
 
   const creatorListRES = await fetch(creatorListURL, {
     method: "GET",
     headers: { "Access-Token": env.TT_ACCESS_TOKEN },
   });
   const creatorList = await creatorListRES.json();
+
   if (creatorList.message !== "OK")
     return { error: true, message: `Failed to fetch creator list: ${creatorList.message}` };
 
   if (!creatorList.data.creators)
     return { error: true, message: "No creators found matching those filters." };
-  
-  return creatorList.data.creators;
+
+  return {
+    creators: creatorList.data.creators,
+    totalPages: creatorList.data.page_info.total_page,
+    page: creatorList.data.page_info.page,
+  };
 }
 
 export async function checkFilterInfo(

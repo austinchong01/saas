@@ -7,11 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/CreatorCard";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import {
-  Heart,
-  Users,
-  Video,
-} from "lucide-react";
+import { Heart, Users, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { filtersToSearchParams, searchParamsToFilters } from "../helpers";
@@ -30,17 +26,26 @@ export async function CreatorList({
 }: {
   searchParams?: Record<string, string>;
 }) {
-  const { data: filters, error } = searchParamsToFilters(searchParams); // error on invalid param filters
+  const { data: filters, error } = searchParamsToFilters(searchParams);
   const url = filtersToSearchParams(filters);
 
-  const creators = await getCreatorsByFilters(filters);
+  const result = await getCreatorsByFilters(filters);
 
-  if ("error" in creators) {
-    if (creators.message === "No creators found matching those filters.")
+  if ("error" in result) {
+    if (result.message === "No creators found matching those filters.")
       return <NoCreatorsFound url={url} filters={filters} />;
-    else return <div>{creators.message}</div>;
+    else return <div>{result.message}</div>;
   }
-  return <CreatorsFound creators={creators} url={url} filters={filters} />;
+
+  return (
+    <CreatorsFound
+      creators={result.creators}
+      totalPages={result.totalPages}
+      page={result.page}
+      url={url}
+      filters={filters}
+    />
+  );
 }
 
 function NoCreatorsFound({
@@ -160,20 +165,27 @@ export function FilterBadges({
 
 function CreatorsFound({
   creators,
+  totalPages,
+  page,
   url,
   filters,
 }: {
   creators: Creator[];
+  totalPages: number;
+  page: number;
   url: string;
   filters: CreatorFilterFormValues;
 }) {
+  const prevUrl = filtersToSearchParams({ ...filters, page: page - 1 });
+  const nextUrl = filtersToSearchParams({ ...filters, page: page + 1 });
+  const editUrl = filtersToSearchParams({ ...filters, page: 1 });
+
   return (
     <div className="container my-4 max-w-5xl">
       <div className="grid gap-4">
-        {/* <Input placeholder="Search creators..." value={""} /> */}
         <FilterBadges filters={filters} />
         <Button asChild>
-          <Link href={`/app?${url}`}>Edit Filters</Link>
+          <Link href={`/app?${editUrl}`}>Edit Filters</Link>
         </Button>
         <CreatorSearchInput backUrl={url} />
         {creators.map((creator) => (
@@ -193,14 +205,7 @@ function CreatorsFound({
                   <CardTitle>{creator.display_name}</CardTitle>
                   <CardDescription>@{creator.handle_name}</CardDescription>
                 </div>
-                {/* <div>
-                  {creator.is_verified && (
-                    <BadgeCheck className="size-6 text-blue-500" />
-                  )}
-                </div> */}
               </div>
-
-
             </CardHeader>
 
             <CardContent className="flex items-center justify-center">
@@ -211,9 +216,7 @@ function CreatorsFound({
                 </div>
                 <div className="flex items-center gap-2 h-5 w-56">
                   <Heart className="size-4 text-muted-foreground" />
-                  <span className="nowraptext">
-                    {formatCount(creator.likes_count)} likes
-                  </span>
+                  <span>{formatCount(creator.likes_count)} likes</span>
                 </div>
                 <div className="flex items-center gap-2 h-5 w-56">
                   <Video className="size-4 text-muted-foreground" />
@@ -230,6 +233,18 @@ function CreatorsFound({
             </CardContent>
           </Card>
         ))}
+
+        <div className="flex items-center justify-between pt-2">
+          <Button variant="outline" asChild disabled={page <= 1}>
+            <Link href={`/app/creators?${prevUrl}`}>← Previous</Link>
+          </Button>
+          <span className="text-sm text-muted-foreground">
+            Page {page} of {totalPages}
+          </span>
+          <Button variant="outline" asChild disabled={page >= totalPages}>
+            <Link href={`/app/creators?${nextUrl}`}>Next →</Link>
+          </Button>
+        </div>
       </div>
     </div>
   );

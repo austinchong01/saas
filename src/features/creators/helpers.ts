@@ -13,6 +13,7 @@ const defaultFilters: CreatorFilterFormValues = {
   medianViewsMax: "",
   engagementRateMin: "",
   engagementRateMax: "",
+  page: 1,
 };
 
 export function filtersToSearchParams(
@@ -21,6 +22,7 @@ export function filtersToSearchParams(
   const params = new URLSearchParams();
 
   for (const [key, value] of Object.entries(filters)) {
+    if (key === "page" && value === 1) continue;
     if (value == "") continue;
     if (Array.isArray(value) && value.length == 0) continue;
     if (Array.isArray(value)) {
@@ -61,6 +63,7 @@ export function searchParamsToFilters(params: Record<string, string>): {
     followerCountryCodes: getArray("followerCountryCodes"),
     followerGenderRatio: get("followerGenderRatio") ?? "",
     followerAge: get("followerAge") ?? "",
+    page: Number(get("page") ?? 1),
   };
 
   const parsed = creatorFilterSchema.safeParse(result);
