@@ -34,8 +34,9 @@ import { filtersToSearchParams, searchParamsToFilters } from "../helpers";
 import { useEffect } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { stripEmptyFields } from "@/lib/utils";
+import { z } from "zod";
 
-const defaultFilters: CreatorFilterFormValues = {
+const defaultFilters: z.infer<typeof creatorFilterSchema> = {
   languages: [],
   followerCountryCodes: [],
   countryCode: "US",
@@ -64,12 +65,12 @@ export function CreatorFilterForm({
     if (error) router.replace("/app");
   }, [error, router]);
 
-  const form = useForm<CreatorFilterFormValues>({
+  const form = useForm<z.infer<typeof creatorFilterSchema>>({
     resolver: zodResolver(creatorFilterSchema),
     defaultValues: { ...defaultFilters, ...stripEmptyFields(filters) },
   });
 
-  async function onSubmit(values: CreatorFilterFormValues) {
+  async function onSubmit(values: z.infer<typeof creatorFilterSchema>) {
     const safeParsed = await checkFilterInfo(values);
 
     if ("error" in safeParsed) {
@@ -78,9 +79,7 @@ export function CreatorFilterForm({
     }
 
     const strippedValues = stripEmptyFields(values);
-    console.log(strippedValues);
-
-    const url = filtersToSearchParams(strippedValues);
+    const url = filtersToSearchParams(strippedValues as Partial<CreatorFilterFormValues>);
     router.push(`/app/creators?${url}`);
   }
 

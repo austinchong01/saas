@@ -36,7 +36,6 @@ export const creatorFilterSchema = z
     engagementRateMin: optionalRate,
     engagementRateMax: optionalRate,
     languages: z.array(z.enum(LANGUAGES)),
-    page: z.coerce.number().int().min(1).default(1),
     followerCountryCodes: z.array(z.enum(COUNTRY_CODES)),
     countryCode: z.enum(COUNTRY_CODES, {
       required_error: "Select a creator country",
@@ -70,4 +69,6 @@ export const creatorFilterSchema = z
     { message: "min must be ≤ max", path: ["engagementRateMax"] },
   );
 
-export type CreatorFilterFormValues = z.infer<typeof creatorFilterSchema>;
+export type CreatorFilterFormValues = z.infer<typeof creatorFilterSchema> & {
+  page: number;
+};

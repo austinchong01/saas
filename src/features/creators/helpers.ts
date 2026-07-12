@@ -1,6 +1,7 @@
 import { CreatorFilterFormValues, creatorFilterSchema } from "./schemas";
+import { z } from "zod";
 
-const defaultFilters: CreatorFilterFormValues = {
+const defaultFilters: z.infer<typeof creatorFilterSchema> = {
   languages: [],
   followerCountryCodes: [],
   countryCode: "US",
@@ -13,7 +14,6 @@ const defaultFilters: CreatorFilterFormValues = {
   medianViewsMax: "",
   engagementRateMin: "",
   engagementRateMax: "",
-  page: 1,
 };
 
 export function filtersToSearchParams(
@@ -70,10 +70,10 @@ export function searchParamsToFilters(params: Record<string, string>): {
   // console.log(parsed)
   if (!parsed.success) {
     console.log(parsed.error.issues);
-    return { data: defaultFilters, error: "Invalid filter parameters in URL" };
+    return { data: { ...defaultFilters, page: 1 }, error: "Invalid filter parameters in URL" };
   }
 
-  return { data: parsed.data, error: null };
+  return { data: { ...parsed.data, page: result.page }, error: null };
 }
 
 export function setIfDefined(
