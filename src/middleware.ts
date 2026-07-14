@@ -19,7 +19,7 @@ const aj = arcjet({
       mode: "LIVE",
       allow: ["CATEGORY:SEARCH_ENGINE", "CATEGORY:MONITOR", "CATEGORY:PREVIEW"],
     }),
-    slidingWindow({ mode: "LIVE", interval: "1m", max: 100 }),
+    slidingWindow({ mode: "DRY_RUN", interval: "1m", max: 100 }),
   ],
 });
 
@@ -32,7 +32,6 @@ export default clerkMiddleware(async (auth, req) => {
 
   // must be logged in to access non-public routes
   if (!isPublicRoute(req)) {
-
     // if user is signed in, do nothing
     // else, redirect to sign in page
     await auth.protect();
@@ -46,5 +45,5 @@ export const config = {
     // Always run for API routes
     "/(api|trpc)(.*)",
   ],
-  runtime: "nodejs"
+  runtime: "nodejs",
 };
